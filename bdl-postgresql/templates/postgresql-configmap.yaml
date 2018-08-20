@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ template "bdl-postgresql.fullname" . }}-db-config
+  labels:
+    heritage: {{ .Release.Service | quote }}
+    release: {{ .Release.Name | quote }}
+    chart: {{ template "bdl-postgresql.chart" . }}
+    component: "{{ .Release.Name }}-{{ .Values.Component }}"
+data:
+  database.dir: {{ .Values.DBVolumeMount }}/postgres
+  dabatase.name: {{ .Values.DBName }}
+  database.user: {{ .Values.DBUser }}
