@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ template "bdl-postgresql.fullname" . }}-clusterip
+  name: {{ template "bdl-postgresql.fullname" . }}
   labels:
     heritage: {{ .Release.Service | quote }}
     release: {{ .Release.Name | quote }}
@@ -10,8 +10,8 @@ metadata:
 spec:
   type: ClusterIP
   ports:
-  - port: 5432
-    targetPort: 5432
+  - port: {{ .Values.Ports.Metastore.Container }}
+    targetPort: {{ .Values.Ports.Metastore.Container }}
   selector:
     heritage: {{ .Release.Service }}
     release: {{ .Release.Name | quote }}

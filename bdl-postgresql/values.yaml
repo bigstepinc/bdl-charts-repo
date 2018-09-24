@@ -8,17 +8,27 @@ Image: "bigstepinc/postgresql_bdl"
 ImageTag: "2.3.0-2"
 ImagePullPolicy: "Always"
 Resources: {}
+DataDir: "/test"
 
-MetastoreContainerPort: 5432
-MetastorePort: 30000
+Service:
+  Enabled: true
+  Type: "LoadBalancer"
+
+
+Ports:
+  Metastore:
+    Container: 5432
+    Public: 30000
+
+# MetastoreContainerPort: 5432
+# MetastorePort: 30000
 
 Storage: "1Gi"
 StorageClassUseDefault: true
 StorageClass: "-"
 
-DBVolumeMount: "/test"
-DBName: "the-db"
-DBUser: "the-user"
-
-Security:
-  postgres_password: ""
+DataBase:
+  PostgresPassword: "the-postgres-pass"
+  Name: "the-db"
+  User: "postgres"
+  Password: "the-pass"

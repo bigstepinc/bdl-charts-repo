@@ -30,34 +30,47 @@ spec:
         imagePullPolicy: "{{ .Values.ImagePullPolicy }}"
         ports:
         - name: metastore
-          containerPort: 5432
+          containerPort: {{ .Values.Ports.Metastore.Container }}
           protocol: TCP
         resources:
 {{ toYaml .Values.Resources | indent 10 }}
         env:
         - name: CONTAINER_DIR
-          valueFrom:
-            configMapKeyRef:
-              name: {{ template "bdl-postgresql.fullname" . }}-db-config
-              key: database.dir
+          value: {{ .Values.DataDir }}/postgres
+################################################
         - name: POSTGRES_DB
-          valueFrom:
-            configMapKeyRef:
-              name: {{ template "bdl-postgresql.fullname" . }}-db-config
-              key: dabatase.name
+          value: postgres
         - name: POSTGRES_USER
-          valueFrom:
-            configMapKeyRef:
-              name: {{ template "bdl-postgresql.fullname" . }}-db-config
-              key: database.user
+          value: postgres
         - name: POSTGRES_PASSWORD
           valueFrom:
             secretKeyRef:
               name: {{ template "bdl-postgresql.fullname" . }}
               key: postgres_password
+
+        - name: DB_NAME
+          valueFrom:
+            secretKeyRef:
+              name: {{ template "bdl-postgresql.fullname" . }}
+              key: db_name
+        - name: DB_USER
+          valueFrom:
+            secretKeyRef:
+              name: {{ template "bdl-postgresql.fullname" . }}
+              key: db_user
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: {{ template "bdl-postgresql.fullname" . }}
+              key: db_password
+################################################
+        - name: POSTGRES_HOSTNAME
+          value: "{{ template "bdl-postgresql.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local"
+        - name: POSTGRES_PORT
+          value: "{{ .Values.Ports.Metastore.Container }}"
         volumeMounts:
         - name: datadir
-          mountPath: {{ .Values.DBVolumeMount }}
+          mountPath: {{ .Values.DataDir }}
         terminationMessagePath: "/dev/termination-log"
         terminationMessagePolicy: File
       restartPolicy: Always
