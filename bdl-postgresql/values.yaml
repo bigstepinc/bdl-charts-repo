@@ -27,8 +27,12 @@ Storage: "1Gi"
 StorageClassUseDefault: true
 StorageClass: "-"
 
+Admin:
+  Name: "postgres"
+  User: "postgres"
+  Password: "the-admin-pass"
+
 DataBase:
-  PostgresPassword: "the-postgres-pass"
   Name: "the-db"
   User: "postgres"
   Password: "the-pass"
