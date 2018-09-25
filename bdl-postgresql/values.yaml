@@ -5,7 +5,7 @@
 Component: "portgresql"
 Replicas: 1
 Image: "bigstepinc/postgresql_bdl"
-ImageTag: "2.3.0-2"
+ImageTag: "2.3.0-3"
 ImagePullPolicy: "Always"
 Resources: {}
 DataDir: "/test"
@@ -33,6 +33,6 @@ Admin:
   Password: "the-admin-pass"
 
 DataBase:
-  Name: "the-db"
-  User: "postgres"
-  Password: "the-pass"
+  Name: "the-user-db"
+  User: "the-user"
+  Password: "the-user-pass"
