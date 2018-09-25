@@ -27,7 +27,7 @@ spec:
       containers:
       - name: "{{ template "bdl-spark.worker.fullname" . }}"
         image: "{{ .Values.Worker.Image }}:{{ .Values.Worker.ImageTag }}"
-        imagePullPolicy: "IfNotPresent"
+        imagePullPolicy: "{{ .Values.Worker.ImagePullPolicy }}"
         terminationMessagePolicy: "File"
         terminationMessagePath: "/dev/termination-log"
         ports:
@@ -75,6 +75,31 @@ spec:
           value: "{{ template "bdl-spark.master.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local"
         - name: SPARK_WORKER_WEBUI_PORT
           value: "{{ .Values.Worker.Ports.workerWebUI }}"
+        {{- if .Values.DataBase.Enabled}}
+        - name: DB_TYPE
+          value: "{{ .Values.DataBase.Type }}"
+        {{- if (eq .Values.DataBase.Type "postgresql") }}
+        - name: POSTGRES_HOSTNAME
+          value: "{{ .Values.DataBase.Hostname }}"
+        - name: POSTGRES_PORT
+          value: "{{ .Values.DataBase.Port }}"
+        - name: DB_NAME
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Values.DataBase.CredentialsSecret }}
+              key: db_name
+        - name: DB_USER
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Values.DataBase.CredentialsSecret }}
+              key: db_user
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Values.DataBase.CredentialsSecret }}
+              key: db_password
+        {{- end }}
+        {{- end }}
         volumeMounts:
         - name: data-dir
           mountPath: {{ .Values.Worker.DataDir }}

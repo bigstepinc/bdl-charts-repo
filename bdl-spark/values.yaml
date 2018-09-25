@@ -17,7 +17,8 @@ Master:
   Component: "spark-master"
   Replicas: 1
   Image: "bigstepinc/spark_bdl"
-  ImageTag: "2.3.0-1"
+  ImageTag: "2.3.0-2"
+  ImagePullPolicy: "Always"
   Resources: {}
   DataDir: "/bigstep/data-dir"
   ConfigMapDir: "/bigstep/config"
@@ -37,7 +38,8 @@ Worker:
   Component: "spark-worker"
   Replicas: 1
   Image: "bigstepinc/spark_bdl"
-  ImageTag: "2.3.0-1"
+  ImageTag: "2.3.0-2"
+  ImagePullPolicy: "Always"
   Resources: {}
   DataDir: "/bigstep/data-dir"
   Storage: "1Gi"
@@ -58,6 +60,13 @@ Env:
   EX_MEM: "4G"
   JAVA_DRIVER_OPTS: "Xmx1024M"
   MEM: "4G"
+
+DataBase:
+  Enabled: false
+  Type: ""
+  Hostname: ""
+  Port: ""
+  CredentialsSecret: ""
 
 Debug:
   Component: "spark-debug"
