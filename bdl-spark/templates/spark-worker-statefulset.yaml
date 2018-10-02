@@ -60,14 +60,19 @@ spec:
           value: "worker"
         - name: AUTH_METHOD
           value: "{{ .Values.ObjStorage.Auth.Method }}"
-        {{- if (eq .Values.ObjStorage.Auth.Method "basic") }}
+        {{- if (eq .Values.ObjStorage.Auth.Method "mock-basic") }}
         - name: OBJ_STORAGE_USERNAME
           value: "{{ .Values.ObjStorage.Auth.Username }}"
         - name: OBJ_STORAGE_PASSWORD
           value: "{{ .Values.ObjStorage.Auth.Password }}"
+        {{- else if (eq .Values.ObjStorage.Auth.Method "mock-apikey") }}
+        - name: AUTH_APIKEY
+          value: "{{ .Values.ObjStorage.Auth.ApiKey }}"
         {{- else if (eq .Values.ObjStorage.Auth.Method "apikey") }}
         - name: AUTH_APIKEY
           value: "{{ .Values.ObjStorage.Auth.ApiKey }}"
+        - name: API_ENDPOINT
+          value: "{{ .Values.BDL.ApiEndpoint }}"
         {{- end }}
         - name: SET_PATH_TO_CONF_FOLDER
           value: "{{ .Values.Debug.ConfigDir }}"

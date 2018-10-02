@@ -2,22 +2,27 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
-
+BDL:
+  ApiEndpoint: ""
 
 ObjStorage:
   Auth:
-    Method: "basic"
+    Method: "mock-basic"
     Username: "user-1"
     Password: "pass-1"
   # Auth:
   #   Method: "apikey"
   #   ApiKey: "apikey-1-asdf"
+  # Auth:
+  #   Method: "apikey"
+  #   ApiKey: ""
+
 
 Master:
   Component: "spark-master"
   Replicas: 1
   Image: "bigstepinc/spark_bdl"
-  ImageTag: "2.3.0-2"
+  ImageTag: "2.3.0-4"
   ImagePullPolicy: "Always"
   Resources: {}
   DataDir: "/bigstep/data-dir"
@@ -38,7 +43,7 @@ Worker:
   Component: "spark-worker"
   Replicas: 1
   Image: "bigstepinc/spark_bdl"
-  ImageTag: "2.3.0-2"
+  ImageTag: "2.3.0-4"
   ImagePullPolicy: "Always"
   Resources: {}
   DataDir: "/bigstep/data-dir"
