@@ -7,7 +7,7 @@ Image: "bigstepinc/jupyter_bdl"
 ImageTag: "2.3.0-2"
 ImagePullPolicy: "IfNotPresent"
 Resources: {}
-DataDir: "/notebooks"
+DataDir: "/bigstep"
 
 Storage: "1Gi"
 StorageClassUseDefault: true
