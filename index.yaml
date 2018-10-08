@@ -3,9 +3,9 @@ entries:
   bdl-jupyter:
   - apiVersion: v1
     appVersion: "1.0"
-    created: 2018-10-08T14:46:04.264066963+03:00
+    created: 2018-10-08T15:25:46.711340986+03:00
     description: Jupyter Chart for Bigstep Data Lake
-    digest: d7864f290d754e640d63b24d83dd86247f30e427e3e87738d510f60cae389381
+    digest: b1979648c38f7bc460853f828525d14388b74d48e0bcf41ddbcc85f79102600a
     name: bdl-jupyter
     urls:
     - https://bigstepinc.github.io/bdl-charts-repo/bdl-jupyter-0.1.0.tgz
@@ -13,7 +13,7 @@ entries:
   bdl-postgresql:
   - apiVersion: v1
     appVersion: "1.0"
-    created: 2018-10-08T14:46:04.26505639+03:00
+    created: 2018-10-08T15:25:46.711767643+03:00
     description: PostgreSQL Chart for Bigstep Data Lake
     digest: 74f3d9f2ef2ca255f3c169761d2aa83b5760b554d1ef1802c14aa5038e565d98
     name: bdl-postgresql
@@ -23,11 +23,11 @@ entries:
   bdl-spark:
   - apiVersion: v1
     appVersion: "1.0"
-    created: 2018-10-08T14:46:04.266003032+03:00
+    created: 2018-10-08T15:25:46.712198583+03:00
     description: Spark Chart for Bigstep Data Lake
     digest: 6fdfe39a8f1a4f10c3a25a480b4d8b01f4dcc9366694db189942a0287ceba1ba
     name: bdl-spark
     urls:
     - https://bigstepinc.github.io/bdl-charts-repo/bdl-spark-0.1.0.tgz
     version: 0.1.0
-generated: 2018-10-08T14:46:04.263500717+03:00
+generated: 2018-10-08T15:25:46.710810262+03:00
