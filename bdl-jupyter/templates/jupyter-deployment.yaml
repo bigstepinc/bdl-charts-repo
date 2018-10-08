@@ -44,4 +44,4 @@ spec:
       volumes:
       - name: datadir
         persistentVolumeClaim:
-          claimName: {{ template "bdl-jupyter.fullname" . }}
+          claimName: "{{ template "bdl-jupyter.fullname" . }}-data"
