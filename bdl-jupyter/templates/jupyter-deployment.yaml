@@ -41,7 +41,7 @@ spec:
         volumeMounts:
         - name: datadir
           mountPath: {{ .Values.DataDir }}
-    volumes:
-    - name: datadir
-      persistentVolumeClaim:
-        claimName: {{ template "bdl-jupyter.fullname" . }}
+      volumes:
+      - name: datadir
+        persistentVolumeClaim:
+          claimName: {{ template "bdl-jupyter.fullname" . }}
