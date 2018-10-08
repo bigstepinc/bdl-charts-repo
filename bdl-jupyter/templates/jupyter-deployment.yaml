@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ template "bdl-jupyter.fullname" . }}
+  labels:
+    heritage: {{ .Release.Service | quote }}
+    release: {{ .Release.Name | quote }}
+    chart: {{ template "bdl-jupyter.chart" . }}
+    component: "{{ .Release.Name }}-{{ .Values.Component }}"
+spec:
+  selector:
+    matchLabels:
+      heritage: {{ .Release.Service | quote }}
+      release: {{ .Release.Name | quote }}
+      chart: {{ template "bdl-jupyter.chart" . }}
+      component: "{{ .Release.Name }}-{{ .Values.Component }}"
+  template:
+    metadata:
+      labels:
+        heritage: {{ .Release.Service | quote }}
+        release: {{ .Release.Name | quote }}
+        chart: {{ template "bdl-jupyter.chart" . }}
+        component: "{{ .Release.Name }}-{{ .Values.Component }}"
+    spec:
+      containers:
+      - name: "{{ template "bdl-jupyter.fullname" . }}"
+        image: "{{ .Values.Image }}:{{ .Values.ImageTag }}"
+        imagePullPolicy: "{{ .Values.ImagePullPolicy }}"
+        ports:
+        - name: notebook
+          containerPort: 8888
+          protocol: TCP
+        env:
+        - name: NOTEBOOK_DIR
+          value: {{ .Values.Datadir }}
+        - name: NOTEBOOK_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: {{ template "bdl-jupyter.fullname" . }}-credentials
+              key: notebook_password
+        volumeMounts:
+        - name: datadir
+          mountPath: {{ .Values.DataDir }}
+    volumes:
+    - name: datadir
+      persistentVolumeClaim:
+        claimName: {{ template "bdl-jupyter.fullname" . }}
