@@ -32,7 +32,7 @@ spec:
           protocol: TCP
         env:
         - name: NOTEBOOK_DIR
-          value: {{ .Values.Datadir }}
+          value: {{ .Values.DataDir }}
         - name: NOTEBOOK_PASSWORD
           valueFrom:
             secretKeyRef:
