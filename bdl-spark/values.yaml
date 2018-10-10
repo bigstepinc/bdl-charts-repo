@@ -23,7 +23,7 @@ Master:
   Replicas: 1
   Image: "bigstepinc/spark_bdl"
   ImageTag: "2.3.0-6"
-  ImagePullPolicy: "Always"
+  ImagePullPolicy: "IfNotPresent"
   Resources: {}
   DataDir: "/bigstep/data-dir"
   ConfigMapDir: "/bigstep/config"
@@ -44,7 +44,7 @@ Worker:
   Replicas: 1
   Image: "bigstepinc/spark_bdl"
   ImageTag: "2.3.0-6"
-  ImagePullPolicy: "Always"
+  ImagePullPolicy: "IfNotPresent"
   Resources: {}
   DataDir: "/bigstep/data-dir"
   Storage: "1Gi"
