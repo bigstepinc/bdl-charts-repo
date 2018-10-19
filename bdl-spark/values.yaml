@@ -22,7 +22,7 @@ Master:
   Component: "spark-master"
   Replicas: 1
   Image: "bigstepinc/spark_bdl"
-  ImageTag: "2.3.0-6"
+  ImageTag: "2.3.0-7"
   ImagePullPolicy: "IfNotPresent"
   Resources: {}
   DataDir: "/bigstep/data-dir"
@@ -43,7 +43,7 @@ Worker:
   Component: "spark-worker"
   Replicas: 1
   Image: "bigstepinc/spark_bdl"
-  ImageTag: "2.3.0-6"
+  ImageTag: "2.3.0-7"
   ImagePullPolicy: "IfNotPresent"
   Resources: {}
   DataDir: "/bigstep/data-dir"
@@ -79,3 +79,9 @@ Debug:
   Storage: "1Gi"
   StorageClassUseDefault: true
   StorageClass: "-"
+
+Audit:
+  Enabled: false
+  # MockUserId: ""
+  # ESURL: ""
+  # ESAuthToken: ""

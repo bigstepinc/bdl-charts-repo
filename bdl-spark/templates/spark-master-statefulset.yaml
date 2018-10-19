@@ -112,6 +112,19 @@ spec:
               key: db_password
         {{- end }}
         {{- end }}
+        {{- if .Values.Audit.Enabled }}
+        - name: AUDIT_ENABLED
+          value: "true"
+        - name: AUDIT_ELASTICSEARCH_URL
+          value: "{{ .Values.Audit.ESURL }}"
+        - name: AUDIT_ELASTICSEARCH_AUTH_TOKEN
+          value: "{{ .Values.Audit.ESAuthToken }}"
+        - name: AUDIT_MOCK_USERID
+          value: "{{ .Values.Audit.MockUserId }}"
+        {{- else }}
+        - name: AUDIT_ENABLED
+          value: "false"
+        {{- end }}
         volumeMounts:
         - name: debug-config-dir
           mountPath: {{ .Values.Debug.ConfigDir }}
