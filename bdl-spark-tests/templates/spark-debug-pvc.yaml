@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: "{{ template "bdl-spark.debug.fullname" . }}-data"
+  labels:
+    heritage: {{ .Release.Service | quote }}
+    release: {{ .Release.Name | quote }}
+    chart: {{ template "bdl-spark.chart" . }}
+    component: "{{ .Release.Name }}-{{ .Values.Debug.Component }}"
+spec:
+  accessModes:
+  - "ReadWriteOnce"
+  resources:
+    requests:
+      storage: "{{ .Values.Debug.Storage }}"
+  {{- if (not .Values.Debug.StorageClassUseDefault) }}
+  {{- if (eq "-" .Values.Debug.StorageClass) }}
+  storageClassName: ""
+  {{- else }}
+  storageClassName: "{{ .Values.Debug.StorageClass }}"
+  {{- end }}
+  {{- end }}
