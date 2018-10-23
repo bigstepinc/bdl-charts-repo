@@ -37,7 +37,6 @@ spec:
         env:
         - name: CONTAINER_DIR
           value: {{ .Values.DataDir }}/postgres
-################################################
         - name: POSTGRES_DB
           valueFrom:
             secretKeyRef:
@@ -53,23 +52,6 @@ spec:
             secretKeyRef:
               name: {{ template "bdl-postgresql.fullname" . }}-credentials-admin
               key: db_password
-
-        - name: DB_NAME
-          valueFrom:
-            secretKeyRef:
-              name: {{ template "bdl-postgresql.fullname" . }}-credentials-project
-              key: db_name
-        - name: DB_USER
-          valueFrom:
-            secretKeyRef:
-              name: {{ template "bdl-postgresql.fullname" . }}-credentials-project
-              key: db_user
-        - name: DB_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: {{ template "bdl-postgresql.fullname" . }}-credentials-project
-              key: db_password
-################################################
         - name: POSTGRES_HOSTNAME
           value: "{{ template "bdl-postgresql.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local"
         - name: POSTGRES_PORT

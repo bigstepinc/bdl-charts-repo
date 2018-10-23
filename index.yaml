@@ -3,7 +3,7 @@ entries:
   bdl-jupyter:
   - apiVersion: v1
     appVersion: "1.0"
-    created: 2018-10-23T12:23:55.986450338+03:00
+    created: 2018-10-23T12:30:10.457293649+03:00
     description: Jupyter Chart for Bigstep Data Lake
     digest: e665d350de224aaf4f71f0e46dbb441ee744f81a4d82d76bbc953ab4e956b9bd
     name: bdl-jupyter
@@ -13,9 +13,9 @@ entries:
   bdl-postgresql:
   - apiVersion: v1
     appVersion: "1.0"
-    created: 2018-10-23T12:23:55.987003572+03:00
+    created: 2018-10-23T12:30:10.457905334+03:00
     description: PostgreSQL Chart for Bigstep Data Lake
-    digest: ced0cf4422a438487803290e943990abc1d7ae6728ddaf82082a21eba718a3d3
+    digest: b87e8cae1812f56a00626f333ea4301c45fa4595cb5a3cd292702ff4528b3c5f
     name: bdl-postgresql
     urls:
     - https://bigstepinc.github.io/bdl-charts-repo/bdl-postgresql-0.1.0.tgz
@@ -23,7 +23,7 @@ entries:
   bdl-postgresql-tests:
   - apiVersion: v1
     appVersion: "1.0"
-    created: 2018-10-23T12:23:55.987744051+03:00
+    created: 2018-10-23T12:30:10.458512006+03:00
     description: PostgreSQL Chart for Bigstep Data Lake
     digest: e4e895d77eb5755fd62894e31296e4fc2383121daed11fc09d49ca76e47f6c0b
     name: bdl-postgresql-tests
@@ -33,7 +33,7 @@ entries:
   bdl-spark:
   - apiVersion: v1
     appVersion: "1.0"
-    created: 2018-10-23T12:23:55.988356821+03:00
+    created: 2018-10-23T12:30:10.459290391+03:00
     description: Spark Chart for Bigstep Data Lake
     digest: 5acfc39e6e361394fbd6f5d84d64de137b44d3d31137511184a52d0bd2a03898
     name: bdl-spark
@@ -43,11 +43,11 @@ entries:
   bdl-spark-tests:
   - apiVersion: v1
     appVersion: "1.0"
-    created: 2018-10-23T12:23:55.988953419+03:00
+    created: 2018-10-23T12:30:10.460002744+03:00
     description: Spark Chart for Bigstep Data Lake
     digest: bedf97530fa542680191b5c55c1873b26836d0e5afd3f1e72a19dc814083677a
     name: bdl-spark-tests
     urls:
     - https://bigstepinc.github.io/bdl-charts-repo/bdl-spark-tests-0.1.0.tgz
     version: 0.1.0
-generated: 2018-10-23T12:23:55.985548639+03:00
+generated: 2018-10-23T12:30:10.456230985+03:00

@@ -31,8 +31,3 @@ Admin:
   Name: "postgres"
   User: "postgres"
   Password: "the-admin-pass"
-
-DataBase:
-  Name: "the-user-db"
-  User: "the-user"
-  Password: "the-user-pass"
