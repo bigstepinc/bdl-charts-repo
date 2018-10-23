@@ -1,0 +1,35 @@
+{{- if .Values.Service.Enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ template "bdl-postgresql.fullname" . }}-loadbalancer
+  labels:
+    heritage: {{ .Release.Service | quote }}
+    release: {{ .Release.Name | quote }}
+    chart: {{ template "bdl-postgresql.chart" . }}
+    component: "{{ .Release.Name }}-{{ .Values.Component }}"
+spec:
+  type: {{ .Values.Service.Type }}
+  {{- if .Values.Service.clusterIP }}
+  clusterIP: {{ .Values.Service.clusterIP }}
+  {{- end }}
+  {{- if .Values.Service.externalIPs }}
+  externalIPs:
+  {{ toYaml .Values.Service.externalIPs | indent 4 }}
+  {{- end }}
+  {{- if .Values.Service.loadBalancerIP }}
+  loadBalancerIP: {{ .Values.Service.loadBalancerIP }}
+  {{- end }}
+  {{- if .Values.Service.loadBalancerSourceRanges }}
+  loadBalancerSourceRanges:
+  {{ toYaml .Values.Service.loadBalancerSourceRanges | indent 4 }}
+  {{- end }}
+  ports:
+  - port: {{ .Values.Ports.Metastore.Public }}
+    targetPort: {{ .Values.Ports.Metastore.Container }}
+  selector:
+    heritage: {{ .Release.Service | quote }}
+    release: {{ .Release.Name | quote }}
+    chart: {{ template "bdl-postgresql.chart" . }}
+    component: "{{ .Release.Name }}-{{ .Values.Component }}"
+{{- end }}

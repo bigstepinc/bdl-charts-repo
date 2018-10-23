@@ -1,0 +1,38 @@
+# Default values for bdl-postgresql.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+Component: "portgresql"
+Replicas: 1
+Image: "bigstepinc/postgresql_bdl"
+ImageTag: "2.3.0-3"
+ImagePullPolicy: "IfNotPresent"
+Resources: {}
+DataDir: "/test"
+
+Service:
+  Enabled: true
+  Type: "LoadBalancer"
+
+
+Ports:
+  Metastore:
+    Container: 5432
+    Public: 30000
+
+# MetastoreContainerPort: 5432
+# MetastorePort: 30000
+
+Storage: "1Gi"
+StorageClassUseDefault: true
+StorageClass: "-"
+
+Admin:
+  Name: "postgres"
+  User: "postgres"
+  Password: "the-admin-pass"
+
+DataBase:
+  Name: "the-user-db"
+  User: "the-user"
+  Password: "the-user-pass"
