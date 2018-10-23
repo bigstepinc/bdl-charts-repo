@@ -5,7 +5,7 @@
 Component: "portgresql"
 Replicas: 1
 Image: "bigstepinc/postgresql_bdl"
-ImageTag: "2.3.0-3"
+ImageTag: "2.3.0-4"
 ImagePullPolicy: "IfNotPresent"
 Resources: {}
 DataDir: "/test"
