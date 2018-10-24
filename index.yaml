@@ -3,7 +3,7 @@ entries:
   bdl-jupyter:
   - apiVersion: v1
     appVersion: "1.0"
-    created: 2018-10-23T12:45:40.680021171+03:00
+    created: 2018-10-24T11:44:34.672328005+03:00
     description: Jupyter Chart for Bigstep Data Lake
     digest: e665d350de224aaf4f71f0e46dbb441ee744f81a4d82d76bbc953ab4e956b9bd
     name: bdl-jupyter
@@ -13,7 +13,7 @@ entries:
   bdl-postgresql:
   - apiVersion: v1
     appVersion: "1.0"
-    created: 2018-10-23T12:45:40.680581984+03:00
+    created: 2018-10-24T11:44:34.673171785+03:00
     description: PostgreSQL Chart for Bigstep Data Lake
     digest: 97588c0e5b05a834c5389146bc2bf4ec7669405311dfaa12a75d039ec6a10358
     name: bdl-postgresql
@@ -23,7 +23,7 @@ entries:
   bdl-postgresql-tests:
   - apiVersion: v1
     appVersion: "1.0"
-    created: 2018-10-23T12:45:40.681151062+03:00
+    created: 2018-10-24T11:44:34.674037447+03:00
     description: PostgreSQL Chart for Bigstep Data Lake
     digest: e4e895d77eb5755fd62894e31296e4fc2383121daed11fc09d49ca76e47f6c0b
     name: bdl-postgresql-tests
@@ -33,9 +33,9 @@ entries:
   bdl-spark:
   - apiVersion: v1
     appVersion: "1.0"
-    created: 2018-10-23T12:45:40.681994552+03:00
+    created: 2018-10-24T11:44:34.674479484+03:00
     description: Spark Chart for Bigstep Data Lake
-    digest: 5acfc39e6e361394fbd6f5d84d64de137b44d3d31137511184a52d0bd2a03898
+    digest: 7ea6a6db0933a3500199ceeaf78d79b5f717f9bed5705f8c9c301644dac16b8c
     name: bdl-spark
     urls:
     - https://bigstepinc.github.io/bdl-charts-repo/bdl-spark-0.1.0.tgz
@@ -43,11 +43,11 @@ entries:
   bdl-spark-tests:
   - apiVersion: v1
     appVersion: "1.0"
-    created: 2018-10-23T12:45:40.682850494+03:00
+    created: 2018-10-24T11:44:34.679960068+03:00
     description: Spark Chart for Bigstep Data Lake
     digest: bedf97530fa542680191b5c55c1873b26836d0e5afd3f1e72a19dc814083677a
     name: bdl-spark-tests
     urls:
     - https://bigstepinc.github.io/bdl-charts-repo/bdl-spark-tests-0.1.0.tgz
     version: 0.1.0
-generated: 2018-10-23T12:45:40.679221399+03:00
+generated: 2018-10-24T11:44:34.670978392+03:00
