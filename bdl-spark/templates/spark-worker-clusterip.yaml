@@ -9,6 +9,8 @@ metadata:
     component: "{{ .Release.Name }}-{{ .Values.Worker.Component }}"
 spec:
   type: ClusterIP
+  clusterIP: None
+  sessionAffinity: None
   ports:
   - name: master-web-ui
     port: {{ .Values.Worker.Ports.masterWebUI }}
