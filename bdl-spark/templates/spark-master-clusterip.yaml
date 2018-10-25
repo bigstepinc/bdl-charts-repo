@@ -9,8 +9,6 @@ metadata:
     component: "{{ .Release.Name }}-{{ .Values.Master.Component }}"
 spec:
   type: ClusterIP
-  clusterIp: None
-  sessionAffinity: None
   ports:
   - name: spark-ui
     port: {{ .Values.Master.Ports.sparkUI }}
