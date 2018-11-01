@@ -28,6 +28,9 @@ StorageClassUseDefault: true
 StorageClass: "-"
 
 Admin:
+  Secret:
+    Create: true
+    # ExternalName: ""
   Name: "postgres"
   User: "postgres"
   Password: "the-admin-pass"
