@@ -2,7 +2,7 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
-Component: "portgresql"
+Component: "postgresql"
 Replicas: 1
 Image: "bigstepinc/postgresql_bdl"
 ImageTag: "2.3.0-4"
