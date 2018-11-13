@@ -67,8 +67,6 @@ spec:
         - name: API_ENDPOINT
           value: "{{ .Values.BDL.ApiEndpoint }}"
         {{- end }}
-        - name: SET_PATH_TO_CONF_FOLDER
-          value: "{{ .Values.Debug.ConfigDir }}"
         - name: EX_CORES
           value: "{{ .Values.Env.EX_CORES }}"
         - name: EX_MEM
@@ -125,9 +123,9 @@ spec:
         - name: AUDIT_ENABLED
           value: "false"
         {{- end }}
+        - name: SPARK_WAREHOUSE_URL
+          value: "{{ .Values.ObjStorage.WarehouseURL }}"
         volumeMounts:
-        - name: debug-config-dir
-          mountPath: {{ .Values.Debug.ConfigDir }}
         - name: data-dir
           mountPath: {{ .Values.Master.DataDir }}
       restartPolicy: Always
@@ -136,9 +134,6 @@ spec:
       securityContext: {}
       schedulerName: default-scheduler
       volumes:
-      - name: debug-config-dir
-        persistentVolumeClaim:
-          claimName: "{{ template "bdl-spark.debug.fullname" . }}-data"
       - name: data-dir
         persistentVolumeClaim:
           claimName: "{{ template "bdl-spark.master.fullname" . }}-data"

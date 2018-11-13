@@ -41,8 +41,3 @@ Create chart name and version as used by the chart label.
 {{- $name := default (printf "%s-%s" .Chart.Name "worker") .Values.Worker.Name -}}
 {{- printf "%s-%s" .Release.Name $name | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
-
-{{- define "bdl-spark.debug.fullname" -}}
-{{- $name := default (printf "%s-%s" .Chart.Name "debug") .Values.Debug.Name -}}
-{{- printf "%s-%s" .Release.Name $name | trunc 63 | trimSuffix "-" -}}
-{{- end -}}

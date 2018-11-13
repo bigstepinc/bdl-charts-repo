@@ -10,6 +10,7 @@ ObjStorage:
     Method: "mock-basic"
     Username: "user-1"
     Password: "pass-1"
+  WarehouseURL: ""
   # Auth:
   #   Method: "apikey"
   #   ApiKey: "apikey-1-asdf"
@@ -22,7 +23,7 @@ Master:
   Component: "spark-master"
   Replicas: 1
   Image: "bigstepinc/spark_bdl"
-  ImageTag: "2.3.0-8"
+  ImageTag: "2.3.0-10"
   ImagePullPolicy: "IfNotPresent"
   Resources: {}
   DataDir: "/bigstep/data-dir"
@@ -43,7 +44,7 @@ Worker:
   Component: "spark-worker"
   Replicas: 1
   Image: "bigstepinc/spark_bdl"
-  ImageTag: "2.3.0-8"
+  ImageTag: "2.3.0-10"
   ImagePullPolicy: "IfNotPresent"
   Resources: {}
   DataDir: "/bigstep/data-dir"
@@ -72,13 +73,6 @@ DataBase:
   Hostname: ""
   Port: ""
   CredentialsSecret: ""
-
-Debug:
-  Component: "spark-debug"
-  ConfigDir: "/bigstep/debug/conf-bdl-scheme"
-  Storage: "1Gi"
-  StorageClassUseDefault: true
-  StorageClass: "-"
 
 Audit:
   Enabled: false

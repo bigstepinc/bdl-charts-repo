@@ -74,8 +74,6 @@ spec:
         - name: API_ENDPOINT
           value: "{{ .Values.BDL.ApiEndpoint }}"
         {{- end }}
-        - name: SET_PATH_TO_CONF_FOLDER
-          value: "{{ .Values.Debug.ConfigDir }}"
         - name: SPARK_MASTER_HOSTNAME
           value: "{{ template "bdl-spark.master.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local"
         - name: SPARK_WORKER_WEBUI_PORT
@@ -118,20 +116,17 @@ spec:
         - name: AUDIT_ENABLED
           value: "false"
         {{- end }}
+        - name: SPARK_WAREHOUSE_URL
+          value: "{{ .Values.ObjStorage.WarehouseURL }}"
         volumeMounts:
         - name: data-dir
           mountPath: {{ .Values.Worker.DataDir }}
-        - name: debug-config-dir
-          mountPath: {{ .Values.Debug.ConfigDir }}
       restartPolicy: Always
       terminationGracePeriodSeconds: 30
       dnsPolicy: ClusterFirst
       securityContext: {}
       schedulerName: default-scheduler
       volumes:
-      - name: debug-config-dir
-        persistentVolumeClaim:
-          claimName: "{{ template "bdl-spark.debug.fullname" . }}-data"
       - name: data-dir
         persistentVolumeClaim:
           claimName: "{{ template "bdl-spark.worker.fullname" . }}-data"
