@@ -10,7 +10,7 @@ ObjStorage:
     Method: "mock-basic"
     Username: "user-1"
     Password: "pass-1"
-  WarehouseURL: ""
+  WarehouseDir: ""
   # Auth:
   #   Method: "apikey"
   #   ApiKey: "apikey-1-asdf"
