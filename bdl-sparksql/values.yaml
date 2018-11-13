@@ -9,6 +9,7 @@ ObjStorage:
   Auth:
     Method: "apikey"
     ApiKey: ""
+  WarehouseDir: ""
   # Auth:
   #   Method: "apikey"
   #   ApiKey: ""
@@ -17,7 +18,7 @@ Master:
   Component: "spark-master"
   Replicas: 1
   Image: "bigstepinc/spark_bdl"
-  ImageTag: "2.3.0-8"
+  ImageTag: "2.3.0-10"
   ImagePullPolicy: "IfNotPresent"
   Resources: {}
   DataDir: "/bigstep/data-dir"
@@ -38,7 +39,7 @@ Worker:
   Component: "spark-worker"
   Replicas: 1
   Image: "bigstepinc/spark_bdl"
-  ImageTag: "2.3.0-8"
+  ImageTag: "2.3.0-10"
   ImagePullPolicy: "IfNotPresent"
   Resources: {}
   DataDir: "/bigstep/data-dir"

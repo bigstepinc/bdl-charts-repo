@@ -108,6 +108,8 @@ spec:
         - name: AUDIT_ENABLED
           value: "false"
         {{- end }}
+        - name: SPARK_WAREHOUSE_DIR
+          value: "{{ .Values.ObjStorage.WarehouseDir }}"
         volumeMounts:
         - name: data-dir
           mountPath: {{ .Values.Worker.DataDir }}
