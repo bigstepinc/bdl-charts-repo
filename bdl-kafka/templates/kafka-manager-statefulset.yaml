@@ -29,10 +29,6 @@ spec:
       - name: "{{ template "bdl-kafka.manager.fullname" . }}"
         image: "{{ .Values.Manager.Image }}:{{ .Values.Manager.ImageTag }}"
         imagePullPolicy: "{{ .Values.Manager.ImagePullPolicy }}"
-        command:
-        - "/bin/bash"
-        - "-c"
-        - "while true; do echo; sleep 1; done;"
         terminationMessagePolicy: "File"
         terminationMessagePath: "/dev/termination-log"
         ports:

@@ -18,7 +18,7 @@ Core:
 Manager:
   Component: "kafka-manager"
   Replicas: 1
-  Image: "docker.io/bigstepinc/kafka_bdl"
+  Image: "docker.io/bigstepinc/kafkamanager_bdl"
   ImageTag: "latest"
   ImagePullPolicy: "IfNotPresent"
   Resources: {}
