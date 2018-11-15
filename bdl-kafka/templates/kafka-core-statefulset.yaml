@@ -32,7 +32,7 @@ spec:
         command:
         - "sh"
         - "-c"
-        - "./opt.kafkaGenConfig.sh && kafka-server-start $KAFKA_CONF/kafka.properties"
+        - "./opt/kafkaGenConfig.sh && kafka-server-start $KAFKA_CONF/kafka.properties"
         terminationMessagePolicy: "File"
         terminationMessagePath: "/dev/termination-log"
         ports:
