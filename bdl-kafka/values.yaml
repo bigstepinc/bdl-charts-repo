@@ -25,7 +25,7 @@ Manager:
   Ports:
     kafkaManager: 9000
   Service:
-    Enaled: true
+    Enabled: true
     Type: "LoadBalancer"
   Admin:
     Secret:
