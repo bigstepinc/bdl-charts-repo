@@ -1,0 +1,37 @@
+{{- if .Values.Manager.Service.Enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ template "bdl-kafka.manager.fullname" . }}-public
+  labels:
+    heritage: {{ .Release.Service | quote }}
+    release: {{ .Release.Name | quote }}
+    chart: {{ template "bdl-kafka.chart" . }}
+    component: "{{ .Release.Name }}-{{ .Values.Manager.Component }}"
+spec:
+  type: {{ .Values.Manager.Service.Type }}
+  {{- if .Values.Manager.Service.clusterIP }}
+  clusterIP: {{ .Values.Manager.Service.clusterIP }}
+  {{- end }}
+  {{- if .Values.Manager.Service.externalIPs }}
+  externalIPs:
+  {{ toYaml .Values.Manager.Service.externalIPs | indent 4 }}
+  {{- end }}
+  {{- if .Values.Manager.Service.loadBalancerIP }}
+  loadBalancerIP: {{ .Values.Manager.Service.loadBalancerIP }}
+  {{- end }}
+  {{- if .Values.Manager.Service.loadBalancerSourceRanges }}
+  loadBalancerSourceRanges:
+  {{ toYaml .Values.Manager.Service.loadBalancerSourceRanges | indent 4 }}
+  {{- end }}
+  ports:
+  - name: kafka-manager
+    port: {{ .Values.Manager.Ports.kafkaManager }}
+    targetPort: {{ .Values.Manager.Ports.kafkaManager }}
+    protocol: TCP
+  selector:
+    heritage: {{ .Release.Service | quote }}
+    release: {{ .Release.Name | quote }}
+    chart: {{ template "bdl-kafka.chart" . }}
+    component: "{{ .Release.Name }}-{{ .Values.Manager.Component }}"
+{{- end }}

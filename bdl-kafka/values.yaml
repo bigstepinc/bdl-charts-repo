@@ -1,0 +1,62 @@
+# Default values for bdl-kafka.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+Core:
+  Component: "kafka-core"
+  Replicas: 1
+  Image: "docker.io/bigstepinc/kafka_bdl"
+  ImageTag: "latest"
+  ImagePullPolicy: "IfNotPresent"
+  Resources: {}
+  Ports:
+    broker: 9092
+  Env:
+    KAFKA_HEAP_OPTS: "-Xmx1G -Xms1G"
+    KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: "3"
+
+Manager:
+  Component: "kafka-manager"
+  Replicas: 1
+  Image: "docker.io/bigstepinc/kafka_bdl"
+  ImageTag: "latest"
+  ImagePullPolicy: "IfNotPresent"
+  Resources: {}
+  Ports:
+    kafkaManager: 9000
+  Service:
+    Enaled: true
+    Type: "LoadBalancer"
+  Admin:
+    Secret:
+      Create: true
+      # ExternalNName: ""
+    User: "admin"
+    Password: "password"
+
+Zookeeper:
+  Component: "kafka-zookeeper"
+  Replicas: 1
+  Image: "docker.io/bigstepinc/zookeeper_bdl"
+  ImageTag: "latest"
+  ImagePullPolicy: "IfNotPresent"
+  Resources: {}
+  Ports:
+    client: 2181
+    election: 3888
+    server: 2888
+  Env:
+    JMXAUTH: "false"
+    JMXDISABLE: "false"
+    JXMPORT: "1099"
+    JMXSSL: false
+    ZK_HEAP_SIZE: "1G"
+    ZK_INIT_LIMIT: "5"
+    ZK_LOG_LEVEL: "INFO"
+    ZK_MAX_CLIENT_CNXNS: "60"
+    ZK_MAX_SESSION_TIMEOUT: "40000"
+    ZK_MIN_SESSION_TIMEOUT: "4000"
+    ZK_PURGE_INTERVAL: "0"
+    ZK_SNAP_RETAIN_COUNT: "3"
+    ZK_SYNC_LIMIT: "10"
+    ZK_TICK_TIME: "2000"

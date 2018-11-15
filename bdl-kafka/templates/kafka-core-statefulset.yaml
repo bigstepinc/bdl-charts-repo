@@ -1,0 +1,76 @@
+apiVersion: apps/v1beta1
+kind: StatefulSet
+metadata:
+  name: {{ template "bdl-kafka.core.fullname" . }}
+  labels:
+    heritage: {{ .Release.Service | quote }}
+    release: {{ .Release.Name | quote }}
+    chart: {{ template "bdl-kafka.chart" . }}
+    component: "{{ .Release.Name }}-{{ .Values.Core.Component }}"
+spec:
+  serviceName: "{{ template "bdl-kafka.core.fullname" . }}"
+  replicas: {{ default 1 .Values.Core.Replicas }}
+  podManagementPolicy: OrderedReady
+  updateStrategy:
+    type: OnDelete
+  selector:
+    matchLabels:
+      component: "{{ .Release.Name }}-{{ .Values.Core.Component }}"
+  template:
+    metadata:
+      name: "{{ template "bdl-kafka.core.fullname" }}-broker"
+      labels:
+        heritage: {{ .Release.Service | quote }}
+        release: {{ .Release.Name | quote }}
+        chart: {{ template "bdl-kafka.chart" . }}
+        component: "{{ .Release.Name }}-{{ .Values.Core.Component }}"
+    spec:
+      containers:
+      - name: "{{ template "bdl-kafka.core.fullname" . }}"
+        image: "{{ .Values.Core.Image }}:{{ .Values.Core.ImageTag }}"
+        imagePullPolicy: "{{ .Values.Core.ImagePullPolicy }}"
+        command:
+        - "sh"
+        - "-c"
+        - "./opt.kafkaGenConfig.sh && kafka-server-start $KAFKA_CONF/kafka.properties"
+        terminationMessagePolicy: "File"
+        terminationMessagePath: "/dev/termination-log"
+        ports:
+        - name: broker
+          containerPort: {{ .Values.Core.Ports.broker }}
+          protocol: TCP
+        resources:
+{{ toYaml .Values.Core.Resources | indent 10 }}
+        env:
+        - name: POD_IP
+          valueFrom:
+            fieldRef:
+              apiVersion: v1
+              fieldPath: status.POD_IP
+        - name: KAFKA_HEAP_OPTS
+          value: "{{ .Values.Core.Env.KAFKA_HEAP_OPTS }}"
+          # ////////////////////TODO///////////////////////
+        - name: KAFKA_ZOOKEEPER_CONNECT
+          value: kafka-zookeeper:2181
+        - name: KAFKA_LOG_DIRS
+          value: /opt/kafka/data/logs
+          # ////////////////////TODO///////////////////////
+        - name: KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR
+          value: "{{ .Values.Core.Env.KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR }}"
+        volumeMounts:
+        - mountPath: /opt/kafka/data
+          name: datadir
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+      volumes:
+      - name: data-dir
+        emptyDir: {}
+
+
+
+
+
+
+
+
