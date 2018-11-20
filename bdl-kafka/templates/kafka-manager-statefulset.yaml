@@ -1,0 +1,72 @@
+apiVersion: apps/v1beta1
+kind: StatefulSet
+metadata:
+  name: {{ template "bdl-kafka.manager.fullname" . }}
+  labels:
+    heritage: {{ .Release.Service | quote }}
+    release: {{ .Release.Name | quote }}
+    chart: {{ template "bdl-kafka.chart" . }}
+    component: "{{ .Release.Name }}-{{ .Values.Manager.Component }}"
+spec:
+  serviceName: "{{ template "bdl-kafka.manager.fullname" . }}"
+  replicas: {{ default 1 .Values.Manager.Replicas }}
+  podManagementPolicy: OrderedReady
+  updateStrategy:
+    type: OnDelete
+  selector:
+    matchLabels:
+      component: "{{ .Release.Name }}-{{ .Values.Manager.Component }}"
+  template:
+    metadata:
+      name: "{{ template "bdl-kafka.manager.fullname" }}"
+      labels:
+        heritage: {{ .Release.Service | quote }}
+        release: {{ .Release.Name | quote }}
+        chart: {{ template "bdl-kafka.chart" . }}
+        component: "{{ .Release.Name }}-{{ .Values.Manager.Component }}"
+    spec:
+      containers:
+      - name: "{{ template "bdl-kafka.manager.fullname" . }}"
+        image: "{{ .Values.Manager.Image }}:{{ .Values.Manager.ImageTag }}"
+        imagePullPolicy: "{{ .Values.Manager.ImagePullPolicy }}"
+        terminationMessagePolicy: "File"
+        terminationMessagePath: "/dev/termination-log"
+        ports:
+        - name: kafka-manager
+          containerPort: {{ .Values.Manager.Ports.kafkaManager }}
+          protocol: TCP
+        resources:
+{{ toYaml .Values.Manager.Resources | indent 10 }}
+        env:
+        - name: ZK_HOSTS
+          # value: "kafka-zookeeper:2181"
+          value: "{{ template "bdl-kafka.zookeeper.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local:{{ .Values.Zookeeper.Ports.client }}"
+        - name: ZOOKEEPER_CONNECT
+          # value: "kafka-zookeeper:2181"
+          value: "{{ template "bdl-kafka.zookeeper.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local:{{ .Values.Zookeeper.Ports.client }}"
+        {{- if .Values.Manager.Admin.Secret.Create }}
+        - name: KAFKA_MANAGER_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: {{ template "bdl-kafka.manager.fullname" . }}-credentials-admin
+              key: km_user
+        - name: KAFKA_MANAGER_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: {{ template "bdl-kafka.manager.fullname" . }}-credentials-admin
+              key: km_password
+        {{- else }}
+        - name: KAFKA_MANAGER_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Values.Manager.Admin.Secret.ExternalName }}
+              key: km_user
+        - name: KAFKA_MANAGER_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Values.Manager.Admin.Secret.ExternalName }} 
+              key: km_password
+        {{- end }}
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+      dnsPolicy: ClusterFirst
