@@ -9,7 +9,7 @@ metadata:
     component: "{{ .Release.Name }}-{{ .Values.Worker.Component }}"
 spec:
   serviceName: "{{ template "bdl-sparksql.worker.fullname" . }}"
-  replicas: {{ default 1 .Values.Worker.Replicas }}
+  replicas: {{ .Values.Worker.Replicas }}
   updateStrategy:
     type: OnDelete
   selector:
