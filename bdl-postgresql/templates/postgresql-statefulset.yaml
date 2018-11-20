@@ -9,7 +9,7 @@ metadata:
     component: "{{ .Release.Name }}-{{ .Values.Component }}"
 spec:
   serviceName: "{{ template "bdl-postgresql.fullname" . }}"
-  replicas: {{ default 1 .Values.Replicas }}
+  replicas: {{ .Values.Replicas }}
   updateStrategy:
     type: RollingUpdate
   selector:
