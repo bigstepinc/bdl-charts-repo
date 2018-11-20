@@ -9,7 +9,7 @@ metadata:
     component: "{{ .Release.Name }}-{{ .Values.Master.Component }}"
 spec:
   serviceName: "{{ template "bdl-spark.master.fullname" . }}"
-  replicas: {{ default 1 .Values.Master.Replicas }}
+  replicas: {{ .Values.Master.Replicas }}
   updateStrategy:
     type: OnDelete
   selector:
