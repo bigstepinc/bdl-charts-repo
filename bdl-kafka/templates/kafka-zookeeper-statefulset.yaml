@@ -9,7 +9,7 @@ metadata:
     component: "{{ .Release.Name }}-{{ .Values.Zookeeper.Component }}"
 spec:
   serviceName: "{{ template "bdl-kafka.zookeeper.fullname" . }}"
-  replicas: {{ default 1 .Values.Zookeeper.Replicas }}
+  replicas: {{ .Values.Zookeeper.Replicas }}
   podManagementPolicy: OrderedReady
   updateStrategy:
     type: OnDelete

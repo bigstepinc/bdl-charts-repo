@@ -9,7 +9,7 @@ metadata:
     component: "{{ .Release.Name }}-{{ .Values.Manager.Component }}"
 spec:
   serviceName: "{{ template "bdl-kafka.manager.fullname" . }}"
-  replicas: {{ default 1 .Values.Manager.Replicas }}
+  replicas: {{ .Values.Manager.Replicas }}
   podManagementPolicy: OrderedReady
   updateStrategy:
     type: OnDelete
