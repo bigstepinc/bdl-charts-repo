@@ -10,8 +10,10 @@ metadata:
 spec:
   type: ClusterIP
   ports:
-  - port: {{ .Values.Ports.Metastore.Container }}
+  - name: metastore
+    port: {{ .Values.Ports.Metastore.Container }}
     targetPort: {{ .Values.Ports.Metastore.Container }}
+    protocol: TCP
   selector:
     heritage: {{ .Release.Service }}
     release: {{ .Release.Name | quote }}
