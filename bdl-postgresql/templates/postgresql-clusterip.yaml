@@ -10,9 +10,9 @@ metadata:
 spec:
   type: ClusterIP
   ports:
-  - name: metastore
-    port: {{ .Values.Ports.Metastore.Container }}
-    targetPort: {{ .Values.Ports.Metastore.Container }}
+  - name: postgres
+    port: {{ .Values.Ports.postgres.Container }}
+    targetPort: {{ .Values.Ports.postgres.Container }}
     protocol: TCP
   selector:
     heritage: {{ .Release.Service }}

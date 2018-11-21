@@ -25,9 +25,9 @@ spec:
   {{ toYaml .Values.Service.loadBalancerSourceRanges | indent 4 }}
   {{- end }}
   ports:
-  - name: metastore
-    port: {{ .Values.Ports.Metastore.Public }}
-    targetPort: {{ .Values.Ports.Metastore.Container }}
+  - name: postgres
+    port: {{ .Values.Ports.postgres.Public }}
+    targetPort: {{ .Values.Ports.postgres.Container }}
     protocol: TCP
   selector:
     heritage: {{ .Release.Service | quote }}

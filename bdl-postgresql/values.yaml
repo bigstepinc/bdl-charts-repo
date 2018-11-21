@@ -16,12 +16,9 @@ Service:
 
 
 Ports:
-  Metastore:
+  postgres:
     Container: 5432
     Public: 30000
-
-# MetastoreContainerPort: 5432
-# MetastorePort: 30000
 
 Storage: "1Gi"
 StorageClassUseDefault: true
