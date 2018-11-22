@@ -38,7 +38,7 @@ spec:
         resources:
 {{ toYaml .Values.Manager.Resources | indent 10 }}
         env:
-        - name: ZOOKEEPER_CONNECT
+        - name: ZK_HOSTS
           value: "{{ template "bdl-kafka.zookeeper.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local:{{ .Values.Zookeeper.Ports.client }}"
         {{- if .Values.Manager.Admin.Secret.Create }}
         - name: KAFKA_MANAGER_USERNAME
