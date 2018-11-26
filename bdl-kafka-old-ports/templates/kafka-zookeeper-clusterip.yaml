@@ -13,17 +13,17 @@ spec:
   sessionAffinity: None
   ports:
   - name: client
-    port: 2181
+    port: {{ .Values.Zookeeper.Ports.client }}
     protocol: TCP
-    targetPort: 2181
+    targetPort: {{ .Values.Zookeeper.Ports.client }}
   - name: election
-    port: 3888
+    port: {{ .Values.Zookeeper.Ports.election }}
     protocol: TCP
-    targetPort: 3888
+    targetPort: {{ .Values.Zookeeper.Ports.election }}
   - name: server
-    port: 2888
+    port: {{ .Values.Zookeeper.Ports.server }}
     protocol: TCP
-    targetPort: 2888
+    targetPort: {{ .Values.Zookeeper.Ports.server }}
   selector:
     heritage: {{ .Release.Service | quote }}
     release: {{ .Release.Name | quote }}

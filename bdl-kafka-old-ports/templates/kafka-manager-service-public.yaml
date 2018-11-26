@@ -27,7 +27,7 @@ spec:
   ports:
   - name: kafka-manager
     port: {{ .Values.Manager.Ports.kafkaManager }}
-    targetPort: 9000
+    targetPort: {{ .Values.Manager.Ports.kafkaManager }}
     protocol: TCP
   selector:
     heritage: {{ .Release.Service | quote }}

@@ -13,9 +13,9 @@ spec:
   sessionAffinity: None
   ports:
   - name: kafka-manager
-    port: {{ .Values.Manager.Ports.kafkaManager }}
+    port: 9000
     protocol: TCP
-    targetPort: {{ .Values.Manager.Ports.kafkaManager }}
+    targetPort: 9000
   selector:
     heritage: {{ .Release.Service | quote }}
     release: {{ .Release.Name | quote }}

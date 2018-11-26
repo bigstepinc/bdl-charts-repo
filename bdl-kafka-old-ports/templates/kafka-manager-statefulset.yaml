@@ -33,13 +33,13 @@ spec:
         terminationMessagePath: "/dev/termination-log"
         ports:
         - name: kafka-manager
-          containerPort: 9000
+          containerPort: {{ .Values.Manager.Ports.kafkaManager }}
           protocol: TCP
         resources:
 {{ toYaml .Values.Manager.Resources | indent 10 }}
         env:
         - name: ZK_HOSTS
-          value: "{{ template "bdl-kafka.zookeeper.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local:2181"
+          value: "{{ template "bdl-kafka.zookeeper.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local:{{ .Values.Zookeeper.Ports.client }}"
         {{- if .Values.Manager.Admin.Secret.Create }}
         - name: KAFKA_MANAGER_USERNAME
           valueFrom:

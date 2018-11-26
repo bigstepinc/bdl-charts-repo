@@ -13,8 +13,8 @@ spec:
   sessionAffinity: None
   ports:
   - name: broker
-    port: 9092
-    targetPort: 9092
+    port: {{ .Values.Core.Ports.broker }}
+    targetPort: {{ .Values.Core.Ports.broker }}
     protocol: TCP
   selector:
     heritage: {{ .Release.Service | quote }}

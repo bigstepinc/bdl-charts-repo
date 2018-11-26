@@ -36,13 +36,13 @@ spec:
         terminationMessagePath: "/dev/termination-log"
         ports:
         - name: client
-          containerPort: 2818
+          containerPort: {{ .Values.Zookeeper.Ports.client }}
           protocol: TCP
         - name: election
-          containerPort: 3888
+          containerPort: {{ .Values.Zookeeper.Ports.election }}
           protocol: TCP
         - name: server
-          containerPort: 2888
+          containerPort: {{ .Values.Zookeeper.Ports.server }}
           protocol: TCP
         resources:
 {{ toYaml .Values.Zookeeper.Resources | indent 10 }}
@@ -58,9 +58,9 @@ spec:
         - name: JMXSSL
           value: "{{ .Values.Zookeeper.Env.JMXSSL }}"
         - name: ZK_CLIENT_PORT
-          value: "2181"
+          value: "{{ .Values.Zookeeper.Ports.client }}"
         - name: ZK_ELECTION_PORT
-          value: "3888"
+          value: "{{ .Values.Zookeeper.Ports.election }}"
         - name: ZK_HEAP_SIZE
           value: "{{ .Values.Zookeeper.Env.ZK_HEAP_SIZE }}"
         - name: ZK_INIT_LIMIT
@@ -76,7 +76,7 @@ spec:
         - name: ZK_PURGE_INTERVAL
           value: "{{ .Values.Zookeeper.Env.ZK_PURGE_INTERVAL }}"
         - name: ZK_SERVER_PORT
-          value: "2888"
+          value: "{{ .Values.Zookeeper.Ports.server }}"
         - name: ZK_SNAP_RETAIN_COUNT
           value: "{{ .Values.Zookeeper.Env.ZK_SNAP_RETAIN_COUNT }}"
         - name: ZK_SYNC_LIMIT

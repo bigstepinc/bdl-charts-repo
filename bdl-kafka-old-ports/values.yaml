@@ -9,6 +9,8 @@ Core:
   ImageTag: "latest"
   ImagePullPolicy: "IfNotPresent"
   Resources: {}
+  Ports:
+    broker: 9092
   Env:
     KAFKA_HEAP_OPTS: "-Xmx1G -Xms1G"
     KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: "3"
@@ -39,6 +41,10 @@ Zookeeper:
   ImageTag: "latest"
   ImagePullPolicy: "IfNotPresent"
   Resources: {}
+  Ports:
+    client: 2181
+    election: 3888
+    server: 2888
   Env:
     JMXAUTH: "false"
     JMXDISABLE: "false"
