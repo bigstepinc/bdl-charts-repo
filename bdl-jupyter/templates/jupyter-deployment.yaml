@@ -31,6 +31,8 @@ spec:
           containerPort: 8888
           protocol: TCP
         env:
+        - name: MODE
+          value: "jupyter"
         - name: NOTEBOOK_DIR
           value: {{ .Values.DataDir }}
         {{- if .Values.Notebook.Secret.Create }}
