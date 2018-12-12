@@ -9,8 +9,20 @@ ImagePullPolicy: "IfNotPresent"
 Resources: {}
 DataDir: "/bigstep"
 
+Service:
+  Enabled: true
+  Type: "LoadBalancer"
+
+Ports:
+  notebook: 8888
+
+
 Storage: "1Gi"
 StorageClassUseDefault: true
 StorageClass: "-"
 
-Password: ""
+Notebook:
+  Secret:
+    Create: true
+    # ExternalName: ""
+  Password: "notebook"

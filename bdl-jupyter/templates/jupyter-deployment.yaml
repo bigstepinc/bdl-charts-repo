@@ -33,11 +33,19 @@ spec:
         env:
         - name: NOTEBOOK_DIR
           value: {{ .Values.DataDir }}
+        {{- if .Values.Notebook.Secret.Create }}
         - name: NOTEBOOK_PASSWORD
           valueFrom:
             secretKeyRef:
               name: {{ template "bdl-jupyter.fullname" . }}-credentials
               key: notebook_password
+        {{- else }}
+        - name: NOTEBOOK_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Values.Notebook.Secret.ExternalName }}
+              key: notebook_password
+        {{- end }}
         volumeMounts:
         - name: datadir
           mountPath: {{ .Values.DataDir }}
