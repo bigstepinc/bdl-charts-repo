@@ -12,7 +12,7 @@ spec:
   clusterIP: None
   sessionAffinity: None
   ports:
-  - name: spark-application-ui
+  - name: spark-app-ui
     port: 4040
     targetPort: 4040
     protocol: TCP
