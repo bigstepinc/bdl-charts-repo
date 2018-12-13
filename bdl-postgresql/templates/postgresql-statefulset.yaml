@@ -30,7 +30,7 @@ spec:
         imagePullPolicy: "{{ .Values.ImagePullPolicy }}"
         ports:
         - name: postgres
-          containerPort: {{ .Values.Ports.postgres.Container }}
+          containerPort: 5432
           protocol: TCP
         resources:
 {{ toYaml .Values.Resources | indent 10 }}
@@ -73,7 +73,7 @@ spec:
         - name: POSTGRES_HOSTNAME
           value: "{{ template "bdl-postgresql.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local"
         - name: POSTGRES_PORT
-          value: "{{ .Values.Ports.postgres.Container }}"
+          value: "5432"
         volumeMounts:
         - name: datadir
           mountPath: {{ .Values.DataDir }}

@@ -16,9 +16,7 @@ Service:
 
 
 Ports:
-  postgres:
-    Container: 5432
-    Public: 30000
+  postgres: 5432
 
 Storage: "1Gi"
 StorageClassUseDefault: true

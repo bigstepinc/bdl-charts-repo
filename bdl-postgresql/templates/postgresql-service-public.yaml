@@ -26,8 +26,8 @@ spec:
   {{- end }}
   ports:
   - name: postgres
-    port: {{ .Values.Ports.postgres.Public }}
-    targetPort: {{ .Values.Ports.postgres.Container }}
+    port: {{ .Values.Ports.postgres }}
+    targetPort: 5432
     protocol: TCP
   selector:
     heritage: {{ .Release.Service | quote }}

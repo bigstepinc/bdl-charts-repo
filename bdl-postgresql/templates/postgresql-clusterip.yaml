@@ -11,8 +11,8 @@ spec:
   type: ClusterIP
   ports:
   - name: postgres
-    port: {{ .Values.Ports.postgres.Container }}
-    targetPort: {{ .Values.Ports.postgres.Container }}
+    port: 5432
+    targetPort: 5432
     protocol: TCP
   selector:
     heritage: {{ .Release.Service }}
