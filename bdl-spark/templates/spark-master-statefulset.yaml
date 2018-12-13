@@ -31,14 +31,14 @@ spec:
         terminationMessagePolicy: "File"
         terminationMessagePath: "/dev/termination-log"
         ports:
-        - name: spark-ui
-          containerPort: {{ .Values.Master.Ports.sparkUI }}
+        - name: spark-application-ui
+          containerPort: 4040
           protocol: TCP
         - name: master-web-ui
-          containerPort: {{ .Values.Master.Ports.masterWebUI }}
+          containerPort: 8080
           protocol: TCP
         - name: spark-master
-          containerPort: {{ .Values.Master.Ports.sparkMaster }}
+          containerPort: 7077
           protocol: TCP
         resources:
 {{ toYaml .Values.Master.Resources | indent 10 }}
@@ -79,12 +79,14 @@ spec:
           value: "master"
         - name: SPARK_MASTER_HOSTNAME
           value: "{{ template "bdl-spark.master.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local"
+        - name: SPARK_MASTER_PORT
+          value: "7077"
         - name: SPARK_MASTER_WEBUI_PORT
-          value: "{{ .Values.Master.Ports.masterWebUI }}"
+          value: "8080"
         - name: SPARK_UI_PORT
-          value: "{{ .Values.Master.Ports.sparkUI }}"
+          value: "4040"
         - name: SPARK_WORKER_WEBUI_PORT
-          value: "{{ .Values.Worker.Ports.workerWebUI }}"
+          value: "8081"
         {{- if .Values.DataBase.Enabled}}
         - name: DB_TYPE
           value: "{{ .Values.DataBase.Type }}"

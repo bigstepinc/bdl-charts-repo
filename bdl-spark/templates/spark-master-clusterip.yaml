@@ -12,17 +12,17 @@ spec:
   clusterIP: None
   sessionAffinity: None
   ports:
-  - name: spark-ui
-    port: {{ .Values.Master.Ports.sparkUI }}
-    targetPort: {{ .Values.Master.Ports.sparkUI }}
+  - name: spark-application-ui
+    port: 4040
+    targetPort: 4040
     protocol: TCP
   - name: master-web-ui
-    port: {{ .Values.Master.Ports.masterWebUI }}
-    targetPort: {{ .Values.Master.Ports.masterWebUI }}
+    port: 8080
+    targetPort: 8080
     protocol: TCP
   - name: spark-master
-    port: {{ .Values.Master.Ports.sparkMaster }}
-    targetPort: {{ .Values.Master.Ports.sparkMaster }}
+    port: 7077
+    targetPort: 7077
     protocol: TCP
   selector:
     heritage: {{ .Release.Service | quote }}

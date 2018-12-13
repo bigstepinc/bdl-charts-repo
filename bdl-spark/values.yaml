@@ -23,7 +23,7 @@ Master:
   Component: "spark-master"
   Replicas: 1
   Image: "bigstepinc/spark_bdl"
-  ImageTag: "2.3.0-10"
+  ImageTag: "2.4.0-1"
   ImagePullPolicy: "IfNotPresent"
   Resources: {}
   DataDir: "/bigstep/data-dir"
@@ -35,8 +35,8 @@ Master:
     Enabled: true
     Type: "LoadBalancer"
   Ports:
-    sparkUI: 30002
-    masterWebUI: 30003
+    sparkApplicationUI: 4040
+    masterWebUI: 8080
     sparkMaster: 7077
 
   
@@ -44,7 +44,7 @@ Worker:
   Component: "spark-worker"
   Replicas: 1
   Image: "bigstepinc/spark_bdl"
-  ImageTag: "2.3.0-10"
+  ImageTag: "2.4.0-1"
   ImagePullPolicy: "IfNotPresent"
   Resources: {}
   DataDir: "/bigstep/data-dir"
@@ -55,8 +55,7 @@ Worker:
     Enabled: true
     Type: "LoadBalancer"
   Ports:
-    masterWebUI: 8080
-    workerWebUI: 30006
+    workerWebUI: 8081
 
 Env:
   CORES: "2"

@@ -25,17 +25,17 @@ spec:
   {{ toYaml .Values.Master.Service.loadBalancerSourceRanges | indent 4 }}
   {{- end }}
   ports:
-  - name: spark-ui
-    port: {{ .Values.Master.Ports.sparkUI }}
-    targetPort: {{ .Values.Master.Ports.sparkUI }}
+  - name: spark-application-ui
+    port: {{ .Values.Master.Ports.sparkApplicationUI }}
+    targetPort: 4040
     protocol: TCP
   - name: master-web-ui
     port: {{ .Values.Master.Ports.masterWebUI }}
-    targetPort: {{ .Values.Master.Ports.masterWebUI }}
+    targetPort: 8080
     protocol: TCP
   - name: spark-master
     port: {{ .Values.Master.Ports.sparkMaster }}
-    targetPort: {{ .Values.Master.Ports.sparkMaster }}
+    targetPort: 7077
     protocol: TCP
   selector:
     heritage: {{ .Release.Service | quote }}
