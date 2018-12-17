@@ -1,70 +1,50 @@
 apiVersion: apps/v1beta1
 kind: StatefulSet
 metadata:
-  name: {{ template "bdl-sparksql.master.fullname" . }}
+  name: {{ template "bdl-sparksql.worker.fullname" . }}
   labels:
     heritage: {{ .Release.Service | quote }}
     release: {{ .Release.Name | quote }}
     chart: {{ template "bdl-sparksql.chart" . }}
-    component: "{{ .Release.Name }}-{{ .Values.Master.Component }}"
+    component: "{{ .Release.Name }}-{{ .Values.Worker.Component }}"
 spec:
-  serviceName: "{{ template "bdl-sparksql.master.fullname" . }}"
-  replicas: {{ .Values.Master.Replicas }}
+  serviceName: "{{ template "bdl-sparksql.worker.fullname" . }}"
+  replicas: {{ .Values.Worker.Replicas }}
   updateStrategy:
     type: OnDelete
   selector:
     matchLabels:
-      component: "{{ .Release.Name }}-{{ .Values.Master.Component }}"
+      component: "{{ .Release.Name }}-{{ .Values.Worker.Component }}"
   template:
     metadata:
-      name: "{{ template "bdl-sparksql.master.fullname" }}"
+      name: "{{ template "bdl-sparksql.worker.fullname" }}"
       labels:
         heritage: {{ .Release.Service | quote }}
         release: {{ .Release.Name | quote }}
         chart: {{ template "bdl-sparksql.chart" . }}
-        component: "{{ .Release.Name }}-{{ .Values.Master.Component }}"
+        component: "{{ .Release.Name }}-{{ .Values.Worker.Component }}"
     spec:
       containers:
-      - name: "{{ template "bdl-sparksql.master.fullname" . }}"
-        image: "{{ .Values.Master.Image }}:{{ .Values.Master.ImageTag }}"
-        imagePullPolicy: "{{ .Values.Master.ImagePullPolicy }}"
+      - name: "{{ template "bdl-sparksql.worker.fullname" . }}"
+        image: "{{ .Values.Worker.Image }}:{{ .Values.Worker.ImageTag }}"
+        imagePullPolicy: "{{ .Values.Worker.ImagePullPolicy }}"
         terminationMessagePolicy: "File"
         terminationMessagePath: "/dev/termination-log"
         ports:
-        - name: spark-ui
-          containerPort: {{ .Values.Master.Ports.sparkUI }}
-          protocol: TCP
-        - name: master-web-ui
-          containerPort: {{ .Values.Master.Ports.masterWebUI }}
-          protocol: TCP
-        - name: spark-master
-          containerPort: {{ .Values.Master.Ports.sparkMaster }}
-          protocol: TCP
-        - name: jupyter-ui
-          containerPort: 8888
-          protocol: TCP
-        - name: thrift-port
-          containerPort: 10000
+        - name: worker-web-ui
+          containerPort: 8081
           protocol: TCP
         resources:
-{{ toYaml .Values.Master.Resources | indent 10 }}
+{{ toYaml .Values.Worker.Resources | indent 10 }}
         env:
-        - name: LOCAL_DIR
-          value: {{ .Values.Master.DataDir }}
         - name: CORES
           value: "{{ .Values.Env.CORES }}"
         - name: DRIVER_CORES
           value: "{{ .Values.Env.DRIVER_CORES }}"
         - name: DRIVER_MEM
           value: "{{ .Values.Env.DRIVER_MEM }}"
-        - name: AUTH_METHOD
-          value: "{{ .Values.ObjStorage.Auth.Method }}"
-        {{- if (eq .Values.ObjStorage.Auth.Method "apikey") }}
-        - name: AUTH_APIKEY
-          value: "{{ .Values.ObjStorage.Auth.ApiKey }}"
-        - name: API_ENDPOINT
-          value: "{{ .Values.BDL.ApiEndpoint }}"
-        {{- end }}
+        - name: LOCAL_DIR
+          value: {{ .Values.Worker.DataDir }}
         - name: EX_CORES
           value: "{{ .Values.Env.EX_CORES }}"
         - name: EX_MEM
@@ -74,15 +54,19 @@ spec:
         - name: MEM
           value: "{{ .Values.Env.MEM }}"
         - name: MODE
-          value: "thrift"
+          value: "worker"
+        - name: AUTH_METHOD
+          value: "{{ .Values.ObjStorage.Auth.Method }}"
+        {{- if (eq .Values.ObjStorage.Auth.Method "apikey") }}
+        - name: AUTH_APIKEY
+          value: "{{ .Values.ObjStorage.Auth.ApiKey }}"
+        - name: API_ENDPOINT
+          value: "{{ .Values.BDL.ApiEndpoint }}"
+        {{- end }}
         - name: SPARK_MASTER_HOSTNAME
           value: "{{ template "bdl-sparksql.master.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local"
-        - name: SPARK_MASTER_WEBUI_PORT
-          value: "{{ .Values.Master.Ports.masterWebUI }}"
-        - name: SPARK_UI_PORT
-          value: "{{ .Values.Master.Ports.sparkUI }}"
         - name: SPARK_WORKER_WEBUI_PORT
-          value: "{{ .Values.Worker.Ports.workerWebUI }}"
+          value: "8081"
         {{- if .Values.DataBase.Enabled}}
         - name: DB_TYPE
           value: "{{ .Values.DataBase.Type }}"
@@ -125,7 +109,7 @@ spec:
           value: "{{ .Values.ObjStorage.WarehouseDir }}"
         volumeMounts:
         - name: data-dir
-          mountPath: {{ .Values.Master.DataDir }}
+          mountPath: {{ .Values.Worker.DataDir }}
       restartPolicy: Always
       terminationGracePeriodSeconds: 30
       dnsPolicy: ClusterFirst
@@ -134,6 +118,6 @@ spec:
       volumes:
       - name: data-dir
         persistentVolumeClaim:
-          claimName: "{{ template "bdl-sparksql.master.fullname" . }}-data"
+          claimName: "{{ template "bdl-sparksql.worker.fullname" . }}-data"
   podManagementPolicy: OrderedReady
   revisionHistoryLimit: 10

@@ -12,13 +12,9 @@ spec:
   clusterIP: None
   sessionAffinity: None
   ports:
-  - name: master-web-ui
-    port: {{ .Values.Worker.Ports.masterWebUI }}
-    targetPort: {{ .Values.Worker.Ports.masterWebUI }}
-    protocol: TCP
   - name: worker-web-ui
-    port: {{ .Values.Worker.Ports.workerWebUI }}
-    targetPort: {{ .Values.Worker.Ports.workerWebUI }}
+    port: 8081
+    targetPort: 8081
     protocol: TCP
   selector:
     heritage: {{ .Release.Service | quote }}
