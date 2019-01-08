@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ template "bdl-streamsets.fullname" . }}
+  labels:
+    heritage: {{ .Release.Service | quote }}
+    release: {{ .Release.Name | quote }}
+    chart: {{ template "bdl-streamsets.chart" . }}
+    component: "{{ .Release.Name }}-{{ .Values.Component }}"
+spec:
+  accessModes:
+    - "ReadWriteOnce"
+  resources:
+    requests:
+      storage: "{{ .Values.Storage }}"
+  {{- if (not .Values.StorageClassUseDefault) }}
+  {{- if (eq "-" .Values.StorageClass) }}
+  storageClassName: ""
+  {{- else }}
+  storageClassName: "{{ .Values.StorageClass }}"
+  {{- end }}
+  {{- end }}

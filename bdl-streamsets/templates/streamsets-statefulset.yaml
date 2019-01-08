@@ -1,0 +1,68 @@
+apiVersion: apps/v1beta1
+kind: StatefulSet
+metadata:
+  name: {{ template "bdl-streamsets.fullname" . }}
+  labels:
+    heritage: {{ .Release.Service | quote }}
+    release: {{ .Release.Name | quote }}
+    chart: {{ template "bdl-streamsets.chart" . }}
+    component: "{{ .Release.Name }}-{{ .Values.Component }}"
+spec:
+  serviceName: "{{ template "bdl-streamsets.fullname" . }}"
+  replicas: {{ .Values.Replicas }}
+  updateStrategy:
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      component: "{{ .Release.Name }}-{{ .Values.Component }}"
+  template:
+    metadata:
+      name: "{{ template "bdl-streamsets.fullname" . }}"
+      labels:
+        heritage: {{ .Release.Service | quote }}
+        release: {{ .Release.Name | quote }}
+        chart: {{ template "bdl-streamsets.chart" . }}
+        component: "{{ .Release.Name }}-{{ .Values.Component }}"
+    spec:
+      containers:
+      - name: "{{ template "bdl-streamsets.fullname" . }}"
+        image: "{{ .Values.Image }}:{{ .Values.ImageTag }}"
+        imagePullPolicy: "{{ .Values.ImagePullPolicy }}"
+        ports:
+        - name: streamsets
+          containerPort: 18630
+          protocol: TCP
+        resource:
+{{ toYaml .Values.Resources | indent 10 }}
+        env:
+        - name: CONTAINER_DIR
+          value: {{ .Values.DataDir }}
+        {{- if .Values.Admin.Secret.Create }}
+        - name: ADMIN_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: {{ template "bdl-streamsets.fullname" . }}-credentials-admin
+              key: admin_password
+        {{- else }}
+        - name: ADMIN_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Values.Admin.Secret.ExternalName }}
+              key: admin_password
+        {{- end }}
+        volumeMounts:
+        - name: datadir
+          mountPath: {{ .Values.DataDir }}
+        terminationPath: "/dev/termination-log"
+        terminationMessagePolicy: File
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+      dnsPolicy: ClusterFirst
+      securityContext: {}
+      schedulerName: default-scheduler
+      volumes:
+        - name: DataDir
+          persistentVolumeClaim:
+            claimName: {{ template "bdl-streamsets.fullname" . }}
+    podManagementPolicy: OrderedReady
+    revisionHistoryLimit: 10

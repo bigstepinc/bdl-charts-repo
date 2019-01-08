@@ -1,0 +1,27 @@
+# Default values for bdl-streamsets.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+Component: "streamsets"
+Image: "bigstepinc/streamsets_bdl"
+ImageTag: "3.5.2-0"
+ImagePullPolicy: "IfNotPresent"
+Resources: {}
+DataDir: "/bigstep"
+
+Service:
+  Enabled: true
+  Type: "LoadBalancer"
+
+Ports:
+  streamsets: 18630
+
+Storage: "1Gi"
+StorageClassUseDefault: true
+StorageClass: "-"
+
+Admin:
+  Secret:
+    Create: true
+    # ExternalName: ""
+  Password: "streamsets"
