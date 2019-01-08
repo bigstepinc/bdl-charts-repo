@@ -42,13 +42,13 @@ spec:
           valueFrom:
             secretKeyRef:
               name: {{ template "bdl-streamsets.fullname" . }}-credentials-admin
-              key: admin_password
+              key: ss_password
         {{- else }}
         - name: ADMIN_PASSWORD
           valueFrom:
             secretKeyRef:
               name: {{ .Values.Admin.Secret.ExternalName }}
-              key: admin_password
+              key: ss_password
         {{- end }}
         volumeMounts:
         - name: datadir
