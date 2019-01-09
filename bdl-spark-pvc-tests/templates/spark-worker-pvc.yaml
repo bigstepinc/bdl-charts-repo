@@ -1,6 +1,6 @@
 {{ $context := . }}
 
-{{ range $i := untilStep 0 1 2 }}
+{{ range $i := until (int .Values.Worker.Replicas) }}
 {{with $context}}
 apiVersion: v1
 kind: PersistentVolumeClaim

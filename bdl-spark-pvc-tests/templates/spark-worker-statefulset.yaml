@@ -151,11 +151,11 @@ spec:
       storageClassName: "{{ .Values.Worker.StorageClass }}"
       {{- end }}
       {{- end }}
-      selector:
-        matchLabels:
-          heritage: {{ .Release.Service | quote }}
-          release: {{ .Release.Name | quote }}
-          chart: {{ template "bdl-spark.chart" . }}
-          component: "{{ .Release.Name }}-{{ .Values.Worker.Component }}"
+      # selector:
+      #   matchLabels:
+      #     heritage: {{ .Release.Service | quote }}
+      #     release: {{ .Release.Name | quote }}
+      #     chart: {{ template "bdl-spark.chart" . }}
+      #     component: "{{ .Release.Name }}-{{ .Values.Worker.Component }}"
   podManagementPolicy: OrderedReady
   revisionHistoryLimit: 10
