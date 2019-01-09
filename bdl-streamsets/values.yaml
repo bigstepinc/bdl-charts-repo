@@ -16,7 +16,7 @@ Service:
 Ports:
   streamsets: 18630
 
-Storage: "1Gi"
+Storage: "30Gi"
 StorageClassUseDefault: true
 StorageClass: "-"
 

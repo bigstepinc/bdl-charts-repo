@@ -1,0 +1,161 @@
+apiVersion: apps/v1beta1
+kind: StatefulSet
+metadata:
+  name: {{ template "bdl-spark.worker.fullname" . }}
+  labels:
+    heritage: {{ .Release.Service | quote }}
+    release: {{ .Release.Name | quote }}
+    chart: {{ template "bdl-spark.chart" . }}
+    component: "{{ .Release.Name }}-{{ .Values.Worker.Component }}"
+spec:
+  serviceName: "{{ template "bdl-spark.worker.fullname" . }}"
+  replicas: {{ .Values.Worker.Replicas }}
+  updateStrategy:
+    type: OnDelete
+  selector:
+    matchLabels:
+      component: "{{ .Release.Name }}-{{ .Values.Worker.Component }}"
+  template:
+    metadata:
+      name: "{{ template "bdl-spark.worker.fullname" }}"
+      labels:
+        heritage: {{ .Release.Service | quote }}
+        release: {{ .Release.Name | quote }}
+        chart: {{ template "bdl-spark.chart" . }}
+        component: "{{ .Release.Name }}-{{ .Values.Worker.Component }}"
+    spec:
+      containers:
+      - name: "{{ template "bdl-spark.worker.fullname" . }}"
+        image: "{{ .Values.Worker.Image }}:{{ .Values.Worker.ImageTag }}"
+        imagePullPolicy: "{{ .Values.Worker.ImagePullPolicy }}"
+        terminationMessagePolicy: "File"
+        terminationMessagePath: "/dev/termination-log"
+        ports:
+        - name: worker-web-ui
+          containerPort: 8081
+          protocol: TCP
+        resources:
+{{ toYaml .Values.Worker.Resources | indent 10 }}
+        env:
+        - name: CORES
+          value: "{{ .Values.Env.CORES }}"
+        - name: DRIVER_CORES
+          value: "{{ .Values.Env.DRIVER_CORES }}"
+        - name: DRIVER_MEM
+          value: "{{ .Values.Env.DRIVER_MEM }}"
+        - name: LOCAL_DIR
+          value: {{ .Values.Worker.DataDir }}
+        - name: EX_CORES
+          value: "{{ .Values.Env.EX_CORES }}"
+        - name: EX_MEM
+          value: "{{ .Values.Env.EX_MEM }}"
+        - name: JAVA_DRIVER_OPTS
+          value: "{{ .Values.Env.JAVA_DRIVER_OPTS }}"
+        - name: MEM
+          value: "{{ .Values.Env.MEM }}"
+        - name: MODE
+          value: "worker"
+        - name: AUTH_METHOD
+          value: "{{ .Values.ObjStorage.Auth.Method }}"
+        {{- if (eq .Values.ObjStorage.Auth.Method "mock-basic") }}
+        - name: OBJ_STORAGE_USERNAME
+          value: "{{ .Values.ObjStorage.Auth.Username }}"
+        - name: OBJ_STORAGE_PASSWORD
+          value: "{{ .Values.ObjStorage.Auth.Password }}"
+        {{- else if (eq .Values.ObjStorage.Auth.Method "mock-apikey") }}
+        - name: AUTH_APIKEY
+          value: "{{ .Values.ObjStorage.Auth.ApiKey }}"
+        {{- else if (eq .Values.ObjStorage.Auth.Method "apikey") }}
+        - name: AUTH_APIKEY
+          value: "{{ .Values.ObjStorage.Auth.ApiKey }}"
+        - name: API_ENDPOINT
+          value: "{{ .Values.BDL.ApiEndpoint }}"
+        {{- end }}
+        - name: SPARK_MASTER_HOSTNAME
+          value: "{{ template "bdl-spark.master.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local"
+        - name: SPARK_MASTER_PORT
+          value: "7077"
+        - name: SPARK_WORKER_WEBUI_PORT
+          value: "8081"
+        {{- if .Values.DataBase.Enabled}}
+        - name: DB_TYPE
+          value: "{{ .Values.DataBase.Type }}"
+        {{- if (eq .Values.DataBase.Type "postgresql") }}
+        - name: POSTGRES_HOSTNAME
+          value: "{{ .Values.DataBase.Hostname }}"
+        - name: POSTGRES_PORT
+          value: "{{ .Values.DataBase.Port }}"
+        - name: DB_NAME
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Values.DataBase.CredentialsSecret }}
+              key: db_name
+        - name: DB_USER
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Values.DataBase.CredentialsSecret }}
+              key: db_user
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Values.DataBase.CredentialsSecret }}
+              key: db_password
+        {{- end }}
+        {{- end }}
+        {{- if .Values.Audit.Enabled }}
+        - name: AUDIT_ENABLED
+          value: "true"
+        - name: AUDIT_ELASTICSEARCH_URL
+          value: "{{ .Values.Audit.ESURL }}"
+        - name: AUDIT_ELASTICSEARCH_AUTH_TOKEN
+          value: "{{ .Values.Audit.ESAuthToken }}"
+        - name: AUDIT_MOCK_USERID
+          value: "{{ .Values.Audit.MockUserId }}"
+        {{- else }}
+        - name: AUDIT_ENABLED
+          value: "false"
+        {{- end }}
+        - name: SPARK_WAREHOUSE_DIR
+          value: "{{ .Values.ObjStorage.WarehouseDir }}"
+        volumeMounts:
+        # - name: data-dir
+        - name: "data"
+          mountPath: {{ .Values.Worker.DataDir }}
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+      dnsPolicy: ClusterFirst
+      securityContext: {}
+      schedulerName: default-scheduler
+      # volumes:
+      # - name: data-dir
+      #   persistentVolumeClaim:
+      #     claimName: "{{ template "bdl-spark.worker.fullname" . }}-data"
+  volumeClaimTemplates:
+  - metadata:
+      labels:
+        heritage: {{ .Release.Service | quote }}
+        release: {{ .Release.Name | quote }}
+        chart: {{ template "bdl-spark.chart" . }}
+        component: "{{ .Release.Name }}-{{ .Values.Worker.Component }}"
+      name: "data"
+    spec:
+      accessModes:
+      - "ReadWriteOnce"
+      resources:
+        requests:
+          storage: "{{ .Values.Worker.Storage }}"
+      {{- if (not .Values.Worker.StorageClassUseDefault) }}
+      {{- if (eq "-" .Values.Worker.StorageClass) }}
+      storageClassName: ""
+      {{- else }}
+      storageClassName: "{{ .Values.Worker.StorageClass }}"
+      {{- end }}
+      {{- end }}
+      selector:
+        matchLabels:
+          heritage: {{ .Release.Service | quote }}
+          release: {{ .Release.Name | quote }}
+          chart: {{ template "bdl-spark.chart" . }}
+          component: "{{ .Release.Name }}-{{ .Values.Worker.Component }}"
+  podManagementPolicy: OrderedReady
+  revisionHistoryLimit: 10
