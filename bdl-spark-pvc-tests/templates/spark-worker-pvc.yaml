@@ -1,7 +1,7 @@
 {{ $context := . }}
 
 {{ range $i := until (int .Values.Worker.Replicas) }}
-{{with $context}}
+{{ with $context }}
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
@@ -25,5 +25,8 @@ spec:
   storageClassName: "{{ .Values.Worker.StorageClass }}"
   {{- end }}
   {{- end }}
-  {{end}}
+{{- if (not (eq $i (int .Values.Worker.Replicas))) }}
+---
+{{- end }}
+{{ end }}
 {{ end }}
