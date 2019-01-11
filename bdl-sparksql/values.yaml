@@ -18,12 +18,12 @@ Master:
   Component: "spark-master"
   Replicas: 1
   Image: "bigstepinc/spark_bdl"
-  ImageTag: "2.4.0-1"
+  ImageTag: "2.4.0-4"
   ImagePullPolicy: "IfNotPresent"
   Resources: {}
   DataDir: "/bigstep/data-dir"
   ConfigMapDir: "/bigstep/config"
-  Storage: "1Gi"
+  Storage: "15Gi"
   StorageClassUseDefault: true
   StorageClass: "-"
   Service:
@@ -40,11 +40,11 @@ Worker:
   Component: "spark-worker"
   Replicas: 1
   Image: "bigstepinc/spark_bdl"
-  ImageTag: "2.4.0-1"
+  ImageTag: "2.4.0-4"
   ImagePullPolicy: "IfNotPresent"
   Resources: {}
   DataDir: "/bigstep/data-dir"
-  Storage: "1Gi"
+  Storage: "15Gi"
   StorageClassUseDefault: true
   StorageClass: "-"
   Service:
