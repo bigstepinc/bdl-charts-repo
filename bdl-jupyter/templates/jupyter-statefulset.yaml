@@ -36,6 +36,16 @@ spec:
           containerPort: 8888
           protocol: TCP
         env:
+        - name: DATAPOOL_NAME
+          value: "{{ .Values.BDL.DatapoolName }}"
+        - name: AUTH_METHOD
+          value: "{{ .Values.ObjStorage.Auth.Method }}"
+        {{- if (eq .Values.ObjStorage.Auth.Method "apikey") }}
+        - name: AUTH_APIKEY
+          value: "{{ .Values.ObjStorage.Auth.ApiKey }}"
+        - name: API_ENDPOINT
+          value: "{{ .Values.BDL.ApiEndpoint }}"
+        {{- end }}
         - name: MODE
           value: "jupyter"
         - name: NOTEBOOK_DIR

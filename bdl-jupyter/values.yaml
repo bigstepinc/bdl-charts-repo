@@ -2,9 +2,18 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
+BDL:
+  ApiEndpoint: ""
+  DatapoolName: ""
+
+ObjStorage:
+  Auth:
+    Method: "apikey"
+    ApiKey: ""
+
 Component: "jupyter"
 Image: "bigstepinc/jupyter_bdl"
-ImageTag: "2.4.0-1"
+ImageTag: "2.4.0-4"
 ImagePullPolicy: "IfNotPresent"
 Resources: {}
 DataDir: "/bigstep"
