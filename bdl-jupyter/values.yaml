@@ -12,6 +12,7 @@ ObjStorage:
     ApiKey: ""
 
 Component: "jupyter"
+Replicas: 1
 Image: "bigstepinc/jupyter_bdl"
 ImageTag: "2.4.0-4"
 ImagePullPolicy: "IfNotPresent"

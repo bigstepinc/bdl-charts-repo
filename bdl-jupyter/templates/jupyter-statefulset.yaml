@@ -9,8 +9,9 @@ metadata:
     component: "{{ .Release.Name }}-{{ .Values.Component }}"
 spec:
   serviceName: "{{ template "bdl-jupyter.fullname" . }}"
+  replicas: {{ .Values.Replicas }}
   updateStrategy:
-    type: OnDelete
+    type: RollingUpdate
   selector:
     matchLabels:
       heritage: {{ .Release.Service | quote }}

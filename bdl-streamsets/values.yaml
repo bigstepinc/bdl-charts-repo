@@ -3,6 +3,7 @@
 # Declare variables to be passed into your templates.
 
 Component: "streamsets"
+Replicas: 1
 Image: "bigstepinc/streamsets_bdl"
 ImageTag: "3.5.2-0"
 ImagePullPolicy: "IfNotPresent"
