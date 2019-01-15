@@ -9,6 +9,10 @@ Core:
   ImageTag: "latest"
   ImagePullPolicy: "IfNotPresent"
   Resources: {}
+  LogsDir: "/bigstep/logs-dir"
+  Storage: "15Gi"
+  StorageClassUseDefault: true
+  StorageClass: "-"
   Env:
     KAFKA_HEAP_OPTS: "-Xmx1G -Xms1G"
     KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: "3"
@@ -39,6 +43,10 @@ Zookeeper:
   ImageTag: "latest"
   ImagePullPolicy: "IfNotPresent"
   Resources: {}
+  DataDir: "/bigstep/data-dir"
+  Storage: "15Gi"
+  StorageClassUseDefault: true
+  StorageClass: "-"
   Env:
     JMXAUTH: "false"
     JMXDISABLE: "false"

@@ -1,0 +1,31 @@
+{{ $context := . }}
+
+{{ range $i := until (int .Values.Zookeeper.Replicas) }}
+{{ with $context }}
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: "data-{{ template "bdl-kafka.zookeeper.fullname" . }}-{{ $i }}"
+  labels:
+    heritage: {{ .Release.Service | quote }}
+    release: {{ .Release.Name | quote }}
+    chart: {{ template "bdl-kafka.chart" . }}
+    component: "{{ .Release.Name }}-{{ .Values.Zookeeper.Component }}"
+spec:
+  accessModes:
+  - "ReadWriteOnce"
+  resources:
+    requests:
+      storage: "{{ .Values.Zookeeper.Storage }}"
+  {{- if (not .Values.Zookeeper.StorageClassUseDefault) }}
+  {{- if (eq "-" .Values.Zookeeper.StorageClass) }}
+  storageClassName: ""
+  {{- else }}
+  storageClassName: "{{ .Values.Zookeeper.StorageClass }}"
+  {{- end }}
+  {{- end }}
+{{- if (not (eq $i (int .Values.Zookeeper.Replicas))) }}
+---
+{{- end }}
+{{ end }}
+{{ end }}

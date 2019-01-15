@@ -1,0 +1,31 @@
+{{ $context := . }}
+
+{{ range $i := until (int .Values.Core.Replicas) }}
+{{ with $context }}
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: "logs-{{ template "bdl-kafka.core.fullname" . }}-{{ $i }}"
+  labels:
+    heritage: {{ .Release.Service | quote }}
+    release: {{ .Release.Name | quote }}
+    chart: {{ template "bdl-kafka.chart" . }}
+    component: "{{ .Release.Name }}-{{ .Values.Core.Component }}"
+spec:
+  accessModes:
+  - "ReadWriteOnce"
+  resources:
+    requests:
+      storage: "{{ .Values.Core.Storage }}"
+  {{- if (not .Values.Core.StorageClassUseDefault) }}
+  {{- if (eq "-" .Values.Core.StorageClass) }}
+  storageClassName: ""
+  {{- else }}
+  storageClassName: "{{ .Values.Core.StorageClass }}"
+  {{- end }}
+  {{- end }}
+{{- if (not (eq $i (int .Values.Core.Replicas))) }}
+---
+{{- end }}
+{{ end }}
+{{ end }}

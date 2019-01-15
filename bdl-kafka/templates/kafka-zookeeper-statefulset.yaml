@@ -83,10 +83,33 @@ spec:
           value: "{{ .Values.Zookeeper.Env.ZK_SYNC_LIMIT }}"
         - name: ZK_TICK_TIME
           value: "{{ .Values.Zookeeper.Env.ZK_TICK_TIME }}"
+        - name: ZK_DATA_DIR
+          value: "{{ .Values.Zookeeper.DataDir }}"
+        volumeMounts:
+        - name: "data"
+          mountPath: {{ .Values.Zookeeper.DataDir }}
       dnsPolicy: ClusterFirst
       restartPolicy: Always
       terminationGracePeriodSeconds: 30
-      volumes:
-      - emptyDir: {}
-        name: data
+  volumeClaimTemplates:
+  - metadata:
+      labels:
+        heritage: {{ .Release.Service | quote }}
+        release: {{ .Release.Name | quote }}
+        chart: {{ template "bdl-kafka.chart" . }}
+        component: "{{ .Release.Name }}-{{ .Values.Zookeeper.Component }}"
+      name: "data"
+    spec:
+      accessModes:
+      - "ReadWriteOnce"
+      resources:
+        requests:
+          storage: "{{ .Values.Zookeeper.Storage }}"
+      {{- if (not .Values.Zookeeper.StorageClassUseDefault) }}
+      {{- if (eq "-" .Values.Zookeeper.StorageClass) }}
+      storageClassName: ""
+      {{- else }}
+      storageClassName: "{{ .Values.Zookeeper.StorageClass }}"
+      {{- end }}
+      {{- end }}
 
