@@ -128,9 +128,26 @@ spec:
       dnsPolicy: ClusterFirst
       securityContext: {}
       schedulerName: default-scheduler
-      volumes:
-      - name: data-dir
-        persistentVolumeClaim:
-          claimName: "{{ template "bdl-sparksql.master.fullname" . }}-data"
+  volumeClaimTemplates:
+  - metadata:
+      labels:
+        heritage: {{ .Release.Service | quote }}
+        release: {{ .Release.Name | quote }}
+        chart: {{ template "bdl-sparksql.chart" . }}
+        component: "{{ .Release.Name }}-{{ .Values.Master.Component }}"
+      name: "data"
+    spec:
+      accessModes:
+      - "ReadWriteOnce"
+      resources:
+        requests:
+          storage: "{{ .Values.Master.Storage }}"
+      {{- if (not .Values.Master.StorageClassUseDefault) }}
+      {{- if (eq "-" .Values.Master.StorageClass) }}
+      storageClassName: ""
+      {{- else }}
+      storageClassName: "{{ .Values.Master.StorageClass }}"
+      {{- end }}
+      {{- end }}
   podManagementPolicy: OrderedReady
   revisionHistoryLimit: 10

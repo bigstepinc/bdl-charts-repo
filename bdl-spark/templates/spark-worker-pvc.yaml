@@ -1,7 +1,11 @@
+{{ $context := . }}
+
+{{ range $i := until (int .Values.Worker.Replicas) }}
+{{ with $context }}
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: "{{ template "bdl-spark.worker.fullname" . }}-data"
+  name: "data-{{ template "bdl-spark.worker.fullname" . }}-{{ $i }}"
   labels:
     heritage: {{ .Release.Service | quote }}
     release: {{ .Release.Name | quote }}
@@ -20,3 +24,8 @@ spec:
   storageClassName: "{{ .Values.Worker.StorageClass }}"
   {{- end }}
   {{- end }}
+{{- if (not (eq $i (int .Values.Worker.Replicas))) }}
+---
+{{- end }}
+{{ end }}
+{{ end }}
