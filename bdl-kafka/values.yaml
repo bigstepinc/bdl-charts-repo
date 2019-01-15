@@ -9,7 +9,7 @@ Core:
   ImageTag: "latest"
   ImagePullPolicy: "IfNotPresent"
   Resources: {}
-  LogsDir: "/bigstep/logs-dir"
+  LogsDir: "/bigstep"
   Storage: "15Gi"
   StorageClassUseDefault: true
   StorageClass: "-"
@@ -43,7 +43,7 @@ Zookeeper:
   ImageTag: "latest"
   ImagePullPolicy: "IfNotPresent"
   Resources: {}
-  DataDir: "/bigstep/data-dir"
+  DataDir: "/bigstep"
   Storage: "15Gi"
   StorageClassUseDefault: true
   StorageClass: "-"
