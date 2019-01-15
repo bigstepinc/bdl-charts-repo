@@ -108,7 +108,7 @@ spec:
         - name: SPARK_WAREHOUSE_DIR
           value: "{{ .Values.ObjStorage.WarehouseDir }}"
         volumeMounts:
-        - name: data-dir
+        - name: data
           mountPath: {{ .Values.Worker.DataDir }}
       restartPolicy: Always
       terminationGracePeriodSeconds: 30
