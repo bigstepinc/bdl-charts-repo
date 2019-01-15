@@ -11,7 +11,7 @@ spec:
   serviceName: "{{ template "bdl-spark.master.fullname" . }}"
   replicas: {{ .Values.Master.Replicas }}
   updateStrategy:
-    type: OnDelete
+    type: RollingUpdate
   selector:
     matchLabels:
       component: "{{ .Release.Name }}-{{ .Values.Master.Component }}"
