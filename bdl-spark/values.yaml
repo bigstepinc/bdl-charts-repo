@@ -23,7 +23,7 @@ Master:
   Component: "spark-master"
   Replicas: 1
   Image: "bigstepinc/spark_bdl"
-  ImageTag: "2.4.0-4"
+  ImageTag: "2.4.0-5"
   ImagePullPolicy: "IfNotPresent"
   Resources: {}
   DataDir: "/bigstep/data-dir"
@@ -44,7 +44,7 @@ Worker:
   Component: "spark-worker"
   Replicas: 1
   Image: "bigstepinc/spark_bdl"
-  ImageTag: "2.4.0-4"
+  ImageTag: "2.4.0-5"
   ImagePullPolicy: "IfNotPresent"
   Resources: {}
   DataDir: "/bigstep/data-dir"
