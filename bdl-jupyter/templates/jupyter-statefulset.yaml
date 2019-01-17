@@ -37,8 +37,8 @@ spec:
           containerPort: 8888
           protocol: TCP
         env:
-        - name: DATAPOOL_NAME
-          value: "{{ .Values.BDL.DatapoolName }}"
+        - name: DATALAKE_ID
+          value: "{{ .Values.BDL.DatalakeId }}"
         - name: AUTH_METHOD
           value: "{{ .Values.ObjStorage.Auth.Method }}"
         {{- if (eq .Values.ObjStorage.Auth.Method "apikey") }}
