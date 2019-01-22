@@ -3,9 +3,9 @@ entries:
   bdl-jupyter:
   - apiVersion: v1
     appVersion: "1.0"
-    created: 2019-01-17T15:42:36.965714707+02:00
+    created: 2019-01-22T16:31:59.037978543+02:00
     description: Jupyter Chart for Bigstep Data Lake
-    digest: 162f4afc01b6faf5de79fc8f2066f3c074e5779e03fbdf52091ce5fdb1e2f3f9
+    digest: 34e182b365d28bc915cc15280a26dbe8de1c5ba5c3898c434dbec934a72279e5
     name: bdl-jupyter
     urls:
     - https://bigstepinc.github.io/bdl-charts-repo/bdl-jupyter-0.1.0.tgz
@@ -13,7 +13,7 @@ entries:
   bdl-kafka:
   - apiVersion: v1
     appVersion: "1.0"
-    created: 2019-01-17T15:42:36.966194089+02:00
+    created: 2019-01-22T16:31:59.043016573+02:00
     description: Kafka Chart for Bigstep Data Lake
     digest: 7323fd80b38afa5ab6acfa27c37d20529cafe21a9c7b2e7235e9eea20a94c363
     name: bdl-kafka
@@ -23,9 +23,9 @@ entries:
   bdl-postgresql:
   - apiVersion: v1
     appVersion: "1.0"
-    created: 2019-01-17T15:42:36.966556883+02:00
+    created: 2019-01-22T16:31:59.043363312+02:00
     description: PostgreSQL Chart for Bigstep Data Lake
-    digest: 67f019068b6b92947b4ac5207b387448da3d9a0f86b3eb53dcab398215e881c2
+    digest: 6b3b8da32b71e38c375489a95180a75c42d729b9e234e24c1659f51aeb97a737
     name: bdl-postgresql
     urls:
     - https://bigstepinc.github.io/bdl-charts-repo/bdl-postgresql-0.1.0.tgz
@@ -33,7 +33,7 @@ entries:
   bdl-spark:
   - apiVersion: v1
     appVersion: "1.0"
-    created: 2019-01-17T15:42:36.967427778+02:00
+    created: 2019-01-22T16:31:59.043990523+02:00
     description: Spark Chart for Bigstep Data Lake
     digest: 0c7d53059b21c0040e799e0842532a3559ae1f3a3a29140790c0bee59ba3c5aa
     name: bdl-spark
@@ -43,7 +43,7 @@ entries:
   bdl-sparksql:
   - apiVersion: v1
     appVersion: "1.0"
-    created: 2019-01-17T15:42:36.968147499+02:00
+    created: 2019-01-22T16:31:59.044584882+02:00
     description: SparkSQL Chart for Bigstep Data Lake
     digest: 95e6e410f9e9f013425cd29819f7f4d32f6eafa4fb6050cae6102c5d0ad594d7
     name: bdl-sparksql
@@ -53,11 +53,11 @@ entries:
   bdl-streamsets:
   - apiVersion: v1
     appVersion: "1.0"
-    created: 2019-01-17T15:42:36.968727002+02:00
+    created: 2019-01-22T16:31:59.044923069+02:00
     description: A Helm chart for Kubernetes
-    digest: 7d4e3c72b6a39845e4d71a2fd108dbc6a54ad3ba79b9a95b4a6c76c17592644f
+    digest: 5e4348b69be1beb461030c03dc4f80dff38acaeea4cc550d604d1995d849777a
     name: bdl-streamsets
     urls:
     - https://bigstepinc.github.io/bdl-charts-repo/bdl-streamsets-0.1.0.tgz
     version: 0.1.0
-generated: 2019-01-17T15:42:36.965051623+02:00
+generated: 2019-01-22T16:31:59.036622282+02:00

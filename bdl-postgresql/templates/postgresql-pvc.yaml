@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: {{ template "bdl-postgresql.fullname" . }}
+  name: "data-{{ template "bdl-postgresql.fullname" . }}"
   labels:
     heritage: {{ .Release.Service | quote }}
     release: {{ .Release.Name | quote }}

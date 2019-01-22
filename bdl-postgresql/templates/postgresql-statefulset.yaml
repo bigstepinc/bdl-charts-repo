@@ -87,6 +87,6 @@ spec:
       volumes:
         - name: datadir
           persistentVolumeClaim:
-            claimName: {{ template "bdl-postgresql.fullname" . }}
+            claimName: "data-{{ template "bdl-postgresql.fullname" . }}"
   podManagementPolicy: OrderedReady
   revisionHistoryLimit: 10

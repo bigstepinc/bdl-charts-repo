@@ -63,6 +63,6 @@ spec:
       volumes:
         - name: datadir
           persistentVolumeClaim:
-            claimName: {{ template "bdl-streamsets.fullname" . }}
+            claimName: "data-{{ template "bdl-streamsets.fullname" . }}"
     podManagementPolicy: OrderedReady
     revisionHistoryLimit: 10

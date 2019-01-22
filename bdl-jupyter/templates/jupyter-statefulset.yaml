@@ -75,6 +75,6 @@ spec:
       volumes:
       - name: datadir
         persistentVolumeClaim:
-          claimName: "{{ template "bdl-jupyter.fullname" . }}-data"
+          claimName: "data-{{ template "bdl-jupyter.fullname" . }}"
   podManagementPolicy: OrderedReady
   revisionHistoryLimit: 10
