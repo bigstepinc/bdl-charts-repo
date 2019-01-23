@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: sftp-proxy
+  labels:
+    heritage: {{ .Release.Service | quote }}
+    release: {{ .Release.Name | quote }}
+    chart: {{ template "bdl-sftp-proxy.chart" .}}
+    component: "{{ .Release.Name }}-{{ .Values.Component }}"
+data:
+  config.yaml: |
+    server:
+      port: 22
+    bdl:
+      apiEndpoint: "{{ .Values.ConfigMap.apiEndpoint }}"
+    fileSystem:
+      bucket: "{{ .Values.ConfigMap.bucket }}"

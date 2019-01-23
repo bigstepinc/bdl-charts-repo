@@ -1,0 +1,57 @@
+apiVersion: v1
+kind: Deployment
+metadata:
+  name: {{ template "bdl-sftp-proxy.fullname" . }}
+  labels:
+    heritage: {{ .Release.Service | quote }}
+    release: {{ .Release.Name | quote }}
+    chart: {{ template "bdl-sftp-proxy.chart" .}}
+    component: "{{ .Release.Name }}-{{ .Values.Component }}"
+spec:
+  serviceName: "{{ template "bdl-sftp-proxy.fullname" . }}"
+  replicas: {{ .Values.Replicas }}
+  strategy:
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      heritage: {{ .Release.Service | quote }}
+      release: {{ .Release.Name | quote }}
+      chart: {{ template "bdl-sftp-proxy.chart" .}}
+      component: "{{ .Release.Name }}-{{ .Values.Component }}"
+  template:
+    metadata:
+      labels:
+        heritage: {{ .Release.Service | quote }}
+        release: {{ .Release.Name | quote }}
+        chart: {{ template "bdl-sftp-proxy.chart" .}}
+        component: "{{ .Release.Name }}-{{ .Values.Component }}"
+    spec:
+      containers:
+      - name: "{{ template "bdl-sftp-proxy.fullname" . }}"
+        image: "{{ .Values.Image }}:{{ .Values.ImageTag }}"
+        imagePullPolicy: "{{ .Values.ImagePullPolicy }}"
+        terminationMessagePolicy: "File"
+        terminationMessagePath: "/dev/termination-log"
+        ports: 
+        - name: ssh-server
+          containerPort: 22
+          protocol: TCP
+        resource:
+{{ toYaml .Values.Resources | indent 10 }}
+        env:
+        - name: CONFIG_FILE_PATH
+          value: "{{ .Values.ConfigFile }}"
+        volumeMounts:
+        - name: config
+          mountPath: {{ .Values.DataDir }}
+          readOnly: true
+      volumes:
+      - name: config
+        configMap:
+          name: sftp-proxy
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+      dnsPolicy: ClusterFirst
+      securityContext: {}
+      schedularName: default-scheduler
+    revisionHistoryLimit: 10

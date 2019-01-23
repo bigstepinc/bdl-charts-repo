@@ -1,0 +1,23 @@
+# Default values for bdl-sftp-proxy.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+Component: "sftp-proxy"
+Replicas: 1
+Image: "bigstepinc/sftp-proxy"
+ImageTag: "0.1.0"
+ImagePullPolicy: "IfNotPresent"
+Resources: {}
+DataDir: "/etc/sftp-proxy"
+ConfigFile: "/etc/sftp-proxy/templates/sftp-proxy-configmap.yaml"
+
+ConfigMap:
+  apiEndpoint: "http://176.223.207.36:8765"
+  bucket: "bdl://devuiteam.first/"
+
+Ports:
+  sshserver: 22
+
+Service:
+  Enabled: true
+  Type: "LoadBalancer"
