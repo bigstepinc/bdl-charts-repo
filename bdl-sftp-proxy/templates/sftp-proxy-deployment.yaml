@@ -40,7 +40,7 @@ spec:
 {{ toYaml .Values.Resources | indent 10 }}
         env:
         - name: CONFIG_FILE_PATH
-          value: "{{ .Values.ConfigFile }}"
+          value: "{{ .Values.DataDir }}/config.yaml"
         volumeMounts:
         - name: config
           mountPath: {{ .Values.DataDir }}
