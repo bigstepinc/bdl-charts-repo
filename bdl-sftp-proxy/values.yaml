@@ -11,8 +11,8 @@ Resources: {}
 DataDir: "/etc/sftp-proxy"
 
 ConfigMap:
-  apiEndpoint: "http://176.223.207.36:8765"
-  bucket: "bdl://devuiteam.first/"
+  apiEndpoint: ""
+  bucket: ""
 
 Ports:
   sshserver: 22
