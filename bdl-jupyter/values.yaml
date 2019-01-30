@@ -40,7 +40,7 @@ Notebook:
     # ExternalName: ""
   Password: "notebook"
 
-  DataBase:
+DataBase:
   Enabled: false
   Type: ""
   Hostname: ""
