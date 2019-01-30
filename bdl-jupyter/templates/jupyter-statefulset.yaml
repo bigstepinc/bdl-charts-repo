@@ -47,10 +47,39 @@ spec:
         - name: API_ENDPOINT
           value: "{{ .Values.BDL.ApiEndpoint }}"
         {{- end }}
+        - name: SPARK_WAREHOUSE_DIR
+          value: "{{ .Values.ObjStorage.WarehouseDir }}"
+        - name: BDL_DEFAULT_PATH
+          value: "{{ .Values.ObjStorage.BdlDefaultPath }}"
         - name: MODE
           value: "jupyter"
         - name: NOTEBOOK_DIR
           value: {{ .Values.DataDir }}
+        {{- if .Values.DataBase.Enabled}}
+        - name: DB_TYPE
+          value: "{{ .Values.DataBase.Type }}"
+        {{- if (eq .Values.DataBase.Type "postgresql") }}
+        - name: POSTGRES_HOSTNAME
+          value: "{{ .Values.DataBase.Hostname }}"
+        - name: POSTGRES_PORT
+          value: "{{ .Values.DataBase.Port }}"
+        - name: DB_NAME
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Values.DataBase.CredentialsSecret }}
+              key: db_name
+        - name: DB_USER
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Values.DataBase.CredentialsSecret }}
+              key: db_user
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Values.DataBase.CredentialsSecret }}
+              key: db_password
+        {{- end }}
+        {{- end }}
         {{- if .Values.Notebook.Secret.Create }}
         - name: NOTEBOOK_PASSWORD
           valueFrom:
