@@ -107,8 +107,6 @@ spec:
         {{- end }}
         - name: SPARK_WAREHOUSE_DIR
           value: "{{ .Values.ObjStorage.WarehouseDir }}"
-        - name: BDL_DEFAULT_PATH
-          value: "{{ .Values.ObjStorage.BdlDefaultPath }}"
         volumeMounts:
         - name: data
           mountPath: {{ .Values.Worker.DataDir }}

@@ -11,7 +11,6 @@ ObjStorage:
     Username: "user-1"
     Password: "pass-1"
   WarehouseDir: ""
-  BdlDefaultPath: ""
   # Auth:
   #   Method: "apikey"
   #   ApiKey: "apikey-1-asdf"
@@ -24,10 +23,11 @@ Master:
   Component: "spark-master"
   Replicas: 1
   Image: "bigstepinc/spark_bdl"
-  ImageTag: "2.4.0-6"
+  ImageTag: "2.4.0-5"
   ImagePullPolicy: "IfNotPresent"
   Resources: {}
-  DataDir: "/lentiq/data-dir"
+  DataDir: "/bigstep/data-dir"
+  ConfigMapDir: "/bigstep/config"
   Storage: "15Gi"
   StorageClassUseDefault: true
   StorageClass: "-"
@@ -44,10 +44,10 @@ Worker:
   Component: "spark-worker"
   Replicas: 1
   Image: "bigstepinc/spark_bdl"
-  ImageTag: "2.4.0-6"
+  ImageTag: "2.4.0-5"
   ImagePullPolicy: "IfNotPresent"
   Resources: {}
-  DataDir: "/lentiq/data-dir"
+  DataDir: "/bigstep/data-dir"
   Storage: "15Gi"
   StorageClassUseDefault: true
   StorageClass: "-"
