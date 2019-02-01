@@ -25,6 +25,22 @@ spec:
         component: "{{ .Release.Name }}-{{ .Values.Master.Component }}"
     spec:
       containers:
+      - name: "{{ template "bdl-spark.master.fullname" . }}-ui-proxy"
+        image: "elsonrodriguez/spark-ui-proxy"
+        imageTag: "1.0"
+        ports:
+          - container: 80
+        resources:
+          requests:
+            cpu: 100m
+        args:
+          - "{{ template "bdl-spark.master.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local:8080"
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 80
+          initialDelaySeconds: 120
+          timeoutSeconds: 5
       - name: "{{ template "bdl-spark.master.fullname" . }}"
         image: "{{ .Values.Master.Image }}:{{ .Values.Master.ImageTag }}"
         imagePullPolicy: "{{ .Values.Master.ImagePullPolicy }}"
