@@ -29,7 +29,7 @@ spec:
         image: "elsonrodriguez/spark-ui-proxy"
         imageTag: "1.0"
         ports:
-        - name: master-web-ui-proxy
+        - name: ui-proxy
           containerPort: 80
           protocol: TCP
         resources:
