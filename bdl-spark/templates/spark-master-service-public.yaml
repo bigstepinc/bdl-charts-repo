@@ -26,15 +26,15 @@ spec:
   {{- end }}
   ports:
   - name: spark-app-ui
-    port: {{ .Values.Master.Ports.sparkAppUI }}
+    port: {{ .Values.Master.Spark.Ports.sparkAppUI }}
     targetPort: 4040
     protocol: TCP
   - name: ui-proxy
-    port: {{ .Values.Master.Ports.masterWebUI }}
+    port: {{ .Values.Master.UIProxy.Ports.masterWebUIProxy }}
     targetPort: 80
     protocol: TCP
   - name: spark-master
-    port: {{ .Values.Master.Ports.sparkMaster }}
+    port: {{ .Values.Master.Spark.Ports.sparkMaster }}
     targetPort: 7077
     protocol: TCP
   selector:

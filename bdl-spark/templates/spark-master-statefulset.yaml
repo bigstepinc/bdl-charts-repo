@@ -26,18 +26,13 @@ spec:
     spec:
       containers:
       - name: "{{ template "bdl-spark.master.fullname" . }}-ui-proxy"
-        image: "elsonrodriguez/spark-ui-proxy:1.0"
+        image: "{{ .Values.Master.UIProxy.Image }}:{{ .Values.Master.UIProxy.ImageTag }}"
         ports:
         - name: ui-proxy
           containerPort: 80
           protocol: TCP
         resources:
-          limits:
-            cpu: 0.1
-            memory: 0.1Gi
-          requests:
-            cpu: 0.1
-            memory: 0.1Gi
+{{ toYaml .Values.Master.UIProxy.Resources | indent 10 }}
         args:
           - "{{ template "bdl-spark.master.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local:8080"
         livenessProbe:
@@ -47,8 +42,8 @@ spec:
           initialDelaySeconds: 120
           timeoutSeconds: 5
       - name: "{{ template "bdl-spark.master.fullname" . }}"
-        image: "{{ .Values.Master.Image }}:{{ .Values.Master.ImageTag }}"
-        imagePullPolicy: "{{ .Values.Master.ImagePullPolicy }}"
+        image: "{{ .Values.Master.Spark.Image }}:{{ .Values.Master.Spark.ImageTag }}"
+        imagePullPolicy: "{{ .Values.Master.Spark.ImagePullPolicy }}"
         terminationMessagePolicy: "File"
         terminationMessagePath: "/dev/termination-log"
         ports:
@@ -62,10 +57,10 @@ spec:
           containerPort: 7077
           protocol: TCP
         resources:
-{{ toYaml .Values.Master.Resources | indent 10 }}
+{{ toYaml .Values.Master.Spark.Resources | indent 10 }}
         env:
         - name: LOCAL_DIR
-          value: {{ .Values.Master.DataDir }}
+          value: {{ .Values.Master.Spark.DataDir }}
         - name: CORES
           value: "{{ .Values.Env.CORES }}"
         - name: DRIVER_CORES
@@ -152,7 +147,7 @@ spec:
           value: "{{ .Values.ObjStorage.BdlDefaultPath }}"
         volumeMounts:
         - name: data
-          mountPath: {{ .Values.Master.DataDir }}
+          mountPath: {{ .Values.Master.Spark.DataDir }}
       restartPolicy: Always
       terminationGracePeriodSeconds: 30
       dnsPolicy: ClusterFirst
@@ -171,12 +166,12 @@ spec:
       - "ReadWriteOnce"
       resources:
         requests:
-          storage: "{{ .Values.Master.Storage }}"
-      {{- if (not .Values.Master.StorageClassUseDefault) }}
-      {{- if (eq "-" .Values.Master.StorageClass) }}
+          storage: "{{ .Values.Master.Spark.Storage }}"
+      {{- if (not .Values.Master.Spark.StorageClassUseDefault) }}
+      {{- if (eq "-" .Values.Master.Spark.StorageClass) }}
       storageClassName: ""
       {{- else }}
-      storageClassName: "{{ .Values.Master.StorageClass }}"
+      storageClassName: "{{ .Values.Master.Spark.StorageClass }}"
       {{- end }}
       {{- end }}
   podManagementPolicy: OrderedReady
