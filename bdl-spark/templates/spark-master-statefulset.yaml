@@ -26,15 +26,20 @@ spec:
     spec:
       containers:
       - name: "{{ template "bdl-spark.master.fullname" . }}-ui-proxy"
-        image: "elsonrodriguez/spark-ui-proxy"
-        imageTag: "1.0"
+        image: "elsonrodriguez/spark-ui-proxy:1.0"
         ports:
         - name: ui-proxy
           containerPort: 80
           protocol: TCP
         resources:
           requests:
-            cpu: 100m
+          limits:
+            cpu: 0.1
+            memory: 0.1Gi
+          requests:
+            cpu: 0.1
+            memory: 0.1Gi
+
         args:
           - "{{ template "bdl-spark.master.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local:8080"
         livenessProbe:
