@@ -3,7 +3,7 @@ entries:
   bdl-jupyter:
   - apiVersion: v1
     appVersion: "1.0"
-    created: 2019-02-01T14:53:50.835984199+02:00
+    created: 2019-02-01T15:27:10.200257577+02:00
     description: Jupyter Chart for Bigstep Data Lake
     digest: 1af8a09b5a5041ffb145404139c9cf29cff1ab383fdbd5bc584c5f13f81d8a96
     name: bdl-jupyter
@@ -13,7 +13,7 @@ entries:
   bdl-kafka:
   - apiVersion: v1
     appVersion: "1.0"
-    created: 2019-02-01T14:53:50.837342993+02:00
+    created: 2019-02-01T15:27:10.201473361+02:00
     description: Kafka Chart for Bigstep Data Lake
     digest: 7323fd80b38afa5ab6acfa27c37d20529cafe21a9c7b2e7235e9eea20a94c363
     name: bdl-kafka
@@ -23,7 +23,7 @@ entries:
   bdl-postgresql:
   - apiVersion: v1
     appVersion: "1.0"
-    created: 2019-02-01T14:53:50.838604851+02:00
+    created: 2019-02-01T15:27:10.202247025+02:00
     description: PostgreSQL Chart for Bigstep Data Lake
     digest: 6b3b8da32b71e38c375489a95180a75c42d729b9e234e24c1659f51aeb97a737
     name: bdl-postgresql
@@ -33,7 +33,7 @@ entries:
   bdl-sftp-proxy:
   - apiVersion: v1
     appVersion: "1.0"
-    created: 2019-02-01T14:53:50.839007598+02:00
+    created: 2019-02-01T15:27:10.2034306+02:00
     description: A Sftp Proxy Chart for Bigstep Data Lake
     digest: 1c6b520a11851ee5aae18953d2ac5acc18b7ea01208dcb13bd2d965cd6359370
     name: bdl-sftp-proxy
@@ -43,16 +43,16 @@ entries:
   bdl-spark:
   - apiVersion: v1
     appVersion: "1.0"
-    created: 2019-02-01T14:53:50.840429035+02:00
+    created: 2019-02-01T15:27:10.208025515+02:00
     description: Spark Chart for Bigstep Data Lake
-    digest: fe0cb703bb8cf01e86b74e94ca30f4a6b5eea66d57b518fb3a07bd64eb0a95fd
+    digest: acd0938f1499caad621da1e7269df2abd2a8ec0ff8afefbc7aebd694799fae7e
     name: bdl-spark
     urls:
     - https://bigstepinc.github.io/bdl-charts-repo/bdl-spark-0.3.0.tgz
     version: 0.3.0
   - apiVersion: v1
     appVersion: "1.0"
-    created: 2019-02-01T14:53:50.839888525+02:00
+    created: 2019-02-01T15:27:10.206488692+02:00
     description: Spark Chart for Bigstep Data Lake
     digest: 21dbe1e508f91b1ba3c45ff655def795bc28a0d762ca172c9fbff366fd78f0e2
     name: bdl-spark
@@ -61,7 +61,7 @@ entries:
     version: 0.2.0
   - apiVersion: v1
     appVersion: "1.0"
-    created: 2019-02-01T14:53:50.839467094+02:00
+    created: 2019-02-01T15:27:10.20489536+02:00
     description: Spark Chart for Bigstep Data Lake
     digest: 0c7d53059b21c0040e799e0842532a3559ae1f3a3a29140790c0bee59ba3c5aa
     name: bdl-spark
@@ -71,7 +71,7 @@ entries:
   bdl-sparksql:
   - apiVersion: v1
     appVersion: "1.0"
-    created: 2019-02-01T14:53:50.841471388+02:00
+    created: 2019-02-01T15:27:10.211008832+02:00
     description: SparkSQL Chart for Bigstep Data Lake
     digest: d86c3ca487a449c8f3e98778769b8f00184482e8922731522fa773534691b2ae
     name: bdl-sparksql
@@ -80,7 +80,7 @@ entries:
     version: 0.2.0
   - apiVersion: v1
     appVersion: "1.0"
-    created: 2019-02-01T14:53:50.840890414+02:00
+    created: 2019-02-01T15:27:10.209528255+02:00
     description: SparkSQL Chart for Bigstep Data Lake
     digest: 95e6e410f9e9f013425cd29819f7f4d32f6eafa4fb6050cae6102c5d0ad594d7
     name: bdl-sparksql
@@ -90,11 +90,11 @@ entries:
   bdl-streamsets:
   - apiVersion: v1
     appVersion: "1.0"
-    created: 2019-02-01T14:53:50.841941414+02:00
+    created: 2019-02-01T15:27:10.212128992+02:00
     description: A Helm chart for Kubernetes
     digest: 5e4348b69be1beb461030c03dc4f80dff38acaeea4cc550d604d1995d849777a
     name: bdl-streamsets
     urls:
     - https://bigstepinc.github.io/bdl-charts-repo/bdl-streamsets-0.1.0.tgz
     version: 0.1.0
-generated: 2019-02-01T14:53:50.834457437+02:00
+generated: 2019-02-01T15:27:10.199090771+02:00
