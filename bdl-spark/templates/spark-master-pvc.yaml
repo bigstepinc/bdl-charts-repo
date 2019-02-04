@@ -16,12 +16,12 @@ spec:
   - "ReadWriteOnce"
   resources:
     requests:
-      storage: "{{ .Values.Master.Spark.Storage }}"
-  {{- if (not .Values.Master.Spark.StorageClassUseDefault) }}
-  {{- if (eq "-" .Values.Master.Spark.StorageClass) }}
+      storage: "{{ .Values.Master.Storage }}"
+  {{- if (not .Values.Master.StorageClassUseDefault) }}
+  {{- if (eq "-" .Values.Master.StorageClass) }}
   storageClassName: ""
   {{- else }}
-  storageClassName: "{{ .Values.Master.Spark.StorageClass }}"
+  storageClassName: "{{ .Values.Master.StorageClass }}"
   {{- end }}
   {{- end }}
 {{- if (not (eq $i (int .Values.Master.Replicas))) }}

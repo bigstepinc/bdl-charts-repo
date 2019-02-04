@@ -42,8 +42,8 @@ spec:
           initialDelaySeconds: 120
           timeoutSeconds: 5
       - name: "{{ template "bdl-spark.master.fullname" . }}"
-        image: "{{ .Values.Master.Spark.Image }}:{{ .Values.Master.Spark.ImageTag }}"
-        imagePullPolicy: "{{ .Values.Master.Spark.ImagePullPolicy }}"
+        image: "{{ .Values.Master.Image }}:{{ .Values.Master.ImageTag }}"
+        imagePullPolicy: "{{ .Values.Master.ImagePullPolicy }}"
         terminationMessagePolicy: "File"
         terminationMessagePath: "/dev/termination-log"
         ports:
@@ -57,10 +57,10 @@ spec:
           containerPort: 7077
           protocol: TCP
         resources:
-{{ toYaml .Values.Master.Spark.Resources | indent 10 }}
+{{ toYaml .Values.Master.Resources | indent 10 }}
         env:
         - name: LOCAL_DIR
-          value: {{ .Values.Master.Spark.DataDir }}
+          value: {{ .Values.Master.DataDir }}
         - name: CORES
           value: "{{ .Values.Env.CORES }}"
         - name: DRIVER_CORES
@@ -147,7 +147,7 @@ spec:
           value: "{{ .Values.ObjStorage.BdlDefaultPath }}"
         volumeMounts:
         - name: data
-          mountPath: {{ .Values.Master.Spark.DataDir }}
+          mountPath: {{ .Values.Master.DataDir }}
       restartPolicy: Always
       terminationGracePeriodSeconds: 30
       dnsPolicy: ClusterFirst
@@ -166,12 +166,12 @@ spec:
       - "ReadWriteOnce"
       resources:
         requests:
-          storage: "{{ .Values.Master.Spark.Storage }}"
-      {{- if (not .Values.Master.Spark.StorageClassUseDefault) }}
-      {{- if (eq "-" .Values.Master.Spark.StorageClass) }}
+          storage: "{{ .Values.Master.Storage }}"
+      {{- if (not .Values.Master.StorageClassUseDefault) }}
+      {{- if (eq "-" .Values.Master.StorageClass) }}
       storageClassName: ""
       {{- else }}
-      storageClassName: "{{ .Values.Master.Spark.StorageClass }}"
+      storageClassName: "{{ .Values.Master.StorageClass }}"
       {{- end }}
       {{- end }}
   podManagementPolicy: OrderedReady

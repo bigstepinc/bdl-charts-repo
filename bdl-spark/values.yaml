@@ -23,20 +23,19 @@ ObjStorage:
 Master:
   Component: "spark-master"
   Replicas: 1
-  Spark:
-    Image: "bigstepinc/spark_bdl"
-    ImageTag: "2.4.0-6"
-    ImagePullPolicy: "IfNotPresent"
-    Resources: {}
-    DataDir: "/lentiq/data-dir"
-    Storage: "15Gi"
-    StorageClassUseDefault: true
-    StorageClass: "-"
-    Ports:
-      sparkAppUI: 4040
-      sparkMaster: 7077
+  Image: "bigstepinc/spark_bdl"
+  ImageTag: "2.4.0-6"
+  ImagePullPolicy: "IfNotPresent"
+  Resources: {}
+  DataDir: "/lentiq/data-dir"
+  Storage: "15Gi"
+  StorageClassUseDefault: true
+  StorageClass: "-"
+  Ports:
+    sparkAppUI: 4040
+    sparkMaster: 7077
   UIProxy:
-    Image: "elsonrodriguez/spark-ui-proxy"
+    Image: "bigstepinc/spark_ui_proxy_bdl"
     ImageTag: "1.0"
     ImagePullPolicy: "IfNotPresent"
     Resources: {}
