@@ -25,6 +25,22 @@ spec:
         component: "{{ .Release.Name }}-{{ .Values.Master.Component }}"
     spec:
       containers:
+      - name: "{{ template "bdl-sparksql.master.fullname" . }}-ui-proxy"
+        image: "{{ .Values.Master.UIProxy.Image }}:{{ .Values.Master.UIProxy.ImageTag }}"
+        ports:
+        - name: ui-proxy
+          containerPort: 80
+          protocol: TCP
+        resources:
+{{ toYaml .Values.Master.UIProxy.Resources | indent 10 }}
+        args:
+          - "{{ template "bdl-sparksql.master.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local:8080"
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 80
+          initialDelaySeconds: 120
+          timeoutSeconds: 5
       - name: "{{ template "bdl-sparksql.master.fullname" . }}"
         image: "{{ .Values.Master.Image }}:{{ .Values.Master.ImageTag }}"
         imagePullPolicy: "{{ .Values.Master.ImagePullPolicy }}"

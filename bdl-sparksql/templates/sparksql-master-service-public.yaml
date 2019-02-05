@@ -29,9 +29,9 @@ spec:
     port: {{ .Values.Master.Ports.sparkAppUI }}
     targetPort: 4040
     protocol: TCP
-  - name: master-web-ui
-    port: {{ .Values.Master.Ports.masterWebUI }}
-    targetPort: 8080
+  - name: ui-proxy
+    port: {{ .Values.Master.UIProxy.Ports.masterWebUIProxy }}
+    targetPort: 80
     protocol: TCP
   - name: spark-master
     port: {{ .Values.Master.Ports.sparkMaster }}

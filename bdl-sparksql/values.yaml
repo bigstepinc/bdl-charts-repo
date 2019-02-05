@@ -26,14 +26,20 @@ Master:
   Storage: "15Gi"
   StorageClassUseDefault: true
   StorageClass: "-"
+  Ports:
+    sparkAppUI: 4040
+    sparkMaster: 7077
+    thrift: 10000
+  UIProxy:
+    Image: "bigstepinc/spark_ui_proxy_bdl"
+    ImageTag: "1.0"
+    ImagePullPolicy: "IfNotPresent"
+    Resources: {}
+    Ports:
+      masterWebUIProxy: 80
   Service:
     Enabled: true
     Type: "LoadBalancer"
-  Ports:
-    sparkAppUI: 4040
-    masterWebUI: 8080
-    sparkMaster: 7077
-    thrift: 10000
 
 
 Worker:
