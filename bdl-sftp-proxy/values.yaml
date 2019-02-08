@@ -6,7 +6,7 @@ Component: "sftp-proxy"
 Replicas: 1
 Image: "bigstepinc/sftp-proxy"
 ImageTag: "0.1.4"
-ImagePullPolicy: "Always"
+ImagePullPolicy: "IfNotPresent"
 Resources: {}
 DataDir: "/etc/sftp-proxy"
 
