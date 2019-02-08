@@ -3,7 +3,7 @@ entries:
   bdl-jupyter:
   - apiVersion: v1
     appVersion: "1.0"
-    created: 2019-02-08T15:51:10.699124275+02:00
+    created: 2019-02-08T18:27:30.80364002+02:00
     description: Jupyter Chart for Bigstep Data Lake
     digest: ae5fecd2f407c2af81bd39d4b7f87c759252ccf740aca5625a0b24f9074114a1
     name: bdl-jupyter
@@ -12,7 +12,7 @@ entries:
     version: 0.1.1
   - apiVersion: v1
     appVersion: "1.0"
-    created: 2019-02-08T15:51:10.697938768+02:00
+    created: 2019-02-08T18:27:30.802464495+02:00
     description: Jupyter Chart for Bigstep Data Lake
     digest: 1af8a09b5a5041ffb145404139c9cf29cff1ab383fdbd5bc584c5f13f81d8a96
     name: bdl-jupyter
@@ -22,7 +22,7 @@ entries:
   bdl-kafka:
   - apiVersion: v1
     appVersion: "1.0"
-    created: 2019-02-08T15:51:10.702312571+02:00
+    created: 2019-02-08T18:27:30.806583176+02:00
     description: Kafka Chart for Bigstep Data Lake
     digest: a9ec66cc8ef5a752fce1c131ee89e72ba8b17bea763c366b8de4fca59e340f7b
     name: bdl-kafka
@@ -31,7 +31,7 @@ entries:
     version: 0.1.1
   - apiVersion: v1
     appVersion: "1.0"
-    created: 2019-02-08T15:51:10.700801259+02:00
+    created: 2019-02-08T18:27:30.805164502+02:00
     description: Kafka Chart for Bigstep Data Lake
     digest: 7323fd80b38afa5ab6acfa27c37d20529cafe21a9c7b2e7235e9eea20a94c363
     name: bdl-kafka
@@ -41,7 +41,7 @@ entries:
   bdl-postgresql:
   - apiVersion: v1
     appVersion: "1.0"
-    created: 2019-02-08T15:51:10.704495839+02:00
+    created: 2019-02-08T18:27:30.807485478+02:00
     description: PostgreSQL Chart for Bigstep Data Lake
     digest: 61498d6f5bb2bf7082e94364b8d03b30a9c40e3f3ef6915b842feaa6732afc06
     name: bdl-postgresql
@@ -50,7 +50,7 @@ entries:
     version: 0.1.1
   - apiVersion: v1
     appVersion: "1.0"
-    created: 2019-02-08T15:51:10.703369982+02:00
+    created: 2019-02-08T18:27:30.807004402+02:00
     description: PostgreSQL Chart for Bigstep Data Lake
     digest: 6b3b8da32b71e38c375489a95180a75c42d729b9e234e24c1659f51aeb97a737
     name: bdl-postgresql
@@ -60,16 +60,16 @@ entries:
   bdl-sftp-proxy:
   - apiVersion: v1
     appVersion: "1.0"
-    created: 2019-02-08T15:51:10.705463082+02:00
+    created: 2019-02-08T18:27:30.809522258+02:00
     description: A Sftp Proxy Chart for Bigstep Data Lake
-    digest: 1bb98ab91741a2d36a72625a98bca9406f3eb40cd7ad9000f599c194f4c567da
+    digest: 5d23aefa7ca9f7ff57b50080bc0b5e1e54a29f23ca6a172e697b22b6f1fafa9b
     name: bdl-sftp-proxy
     urls:
     - https://bigstepinc.github.io/bdl-charts-repo/bdl-sftp-proxy-0.1.1.tgz
     version: 0.1.1
   - apiVersion: v1
     appVersion: "1.0"
-    created: 2019-02-08T15:51:10.705044396+02:00
+    created: 2019-02-08T18:27:30.808507963+02:00
     description: A Sftp Proxy Chart for Bigstep Data Lake
     digest: 1c6b520a11851ee5aae18953d2ac5acc18b7ea01208dcb13bd2d965cd6359370
     name: bdl-sftp-proxy
@@ -79,7 +79,7 @@ entries:
   bdl-spark:
   - apiVersion: v1
     appVersion: "1.0"
-    created: 2019-02-08T15:51:10.707237993+02:00
+    created: 2019-02-08T18:27:30.811569972+02:00
     description: Spark Chart for Bigstep Data Lake
     digest: 62d2cdc5b396ff5a71b14c9479a05b74eb60de31bc0e5aa098d7cddfe01a4ea1
     name: bdl-spark
@@ -88,7 +88,7 @@ entries:
     version: 0.3.0
   - apiVersion: v1
     appVersion: "1.0"
-    created: 2019-02-08T15:51:10.706659227+02:00
+    created: 2019-02-08T18:27:30.811069148+02:00
     description: Spark Chart for Bigstep Data Lake
     digest: 21dbe1e508f91b1ba3c45ff655def795bc28a0d762ca172c9fbff366fd78f0e2
     name: bdl-spark
@@ -97,7 +97,7 @@ entries:
     version: 0.2.0
   - apiVersion: v1
     appVersion: "1.0"
-    created: 2019-02-08T15:51:10.706066414+02:00
+    created: 2019-02-08T18:27:30.810407085+02:00
     description: Spark Chart for Bigstep Data Lake
     digest: 0c7d53059b21c0040e799e0842532a3559ae1f3a3a29140790c0bee59ba3c5aa
     name: bdl-spark
@@ -107,7 +107,7 @@ entries:
   bdl-sparksql:
   - apiVersion: v1
     appVersion: "1.0"
-    created: 2019-02-08T15:51:10.710396743+02:00
+    created: 2019-02-08T18:27:30.81761612+02:00
     description: SparkSQL Chart for Bigstep Data Lake
     digest: b6069bb790a2acbbae4db59261a5933841fe988473c126e2d5707d09aaba4dc0
     name: bdl-sparksql
@@ -116,7 +116,7 @@ entries:
     version: 0.3.0
   - apiVersion: v1
     appVersion: "1.0"
-    created: 2019-02-08T15:51:10.709844251+02:00
+    created: 2019-02-08T18:27:30.81663013+02:00
     description: SparkSQL Chart for Bigstep Data Lake
     digest: b399eb33d11acdbb00897d4e95a9314231baaabfeded114f56f438d49738ce27
     name: bdl-sparksql
@@ -125,7 +125,7 @@ entries:
     version: 0.2.1
   - apiVersion: v1
     appVersion: "1.0"
-    created: 2019-02-08T15:51:10.70920259+02:00
+    created: 2019-02-08T18:27:30.814176852+02:00
     description: SparkSQL Chart for Bigstep Data Lake
     digest: d86c3ca487a449c8f3e98778769b8f00184482e8922731522fa773534691b2ae
     name: bdl-sparksql
@@ -134,7 +134,7 @@ entries:
     version: 0.2.0
   - apiVersion: v1
     appVersion: "1.0"
-    created: 2019-02-08T15:51:10.707833734+02:00
+    created: 2019-02-08T18:27:30.812854577+02:00
     description: SparkSQL Chart for Bigstep Data Lake
     digest: 95e6e410f9e9f013425cd29819f7f4d32f6eafa4fb6050cae6102c5d0ad594d7
     name: bdl-sparksql
@@ -144,7 +144,7 @@ entries:
   bdl-streamsets:
   - apiVersion: v1
     appVersion: "1.0"
-    created: 2019-02-08T15:51:10.711434768+02:00
+    created: 2019-02-08T18:27:30.819055529+02:00
     description: A Helm chart for Kubernetes
     digest: 68232f3e47505bcc54f5dcb356592883642084257ba850a5d95eaa7617318e4c
     name: bdl-streamsets
@@ -153,11 +153,11 @@ entries:
     version: 0.1.1
   - apiVersion: v1
     appVersion: "1.0"
-    created: 2019-02-08T15:51:10.71094898+02:00
+    created: 2019-02-08T18:27:30.818321474+02:00
     description: A Helm chart for Kubernetes
     digest: 5e4348b69be1beb461030c03dc4f80dff38acaeea4cc550d604d1995d849777a
     name: bdl-streamsets
     urls:
     - https://bigstepinc.github.io/bdl-charts-repo/bdl-streamsets-0.1.0.tgz
     version: 0.1.0
-generated: 2019-02-08T15:51:10.696090364+02:00
+generated: 2019-02-08T18:27:30.800857069+02:00
