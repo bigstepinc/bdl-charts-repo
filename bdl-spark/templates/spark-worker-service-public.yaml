@@ -22,7 +22,7 @@ spec:
   {{- end }}
   {{- if .Values.Worker.Service.loadBalancerSourceRanges }}
   loadBalancerSourceRanges:
-  {{ toYaml .Values.Worker.Service.loadBalancerSourceRanges | indent 4 }}
+  {{ toJson .Values.Worker.Service.loadBalancerSourceRanges | indent 4 }}
   {{- end }}
   ports:
   - name: worker-web-ui

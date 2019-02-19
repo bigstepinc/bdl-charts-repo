@@ -22,7 +22,7 @@ spec:
   {{- end }}
   {{- if .Values.Master.Service.loadBalancerSourceRanges }}
   loadBalancerSourceRanges:
-  {{ toYaml .Values.Master.Service.loadBalancerSourceRanges | indent 4 }}
+  {{ toJson .Values.Master.Service.loadBalancerSourceRanges | indent 4 }}
   {{- end }}
   ports:
   - name: ui-proxy

@@ -22,7 +22,7 @@ spec:
   {{- end }}
   {{- if .Values.Manager.Service.loadBalancerSourceRanges }}
   loadBalancerSourceRanges:
-  {{ toYaml .Values.Manager.Service.loadBalancerSourceRanges | indent 4 }}
+  {{ toJson .Values.Manager.Service.loadBalancerSourceRanges | indent 4 }}
   {{- end }}
   ports:
   - name: kafka-manager
