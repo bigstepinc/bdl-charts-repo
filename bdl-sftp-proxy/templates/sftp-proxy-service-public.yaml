@@ -22,7 +22,7 @@ spec:
   {{- end }}
   {{- if .Values.Service.loadBalancerSourceRanges }}
   loadBalancerSourceRanges:
-  {{ toYaml .Values.Service.loadBalancerSourceRanges | indent 4 }}
+  {{ toJson .Values.Service.loadBalancerSourceRanges | indent 4 }}
   {{- end }}
   ports:
   - name: ssh-server
