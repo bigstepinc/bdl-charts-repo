@@ -50,6 +50,11 @@ spec:
               name: {{ .Values.Admin.Secret.ExternalName }}
               key: ss_password
         {{- end }}
+        securityContext:
+          capabilities:
+            add:
+            - IPC_LOCK
+            - SYS_RESOURCE
         volumeMounts:
         - name: datadir
           mountPath: {{ .Values.DataDir }}
