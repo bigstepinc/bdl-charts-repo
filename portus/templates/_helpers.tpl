@@ -21,6 +21,11 @@ We truncate at 63 chars because some Kubernetes name fields are limited to this 
 {{- printf "%s-%s-%s" .Release.Name $name "registry" | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
+{{- define "nginx.fullname" -}}
+{{- $name := default .Chart.Name .Values.nameOverride -}}
+{{- printf "%s-%s-%s" .Release.Name $name "nginx" | trunc 63 | trimSuffix "-" -}}
+{{- end -}}
+
 {{- define "mariadb.fullname" -}}
 {{- printf "%s-%s" .Release.Name "mariadb" | trunc 63 | trimSuffix "-" -}}
 {{- end -}}

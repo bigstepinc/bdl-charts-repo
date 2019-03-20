@@ -9,23 +9,23 @@ metadata:
     heritage: {{ .Release.Service }}
 data:
   {{- if .Values.portus.tls.enabled }}
-  REGISTRY_AUTH_TOKEN_REALM: {{ printf "https://%s:%d/v2/token" (include "portus.fullname" .) (int .Values.portus.service.port) | quote }}
+  REGISTRY_AUTH_TOKEN_REALM: {{ printf "https://%s:%d/v2/token" (.Values.nginx.host | default (printf "%s" (include "nginx.fullname" .))) (int .Values.nginx.service.port) | quote }}
   REGISTRY_AUTH_TOKEN_SERVICE: {{ printf "%s:%s" (include "registry.fullname" .) .Values.registry.service.port | quote }}
   REGISTRY_AUTH_TOKEN_ISSUER: {{ template "portus.fullname" . }}
   REGISTRY_HTTP_TLS_KEY: "/certificates/portus.key"
   REGISTRY_HTTP_TLS_CERTIFICATE: "/certificates/portus.crt"
   REGISTRY_AUTH_TOKEN_ROOTCERTBUNDLE: "/certificates/portus.crt"
   {{- else }}
-  REGISTRY_AUTH_SILLY_REALM: {{ printf "http://%s:%d/v2/token" (include "portus.fullname" .) (int (.Values.registry.service.nodePort | default .Values.portus.service.port)) | quote }}
+  REGISTRY_AUTH_SILLY_REALM: {{ printf "http://%s:%d/v2/token" (.Values.nginx.host | default (printf "%s" (include "nginx.fullname" .))) (int (.Values.registry.service.nodePort | default .Values.nginx.service.port)) | quote }}
   REGISTRY_AUTH_SILLY_SERVICE: {{ printf "%s:%s" (include "registry.fullname" .) .Values.registry.service.port | quote }}
   {{- end }}
 
   REGISTRY_NOTIFICATIONS_ENDPOINTS: >
-    - name: portus
+    - name: nginx
       {{- if .Values.portus.tls.enabled }}
-      url: https://{{ template "portus.fullname" . }}/v2/webhooks/events
+      url: https://{{ template "nginx.fullname" . }}/v2/webhooks/events
       {{- else }}
-      url: http://{{ template "portus.fullname" . }}/v2/webhooks/events
+      url: http://{{ template "nginx.fullname" . }}/v2/webhooks/events
       {{- end }}
       timeout: 2000ms
       threshold: 5
