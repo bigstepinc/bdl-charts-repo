@@ -240,40 +240,40 @@ registry:
 ## Default values for Nginx.
 ##
 nginx:
-  replicas: 1
+#  replicas: 1
 
   ## image configuration.
   ##
-  image:
-    repository: "library/nginx"
-    tag: "alpine"
-    pullPolicy: "IfNotPresent"
+ # image:
+  #  repository: "library/nginx"
+   # tag: "alpine"
+    #pullPolicy: "IfNotPresent"
 
   ## Service configuration.
   ##
   service:
     ## Set to ClusterIP if using ingress, or NodePort if using minikube
     ##
-    type: "ClusterIP"
+   # type: "ClusterIP"
 
     port:
     # nodePort:
 
     ## Annotation to be added to the service
     ##
-    annotations:
+    #annotations:
     #   kubernetes.io/ingress.class: "nginx"
 
   ## in order to access the docker registry from outside of the cluster
   ## if ingress is enabled set host to the domain you are using
   ## if NodePort is being used set host to the ip address of a cluster node
   ##
-  # host:
+  host:
 
   ## ingress configuration.
   ##
-  ingress:
-    enabled: false
+ # ingress:
+  #  enabled: false
 
     ## Anntations to be added to the web ingress
     ##
@@ -295,10 +295,10 @@ nginx:
 
   ## Resource configuration.
   ##
-  resources:
-    requests:
-      memory: "512Mi"
-      cpu: "300m"
+  #resources:
+   # requests:
+    #  memory: "512Mi"
+     # cpu: "300m"
 
 ## Default values for Mariadb.
 ##
