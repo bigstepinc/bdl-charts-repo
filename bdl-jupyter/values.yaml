@@ -5,6 +5,7 @@
 BDL:
   ApiEndpoint: ""
   DatalakeId: ""
+  ProjectName: ""
 
 
 ObjStorage:
@@ -17,7 +18,7 @@ ObjStorage:
 Component: "jupyter"
 Replicas: 1
 Image: "bigstepinc/jupyter_bdl"
-ImageTag: "2.4.0-7"
+ImageTag: "2.4.0-8"
 ImagePullPolicy: "IfNotPresent"
 Resources: {}
 DataDir: "/bigstep"
