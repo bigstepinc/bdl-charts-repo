@@ -39,6 +39,8 @@ spec:
         env:
         - name: DATALAKE_ID
           value: "{{ .Values.BDL.DatalakeId }}"
+        - name: PROJECT
+          value: "{{ .Values.BDL.ProjectName }}"
         - name: AUTH_METHOD
           value: "{{ .Values.ObjStorage.Auth.Method }}"
         {{- if (eq .Values.ObjStorage.Auth.Method "apikey") }}

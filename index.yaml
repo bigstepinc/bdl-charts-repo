@@ -2,7 +2,7 @@ apiVersion: v1
 entries:
   argo:
   - apiVersion: v1
-    created: 2019-03-21T12:57:59.633039794+02:00
+    created: 2019-03-21T12:10:52.017118956+02:00
     description: A Helm chart for Kubernetes
     digest: 75cfea17a21ba374493b570276924a11213af1e9a2ad675dad1fd07ab76dc4ab
     name: argo
@@ -14,7 +14,7 @@ entries:
     appVersion: "1.0"
     created: 2019-03-21T12:57:59.634463891+02:00
     description: Jupyter Chart for Bigstep Data Lake
-    digest: a5336b4b40eaa2ab641e0fb88ed9e5284fc0aa015724c5bfdfcf5f535102004c
+    digest: b93d9f1e5e44f20d0b300a74123392bb26feb3c69237d9aad0e6789c0c9c1f0e
     name: bdl-jupyter
     urls:
     - https://bigstepinc.github.io/bdl-charts-repo/bdl-jupyter-0.1.1.tgz
