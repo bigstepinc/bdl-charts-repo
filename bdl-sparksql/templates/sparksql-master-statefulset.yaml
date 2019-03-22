@@ -141,17 +141,17 @@ spec:
         volumeMounts:
         - name: data
           mountPath: {{ .Values.Master.DataDir }}
-         livenessProbe:
-           exec:
-             command:
-             - /opt/spark-2.4.0-bin-hadoop2.7/bin/beeline
-             - -u"jdbc:hive2://localhost:10000/default"
-             - -e"show tables"
-           failureThreshold: 5
-           initialDelaySeconds: 30
-           periodSeconds: 15
-           successThreshold: 1
-           timeoutSeconds: 15
+        livenessProbe:
+          exec:
+            command:
+            - /opt/spark-2.4.0-bin-hadoop2.7/bin/beeline
+            - -u"jdbc:hive2://localhost:10000/default"
+            - -e"show tables"
+          failureThreshold: 5
+          initialDelaySeconds: 30
+          periodSeconds: 15
+          successThreshold: 1
+          timeoutSeconds: 15
       restartPolicy: Always
       terminationGracePeriodSeconds: 30
       dnsPolicy: ClusterFirst
