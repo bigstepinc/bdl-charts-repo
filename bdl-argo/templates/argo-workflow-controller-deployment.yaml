@@ -13,10 +13,11 @@ spec:
   strategy:
     type: RollingUpdate
   selector:
-    heritage: {{ .Release.Service | quote }}
-    release: {{ .Release.Name | quote }}
-    chart: {{ template "bdl-argo.chart" .}}
-    component: "{{ .Release.Name }}-{{ .Values.WorkflowController.Component }}"
+    matchLabels:
+      heritage: {{ .Release.Service | quote }}
+      release: {{ .Release.Name | quote }}
+      chart: {{ template "bdl-argo.chart" .}}
+      component: "{{ .Release.Name }}-{{ .Values.WorkflowController.Component }}"
   template:
     metadata:
       labels:
