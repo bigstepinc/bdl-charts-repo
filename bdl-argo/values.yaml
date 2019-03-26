@@ -1,0 +1,41 @@
+# Default values for bdl-argo.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+UI:
+  Component: "argo-ui"
+  Replicas: 1
+  Image: "argoproj/argoui"
+  ImageTag: "v2.2.1"
+  ImagePullPolicy: "IfNotPresent"
+  Resources: {}
+  Ports:
+    ui: 80
+  Service:
+    Enabled: true
+    Type: "LoadBalancer"
+  ServiceAccount:
+    Name: "argo-ui"
+    Create: false
+
+WorkflowController:
+  Component: "argo-workflow-controller"
+  Replicas: 1
+  Image: "argoproj/workflow-controller"
+  ImageTag: "v2.2.1"
+  ImagePullPolicy: "IfNotPresent"
+  Resources: {}
+  ServiceAccount:
+    Name: "argo"
+    Create: false
+  logging:
+    level: info
+    globallevel: "0"
+  instanceID:
+    # `instanceID.enabled` configures the controller to filter workflow submissions
+    # to only those which have a matching instanceID attribute.
+    enabled: false
+    # NOTE: If `instanceID.enabled` is set to `true` then either `instanceID.userReleaseName`
+    # or `instanceID.explicitID` must be defined.
+    # useReleaseName: true
+    # explicitID: unique-argo-controller-identifier

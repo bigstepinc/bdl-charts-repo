@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ template "bdl-argo.ui.fullname" . }}
+  labels:
+    heritage: {{ .Release.Service | quote }}
+    release: {{ .Release.Name | quote }}
+    chart: {{ template "bdl-argo.chart" . }}
+    component: "{{ .Release.Name }}-{{ .Values.UI.Component }}"
+spec:
+  serviceName: "{{ template "bdl-argo.ui.fullname" . }}"
+  replicas: {{ .Values.UI.Replicas }}
+  strategy:
+    type: RollingUpdate
+  selector:
+    heritage: {{ .Release.Service | quote }}
+    release: {{ .Release.Name | quote }}
+    chart: {{ template "bdl-argo.chart" . }}
+    component: "{{ .Release.Name }}-{{ .Values.UI.Component }}"
+  template:
+    metadata:
+      labels:
+        heritage: {{ .Release.Service | quote }}
+        release: {{ .Release.Name | quote }}
+        chart: {{ template "bdl-argo.chart" . }}
+        component: "{{ .Release.Name }}-{{ .Values.UI.Component }}"
+    spec:
+      serviceAccountName: "{{ template "bdl-argo.ui.fullname" . }}-{{ .Values.UI.ServiceAccount.Name }}"
+      containers:
+        - name: " {{ template "bdl-argo.ui.fullname" . }}"
+          image: "{{ .Values.UI.Image }}:{{ .Values.UI.ImageTag }}"
+          env:
+          - name: IN_CLUSTER
+            value: "true"
+          - name: ARGO_NAMESPACE
+            valueFrom:
+              fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+          - name: BASE_HREF
+            value: /
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+      dnsPolicy: ClusterFirst
+      securityContext: {}
+      schedularName: default-scheduler
+    revisionHistoryLimit: 10

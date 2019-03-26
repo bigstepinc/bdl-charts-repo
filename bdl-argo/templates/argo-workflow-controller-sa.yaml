@@ -1,0 +1,6 @@
+{{- if .Values.WorkflowController.ServiceAccount.Create }}
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: "{{ template "bdl-argo.workflow-controller.fullname" . }}-{{ .Values.WorkflowController.ServiceAccount.Name }}"
+{{- end }}
