@@ -33,7 +33,7 @@ spec:
           command: [ "workflow-controller" ]
           args:
           - "--configmap"
-          - "{{ .Release.Name }}-{{ .Values.WorkflowController.name}}-configmap"
+          - "{{ .Release.Name }}-{{ .Values.WorkflowController.Name}}-configmap"
           - "--executor-image"
           - "{{ .Values.WorkflowController.Image }}:{{ .Values.WorkflowController.ImageTag }}"
           - "--loglevel"
