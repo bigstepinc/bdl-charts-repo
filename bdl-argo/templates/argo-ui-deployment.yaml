@@ -27,7 +27,7 @@ spec:
     spec:
       serviceAccountName: "{{ template "bdl-argo.ui.fullname" . }}-{{ .Values.UI.ServiceAccount.Name }}"
       containers:
-        - name: " {{ template "bdl-argo.ui.fullname" . }}"
+        - name: "{{ template "bdl-argo.ui.fullname" . }}"
           image: "{{ .Values.UI.Image }}:{{ .Values.UI.ImageTag }}"
           env:
           - name: IN_CLUSTER
