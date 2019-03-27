@@ -35,7 +35,7 @@ spec:
           - "--configmap"
           - "{{ template "bdl-argo.workflow-controller.fullname" . }}-configmap"
           - "--executor-image"
-          - "{{ .Values.WorkflowController.Image }}:{{ .Values.WorkflowController.ImageTag }}"
+          - "{{ .Values.WorkflowController.Executor.Image }}:{{ .Values.WorkflowController.Executor.ImageTag }}"
           - "--loglevel"
           - "{{ .Values.WorkflowController.logging.level }}"
           - "--gloglevel"

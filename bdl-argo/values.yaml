@@ -28,6 +28,9 @@ WorkflowController:
   ServiceAccount:
     Name: "argo"
     Create: false
+  Executor:
+    Image: "argoproj/argoexec"
+    ImageTag: "v2.2.1"
   logging:
     level: info
     globallevel: "0"
