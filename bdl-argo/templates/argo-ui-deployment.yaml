@@ -28,18 +28,20 @@ spec:
     spec:
       serviceAccountName: "{{ template "bdl-argo.ui.fullname" . }}-{{ .Values.UI.ServiceAccount.Name }}"
       containers:
-        - name: "{{ template "bdl-argo.ui.fullname" . }}"
-          image: "{{ .Values.UI.Image }}:{{ .Values.UI.ImageTag }}"
-          env:
-          - name: IN_CLUSTER
-            value: "true"
-          - name: ARGO_NAMESPACE
-            valueFrom:
-              fieldRef:
-                apiVersion: v1
-                fieldPath: metadata.namespace
-          - name: BASE_HREF
-            value: /
+      - name: "{{ template "bdl-argo.ui.fullname" . }}"
+        image: "{{ .Values.UI.Image }}:{{ .Values.UI.ImageTag }}"
+        env:
+        - name: IN_CLUSTER
+          value: "true"
+        - name: ARGO_NAMESPACE
+          valueFrom:
+            fieldRef:
+              apiVersion: v1
+              fieldPath: metadata.namespace
+        - name: BASE_HREF
+          value: /
+        resource:
+{{ toYaml .Values.UI.Resources | indent 10 }}
       restartPolicy: Always
       terminationGracePeriodSeconds: 30
       dnsPolicy: ClusterFirst

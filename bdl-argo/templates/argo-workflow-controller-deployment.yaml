@@ -28,24 +28,26 @@ spec:
     spec:
       serviceAccountName: "{{ template "bdl-argo.workflow-controller.fullname" . }}-{{ .Values.WorkflowController.ServiceAccount.Name }}"
       containers:
-        - name: controller
-          image: "{{ .Values.WorkflowController.Image }}:{{ .Values.WorkflowController.ImageTag }}"
-          command: [ "workflow-controller" ]
-          args:
-          - "--configmap"
-          - "{{ template "bdl-argo.workflow-controller.fullname" . }}-configmap"
-          - "--executor-image"
-          - "{{ .Values.WorkflowController.Executor.Image }}:{{ .Values.WorkflowController.Executor.ImageTag }}"
-          - "--loglevel"
-          - "{{ .Values.WorkflowController.logging.level }}"
-          - "--gloglevel"
-          - "{{ .Values.WorkflowController.logging.globallevel }}"
-          env:
-          - name: ARGO_NAMESPACE
-            valueFrom:
-              fieldRef:
-                apiVersion: v1
-                fieldPath: metadata.namespace
+      - name: controller
+        image: "{{ .Values.WorkflowController.Image }}:{{ .Values.WorkflowController.ImageTag }}"
+        command: [ "workflow-controller" ]
+        args:
+        - "--configmap"
+        - "{{ template "bdl-argo.workflow-controller.fullname" . }}-configmap"
+        - "--executor-image"
+        - "{{ .Values.WorkflowController.Executor.Image }}:{{ .Values.WorkflowController.Executor.ImageTag }}"
+        - "--loglevel"
+        - "{{ .Values.WorkflowController.logging.level }}"
+        - "--gloglevel"
+        - "{{ .Values.WorkflowController.logging.globallevel }}"
+        env:
+        - name: ARGO_NAMESPACE
+          valueFrom:
+            fieldRef:
+              apiVersion: v1
+              fieldPath: metadata.namespace
+        resource:
+{{ toYaml .Values.WorkflowController.Resources | indent 10 }}
       restartPolicy: Always
       terminationGracePeriodSeconds: 30
       dnsPolicy: ClusterFirst
