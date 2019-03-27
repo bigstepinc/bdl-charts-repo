@@ -5,8 +5,8 @@
 UI:
   Component: "argo-ui"
   Replicas: 1
-  Image: "argoproj/argoui"
-  ImageTag: "v2.2.1"
+  Image: "docker.io/bigstepinc/argoui"
+  ImageTag: "2.2.1-0"
   ImagePullPolicy: "IfNotPresent"
   Resources: {}
   Ports:
@@ -21,16 +21,16 @@ UI:
 WorkflowController:
   Component: "argo-workflow-controller"
   Replicas: 1
-  Image: "argoproj/workflow-controller"
-  ImageTag: "v2.2.1"
+  Image: "docker.io/bigstepinc/workflow-controller"
+  ImageTag: "2.2.1-0"
   ImagePullPolicy: "IfNotPresent"
   Resources: {}
   ServiceAccount:
     Name: "argo"
     Create: false
   Executor:
-    Image: "argoproj/argoexec"
-    ImageTag: "v2.2.1"
+    Image: "docker.io/bigstepinc/argoexec"
+    ImageTag: "2.2.1-0"
   logging:
     level: info
     globallevel: "0"
