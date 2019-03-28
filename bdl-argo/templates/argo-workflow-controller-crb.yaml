@@ -9,14 +9,14 @@ roleRef:
   name: {{ template "bdl-argo.workflow-controller.fullname" . }}-cluster-role
 subjects:
   - kind: ServiceAccount
-    name: "{{ template "bdl-argo.workflow-controller.fullname" . }}-{{ .Values.WorkflowController.ServiceAccount.Name }}"
+    name: "{{ template "bdl-argo.workflow-controller.fullname" . }}-{{ .Values.WorkflowController.ServiceAccount.NameBase }}"
     namespace: {{ .Release.Namespace }}
 {{- if .Values.WorkflowController.workflowNamespaces }}
 {{- $namespace := .Release.Namespace }}
 {{- range $key := .Values.WorkflowController.workflowNamespaces }}
   {{- if not (eq $key $namespace) }}
   - kind: ServiceAccount
-    name: "{{ template "bdl-argo.workflow-controller.fullname" . }}-{{ .Values.WorkflowController.ServiceAccount.Name }}"
+    name: "{{ template "bdl-argo.workflow-controller.fullname" . }}-{{ .Values.WorkflowController.ServiceAccount.NameBase }}"
     namespace: {{ $key }}
   {{- end }}
 {{- end }}

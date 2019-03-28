@@ -15,7 +15,7 @@ UI:
     Enabled: true
     Type: "LoadBalancer"
   ServiceAccount:
-    Name: "argo-ui"
+    NameBase: "argo-ui"
     Create: false
 
 WorkflowController:
@@ -26,7 +26,7 @@ WorkflowController:
   ImagePullPolicy: "IfNotPresent"
   Resources: {}
   ServiceAccount:
-    Name: "argo"
+    NameBase: "argo"
     Create: false
   Executor:
     Image: "docker.io/bigstepinc/argoexec"

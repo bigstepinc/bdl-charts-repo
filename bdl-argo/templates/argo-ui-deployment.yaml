@@ -26,7 +26,7 @@ spec:
         chart: {{ template "bdl-argo.chart" . }}
         component: "{{ .Release.Name }}-{{ .Values.UI.Component }}"
     spec:
-      serviceAccountName: "{{ template "bdl-argo.ui.fullname" . }}-{{ .Values.UI.ServiceAccount.Name }}"
+      serviceAccountName: "{{ template "bdl-argo.ui.fullname" . }}-{{ .Values.UI.ServiceAccount.NameBase }}"
       containers:
       - name: "{{ template "bdl-argo.ui.fullname" . }}"
         image: "{{ .Values.UI.Image }}:{{ .Values.UI.ImageTag }}"

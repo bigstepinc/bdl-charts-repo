@@ -9,6 +9,6 @@ roleRef:
   name: {{ template "bdl-argo.ui.fullname" . }}-cluster-role
 subjects:
 - kind: ServiceAccount
-  name: "{{ template "bdl-argo.ui.fullname" . }}-{{ .Values.UI.ServiceAccount.Name }}"
+  name: "{{ template "bdl-argo.ui.fullname" . }}-{{ .Values.UI.ServiceAccount.NameBase }}"
   namespace: {{ .Release.Namespace }}
 {{- end }}
