@@ -27,7 +27,7 @@ spec:
   ports:
   - name: mleap
     port: {{ .Values.Ports.mleap }}
-    targetPort: 8888
+    targetPort: 65327
     protocol: TCP
   selector:
     heritage: {{ .Release.Service | quote }}
