@@ -4,7 +4,7 @@
 
 Component: "mleap"
 Replicas: 1
-Image: "bigstepinc/mleap"
+Image: "bigstepinc/mleap_bdl"
 ImageTag: "latest"
 ImagePullPolicy: "IfNotPresent"
 Resources: {}
