@@ -1,0 +1,37 @@
+{{- if .Values.Service.Enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ template "bdl-mleap.fullname" . }}-public
+  labels:
+    heritage: {{ .Release.Service | quote }}
+    release: {{ .Release.Name | quote }}
+    chart: {{ template "bdl-mleap.chart" .}}
+    component: "{{ .Release.Name }}-{{ .Values.Component }}"
+spec:
+  type: {{ .Values.Service.Type }}
+  {{- if .Values.Service.clusterIP }}
+  clusterIP: {{ .Values.Service.clusterIP }}
+  {{- end }}
+  {{- if .Values.Service.externalIPs }}
+  externalIPs:
+  {{ toYaml .Values.Service.externalIPs | indent 4 }}
+  {{- end }}
+  {{- if .Values.Service.loadBalancerIP }}
+  loadBalancerIP: {{ .Values.Service.loadBalancerIP }}
+  {{- end }}
+  {{- if .Values.Service.loadBalancerSourceRanges }}
+  loadBalancerSourceRanges:
+  {{ toJson .Values.Service.loadBalancerSourceRanges | indent 4 }}
+  {{- end }}
+  ports:
+  - name: mleap
+    port: {{ .Values.Ports.mleap }}
+    targetPort: 8888
+    protocol: TCP
+  selector:
+    heritage: {{ .Release.Service | quote }}
+    release: {{ .Release.Name | quote }}
+    chart: {{ template "bdl-mleap.chart" . }}
+    component: "{{ .Release.Name }}-{{ .Values.Component }}"
+{{- end }}
