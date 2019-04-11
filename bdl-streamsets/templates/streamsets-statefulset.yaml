@@ -32,7 +32,7 @@ spec:
         - name: streamsets
           containerPort: 18630
           protocol: TCP
-        resource:
+        resources:
 {{ toYaml .Values.Resources | indent 10 }}
         env:
         - name: CONTAINER_DIR

@@ -9,12 +9,22 @@ entries:
     urls:
     - https://bigstepinc.github.io/bdl-charts-repo/argo-0.3.1.tgz
     version: 0.3.1
+  bdl-argo:
+  - apiVersion: v1
+    appVersion: "1.0"
+    created: 2019-04-11T16:17:00.297990656+03:00
+    description: A Helm chart for Kubernetes
+    digest: 54026133481ae9c6430b08de42b96b1dea7f1cdb7e0f74e617731fa671d53dce
+    name: bdl-argo
+    urls:
+    - https://bigstepinc.github.io/bdl-charts-repo/bdl-argo-0.1.0.tgz
+    version: 0.1.0
   bdl-jupyter:
   - apiVersion: v1
     appVersion: "1.0"
     created: 2019-04-11T16:59:55.46644686+03:00
     description: Jupyter Chart for Bigstep Data Lake
-    digest: b93d9f1e5e44f20d0b300a74123392bb26feb3c69237d9aad0e6789c0c9c1f0e
+    digest: e9078b742054ac2e033752c6baf64249ccd1c86985aedc3da133a4d8d82de24a
     name: bdl-jupyter
     urls:
     - https://bigstepinc.github.io/bdl-charts-repo/bdl-jupyter-0.1.1.tgz
@@ -56,6 +66,15 @@ entries:
     name: bdl-kaniko
     urls:
     - https://bigstepinc.github.io/bdl-charts-repo/bdl-kaniko-0.1.0.tgz
+  bdl-mleap:
+  - apiVersion: v1
+    appVersion: "1.0"
+    created: 2019-04-11T16:17:00.299439664+03:00
+    description: Mleap Chart for Lentiq
+    digest: b3e59718c63e66e921fce21942a7ee7e573c5de435ac11b5b5871d3bd312f4b0
+    name: bdl-mleap
+    urls:
+    - https://bigstepinc.github.io/bdl-charts-repo/bdl-mleap-0.1.0.tgz
     version: 0.1.0
   bdl-postgresql:
   - apiVersion: v1
@@ -81,7 +100,7 @@ entries:
     appVersion: "1.0"
     created: 2019-04-11T16:59:55.472283653+03:00
     description: A Sftp Proxy Chart for Bigstep Data Lake
-    digest: 767744e963e3ed07ea1ba0db9fe411398c4ea9202b3c6be05f9966a7f6b7f429
+    digest: ce5fae8ad38ee339cda9b28889bc64f42429994a225a67cced5c4217a13d400a
     name: bdl-sftp-proxy
     urls:
     - https://bigstepinc.github.io/bdl-charts-repo/bdl-sftp-proxy-0.1.1.tgz
@@ -128,7 +147,7 @@ entries:
     appVersion: "1.0"
     created: 2019-04-11T16:59:55.478190051+03:00
     description: SparkSQL Chart for Bigstep Data Lake
-    digest: c365c1f828967a71cd98b90bcc636388fa4f351b7c51140fd5add03dd5368f4d
+    digest: 774c684a7e94408b5594c429f0d4462678e028f3026e5a505b55baaeb261dbdd
     name: bdl-sparksql
     urls:
     - https://bigstepinc.github.io/bdl-charts-repo/bdl-sparksql-0.3.0.tgz
@@ -165,7 +184,7 @@ entries:
     appVersion: "1.0"
     created: 2019-04-11T16:59:55.479781852+03:00
     description: A Helm chart for Kubernetes
-    digest: 93da9d900bd4239d9a9544a7b189ccb76fc83653e5311d3ad0685a709dc18f74
+    digest: 1bbda7bc8dff669be10f280819aaaceafc97e45938bf3f80c73a84e50c794920
     name: bdl-streamsets
     urls:
     - https://bigstepinc.github.io/bdl-charts-repo/bdl-streamsets-0.1.1.tgz

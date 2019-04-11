@@ -1,8 +1,8 @@
-{{- if .Values.controller.serviceAccountCreate }}
+{{- if .Values.WorkflowController.ServiceAccount.Create }}
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
-  name: {{ .Release.Name }}-{{ .Values.controller.name}}-cluster-role
+  name: {{ template "bdl-argo.workflow-controller.fullname" . }}-cluster-role
 rules:
 - apiGroups:
   - ""

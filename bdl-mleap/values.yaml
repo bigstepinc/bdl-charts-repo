@@ -1,0 +1,30 @@
+# Default values for bdl-mleap
+# This is a YAML-formatted file.
+# Declare variables to be passed into your template.
+
+Component: "mleap"
+Replicas: 1
+Image: "bigstepinc/mleap_bdl"
+ImageTag: "latest"
+ImagePullPolicy: "IfNotPresent"
+Resources: {}
+
+Service:
+  Enabled: true
+  Type: "LoadBalancer"
+
+Ports:
+  mleap: 65327
+
+ObjStorage:
+  Auth:
+    Method: "apikey"
+    ApiKey: ""
+  BdlDefaultPath: ""
+
+BDL:
+  ApiEndpoint: ""
+  DatalakeId: ""
+  ProjectName: ""
+
+ModelPath: ""

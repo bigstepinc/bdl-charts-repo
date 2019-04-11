@@ -1,0 +1,6 @@
+{{- if .Values.UI.ServiceAccount.Create }}
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: "{{ template "bdl-argo.ui.fullname" . }}-{{ .Values.UI.ServiceAccount.NameBase }}"
+{{- end }}

@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ template "bdl-argo.workflow-controller.fullname" . }}
+  labels:
+    heritage: {{ .Release.Service | quote }}
+    release: {{ .Release.Name | quote }}
+    chart: {{ template "bdl-argo.chart" .}}
+    component: "{{ .Release.Name }}-{{ .Values.WorkflowController.Component }}"
+spec:
+  serviceName: "{{ template "bdl-argo.workflow-controller.fullname" . }}"
+  replicas: {{ .Values.WorkflowController.Replicas }}
+  strategy:
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      heritage: {{ .Release.Service | quote }}
+      release: {{ .Release.Name | quote }}
+      chart: {{ template "bdl-argo.chart" .}}
+      component: "{{ .Release.Name }}-{{ .Values.WorkflowController.Component }}"
+  template:
+    metadata:
+      labels:
+        heritage: {{ .Release.Service | quote }}
+        release: {{ .Release.Name | quote }}
+        chart: {{ template "bdl-argo.chart" .}}
+        component: "{{ .Release.Name }}-{{ .Values.WorkflowController.Component }}"
+    spec:
+      serviceAccountName: "{{ template "bdl-argo.workflow-controller.fullname" . }}-{{ .Values.WorkflowController.ServiceAccount.NameBase }}"
+      containers:
+      - name: controller
+        image: "{{ .Values.WorkflowController.Image }}:{{ .Values.WorkflowController.ImageTag }}"
+        command: [ "workflow-controller" ]
+        args:
+        - "--configmap"
+        - "{{ template "bdl-argo.workflow-controller.fullname" . }}-configmap"
+        - "--executor-image"
+        - "{{ .Values.WorkflowController.Executor.Image }}:{{ .Values.WorkflowController.Executor.ImageTag }}"
+        - "--loglevel"
+        - "{{ .Values.WorkflowController.logging.level }}"
+        - "--gloglevel"
+        - "{{ .Values.WorkflowController.logging.globallevel }}"
+        env:
+        - name: ARGO_NAMESPACE
+          valueFrom:
+            fieldRef:
+              apiVersion: v1
+              fieldPath: metadata.namespace
+        resources:
+{{ toYaml .Values.WorkflowController.Resources | indent 10 }}
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+      dnsPolicy: ClusterFirst
+      securityContext: {}
+      schedularName: default-scheduler
+    revisionHistoryLimit: 10

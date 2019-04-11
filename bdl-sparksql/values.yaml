@@ -15,11 +15,17 @@ ObjStorage:
   #   Method: "apikey"
   #   ApiKey: ""
 
+Libs:
+  spark:
+    version: "2.4.1"
+  hadoop:
+    version: "2.7"
+
 Master:
   Component: "spark-master"
   Replicas: 1
   Image: "bigstepinc/spark_bdl"
-  ImageTag: "2.4.0-6"
+  ImageTag: "2.4.1-1"
   ImagePullPolicy: "IfNotPresent"
   Resources: {}
   DataDir: "/lentiq/data-dir"
@@ -46,7 +52,7 @@ Worker:
   Component: "spark-worker"
   Replicas: 1
   Image: "bigstepinc/spark_bdl"
-  ImageTag: "2.4.0-6"
+  ImageTag: "2.4.1-1"
   ImagePullPolicy: "IfNotPresent"
   Resources: {}
   DataDir: "/lentiq/data-dir"

@@ -1,0 +1,37 @@
+{{- if .Values.UI.Service.Enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ template "bdl-argo.ui.fullname" . }}-public
+  labels:
+    heritage: {{ .Release.Service | quote }}
+    release: {{ .Release.Name | quote }}
+    chart: {{ template "bdl-argo.chart" . }}
+    component: "{{ .Release.Name }}-{{ .Values.UI.Component }}"
+spec:
+  type: {{ .Values.UI.Service.Type }}
+  {{- if .Values.UI.Service.clusterIP }}
+  clusterIP: {{ .Values.UI.Service.clusterIP }}
+  {{- end }}
+  {{- if .Values.UI.Service.externalIPs }}
+  externalIPs:
+  {{ toYaml .Values.UI.Service.externalIPs | indent 4 }}
+  {{- end }}
+  {{- if .Values.UI.Service.loadBalancerIP }}
+  loadBalancerIP: {{ .Values.UI.Service.loadBalancerIP }}
+  {{- end }}
+  {{- if .Values.UI.Service.loadBalancerSourceRanges }}
+  loadBalancerSourceRanges:
+  {{ toJson .Values.UI.Service.loadBalancerSourceRanges | indent 4 }}
+  {{- end }}
+  ports:
+  - name: argo-ui
+    port: {{ .Values.UI.Ports.ui }}
+    targetPort: 8001
+    protocol: TCP
+  selector:
+    heritage: {{ .Release.Service | quote }}
+    release: {{ .Release.Name | quote }}
+    chart: {{ template "bdl-argo.chart" . }}
+    component: "{{ .Release.Name }}-{{ .Values.UI.Component }}"
+{{- end }}

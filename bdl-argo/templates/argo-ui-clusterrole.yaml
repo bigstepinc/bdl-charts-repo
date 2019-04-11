@@ -1,8 +1,8 @@
-{{- if .Values.ui.serviceAccountCreate }}
+{{- if .Values.UI.ServiceAccount.Create }}
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
-  name: {{ .Release.Name }}-{{ .Values.ui.name}}-cluster-role
+  name: {{ template "bdl-argo.ui.fullname" . }}-cluster-role
 rules:
 - apiGroups:
   - ""

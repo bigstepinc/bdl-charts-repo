@@ -1,14 +1,14 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ template "bdl-sftp-proxy.fullname" . }}
+  name: {{ template "bdl-mleap.fullname" . }}
   labels:
     heritage: {{ .Release.Service | quote }}
     release: {{ .Release.Name | quote }}
-    chart: {{ template "bdl-sftp-proxy.chart" .}}
+    chart: {{ template "bdl-mleap.chart" .}}
     component: "{{ .Release.Name }}-{{ .Values.Component }}"
 spec:
-  serviceName: "{{ template "bdl-sftp-proxy.fullname" . }}"
+  serviceName: "{{ template "bdl-mleap.fullname" . }}"
   replicas: {{ .Values.Replicas }}
   strategy:
     type: RollingUpdate
@@ -16,39 +16,45 @@ spec:
     matchLabels:
       heritage: {{ .Release.Service | quote }}
       release: {{ .Release.Name | quote }}
-      chart: {{ template "bdl-sftp-proxy.chart" .}}
+      chart: {{ template "bdl-mleap.chart" .}}
       component: "{{ .Release.Name }}-{{ .Values.Component }}"
   template:
     metadata:
       labels:
         heritage: {{ .Release.Service | quote }}
         release: {{ .Release.Name | quote }}
-        chart: {{ template "bdl-sftp-proxy.chart" .}}
+        chart: {{ template "bdl-mleap.chart" .}}
         component: "{{ .Release.Name }}-{{ .Values.Component }}"
     spec:
       containers:
-      - name: "{{ template "bdl-sftp-proxy.fullname" . }}"
+      - name: "{{ template "bdl-mleap.fullname" . }}"
         image: "{{ .Values.Image }}:{{ .Values.ImageTag }}"
         imagePullPolicy: "{{ .Values.ImagePullPolicy }}"
         terminationMessagePolicy: "File"
         terminationMessagePath: "/dev/termination-log"
         ports: 
-        - name: ssh-server
-          containerPort: 22
+        - name: mleap
+          containerPort: 65327
           protocol: TCP
         resources:
 {{ toYaml .Values.Resources | indent 10 }}
         env:
-        - name: CONFIG_FILE_PATH
-          value: "{{ .Values.DataDir }}/config.yaml"
-        volumeMounts:
-        - name: config
-          mountPath: {{ .Values.DataDir }}
-          readOnly: true
-      volumes:
-      - name: config
-        configMap:
-          name: sftp-proxy
+        - name: DATALAKE_ID
+          value: "{{ .Values.BDL.DatalakeId }}"
+        - name: PROJECT
+          value: "{{ .Values.BDL.ProjectName }}"
+        - name: AUTH_METHOD
+          value: "{{ .Values.ObjStorage.Auth.Method }}"
+        {{- if (eq .Values.ObjStorage.Auth.Method "apikey") }}
+        - name: AUTH_APIKEY
+          value: "{{ .Values.ObjStorage.Auth.ApiKey }}"
+        - name: API_ENDPOINT
+          value: "{{ .Values.BDL.ApiEndpoint }}"
+        {{- end }}
+        - name: BDL_DEFAULT_PATH
+          value: "{{ .Values.ObjStorage.BdlDefaultPath }}"
+        - name: MODEL_BDL_PATH
+          value: "{{ .Values.ModelPath }}"
       restartPolicy: Always
       terminationGracePeriodSeconds: 30
       dnsPolicy: ClusterFirst
