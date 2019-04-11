@@ -1,0 +1,30 @@
+# Default values for bdl-kaniko.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+kaniko:
+  Image: "gcr.io/kaniko-project/executor"
+  ImageTag: "latest"
+  ImagePullPolicy: "IfNotPresent"
+  Destination: ""
+  Tag: "v1"
+  ImageCredentials:
+    registry: ""
+    username: ""
+    password: ""
+  PipPackages: ""
+  OsPackages: ""
+sync:
+  Image: "bigstepinc/sync"
+  ImageTag: "latest"
+  ImagePullPolicy: "Always"
+  Repository: ""
+
+Notebook:
+  name: ""
+  content: ""
+
+Env:
+  environmentVariables:
+
+resources: {}

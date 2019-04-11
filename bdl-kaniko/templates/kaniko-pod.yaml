@@ -1,0 +1,59 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: "{{ template "bdl-kaniko.fullname" . }}"
+  labels:
+    heritage: {{ .Release.Service | quote }}
+    release: {{ .Release.Name | quote }}
+    chart: {{ template "bdl-kaniko.chart" . }}
+    component: "{{ .Release.Name }}-{{ .Values.Component }}"
+spec:
+  template:
+    spec:
+      containers:
+      - name: "{{ template "bdl-kaniko.fullname" . }}"
+        image: "{{ .Values.kaniko.Image }}"
+        imagePullPolicy: "{{ .Values.kaniko.ImagePullPolicy }}"
+        args: [ "--build-arg", "PIP_PACKAGES={{ .Values.kaniko.PipPackages }}",
+                "--build-arg", "OS_PACKAGES={{ .Values.kaniko.OsPackages }}",
+                "--build-arg", "NOTEBOOK_NAME=notebook.yaml",
+                "--dockerfile=Dockerfile",
+                "--context=/context",
+                "--destination={{ .Values.kaniko.Destination }}:{{ .Values.kaniko.Tag }}" ]
+        volumeMounts:
+          - name: docker-config
+            mountPath: /context/docker
+          - name: context
+            mountPath: /context
+          - name: bash-config
+            mountPath: /root/envs
+          - name: config
+            mountPath: /context/notebook
+      initContainers:
+      - name: "{{ template "bdl-kaniko.fullname" . }}-sync"
+        image: "{{ .Values.sync.Image }}"
+        imagePullPolicy: "{{ .Values.sync.ImagePullPolicy }}"
+        env:
+          - name: SOURCE_REPO
+            value: "{{ .Values.sync.Repository }}"
+        volumeMounts:
+          - name: context
+            mountPath: /context
+      restartPolicy: Never
+      volumes:
+        - name: docker-config
+          projected:
+            sources:
+            - secret:
+                name: docker-config
+                items:
+                - key: .dockerconfigjson
+                  path: .docker/config.json
+        - name: context
+          emptyDir: {}
+        - name: config
+          configMap:
+            name: kaniko
+        - name: bash-config
+          configMap:
+            name: bash
