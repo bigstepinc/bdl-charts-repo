@@ -36,7 +36,7 @@ spec:
         - name: mleap
           containerPort: 65327
           protocol: TCP
-        resource:
+        resources:
 {{ toYaml .Values.Resources | indent 10 }}
         env:
         - name: DATALAKE_ID

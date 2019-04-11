@@ -36,7 +36,7 @@ spec:
         - name: ssh-server
           containerPort: 22
           protocol: TCP
-        resource:
+        resources:
 {{ toYaml .Values.Resources | indent 10 }}
         env:
         - name: CONFIG_FILE_PATH

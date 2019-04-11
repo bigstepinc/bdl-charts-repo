@@ -46,7 +46,7 @@ spec:
             fieldRef:
               apiVersion: v1
               fieldPath: metadata.namespace
-        resource:
+        resources:
 {{ toYaml .Values.WorkflowController.Resources | indent 10 }}
       restartPolicy: Always
       terminationGracePeriodSeconds: 30

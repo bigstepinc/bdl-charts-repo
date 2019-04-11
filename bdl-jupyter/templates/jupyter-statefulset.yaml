@@ -36,6 +36,8 @@ spec:
         - name: notebook
           containerPort: 8888
           protocol: TCP
+        resources:
+{{ toYaml .Values.Resources | indent 10 }}
         env:
         - name: DATALAKE_ID
           value: "{{ .Values.BDL.DatalakeId }}"

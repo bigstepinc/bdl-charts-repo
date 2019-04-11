@@ -40,7 +40,7 @@ spec:
               fieldPath: metadata.namespace
         - name: BASE_HREF
           value: /
-        resource:
+        resources:
 {{ toYaml .Values.UI.Resources | indent 10 }}
       restartPolicy: Always
       terminationGracePeriodSeconds: 30
