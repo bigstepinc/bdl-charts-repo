@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: "{{ template "bdl-kaniko.fullname" . }}"
+  labels:
+    heritage: {{ .Release.Service | quote }}
+    release: {{ .Release.Name | quote }}
+    chart: {{ template "bdl-kaniko.chart" . }}
+    component: "{{ .Release.Name }}-{{ .Values.Component }}"
+data:
+  notebook.yaml: "{{ .Values.Notebook.content }}"
