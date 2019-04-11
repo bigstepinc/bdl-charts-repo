@@ -144,7 +144,7 @@ spec:
         livenessProbe:
           exec:
             command:
-            - /opt/spark-2.4.0-bin-hadoop2.7/bin/beeline
+            - /opt/spark-{{ .Values.Libs.spark.version }}-bin-hadoop{{ .Values.Libs.hadoop.version }}/bin/beeline
             - -u"jdbc:hive2://localhost:10000/default"
             - -e"show tables"
           failureThreshold: 5
