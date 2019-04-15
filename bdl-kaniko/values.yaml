@@ -8,12 +8,16 @@ kaniko:
   ImagePullPolicy: "IfNotPresent"
   Destination: ""
   Tag: "v1"
-  ImageCredentials:
-    registry: ""
-    username: ""
-    password: ""
+
+ImageCredentials:
+  registry: ""
+  username: ""
+  password: ""
+
+ImagePackages:
   PipPackages: ""
   OsPackages: ""
+  
 sync:
   Image: "bigstepinc/sync"
   ImageTag: "latest"

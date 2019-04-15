@@ -14,8 +14,8 @@ spec:
       - name: "{{ template "bdl-kaniko.fullname" . }}"
         image: "{{ .Values.kaniko.Image }}"
         imagePullPolicy: "{{ .Values.kaniko.ImagePullPolicy }}"
-        args: [ "--build-arg", "PIP_PACKAGES={{ .Values.kaniko.PipPackages }}",
-                "--build-arg", "OS_PACKAGES={{ .Values.kaniko.OsPackages }}",
+        args: [ "--build-arg", "PIP_PACKAGES={{ .Values.ImagePackages.PipPackages }}",
+                "--build-arg", "OS_PACKAGES={{ .Values.ImagePackages.OsPackages }}",
                 "--build-arg", "NOTEBOOK_NAME=notebook.yaml",
                 "--dockerfile=Dockerfile",
                 "--context=/context",
