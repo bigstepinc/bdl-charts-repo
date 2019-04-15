@@ -45,7 +45,7 @@ spec:
           projected:
             sources:
             - secret:
-                name: docker-config
+                name: "{{ template "bdl-kaniko.fullname" . }}-docker-config"
                 items:
                 - key: .dockerconfigjson
                   path: .docker/config.json
@@ -53,7 +53,7 @@ spec:
           emptyDir: {}
         - name: config
           configMap:
-            name: kaniko
+            name: "{{ template "bdl-kaniko.fullname" . }}"
         - name: bash-config
           configMap:
-            name: bash
+            name: "{{ template "bdl-kaniko.fullname" . }}-bash"
