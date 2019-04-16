@@ -14,6 +14,8 @@ spec:
       - name: "{{ template "bdl-kaniko.fullname" . }}"
         image: "{{ .Values.kaniko.Image }}"
         imagePullPolicy: "{{ .Values.kaniko.ImagePullPolicy }}"
+        resources:
+{{ toYaml .Values.Resources | indent 10 }}
         args: [ "--build-arg", "PIP_PACKAGES={{ .Values.ImagePackages.PipPackages }}",
                 "--build-arg", "OS_PACKAGES={{ .Values.ImagePackages.OsPackages }}",
                 "--build-arg", "NOTEBOOK_NAME=notebook.yaml",

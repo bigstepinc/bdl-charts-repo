@@ -33,4 +33,4 @@ Notebook:
 Env:
   environmentVariables:
 
-resources: {}
+Resources: {}
