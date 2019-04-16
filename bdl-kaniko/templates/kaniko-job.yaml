@@ -18,7 +18,7 @@ spec:
 {{ toYaml .Values.Resources | indent 10 }}
         args: [ "--build-arg", "PIP_PACKAGES={{ .Values.ImagePackages.PipPackages }}",
                 "--build-arg", "OS_PACKAGES={{ .Values.ImagePackages.OsPackages }}",
-                "--build-arg", "NOTEBOOK_NAME=notebook",
+                "--build-arg", "NOTEBOOK_NAME=notebook.ipynb",
                 "--dockerfile=Dockerfile",
                 "--context=/context",
                 "--destination={{ .Values.kaniko.Destination }}:{{ .Values.kaniko.Tag }}" ]
