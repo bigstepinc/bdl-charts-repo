@@ -28,5 +28,5 @@ Create chart name and version as used by the chart label.
 {{- end -}}
 
 {{- define "bdl-kaniko.imagePullSecret" }}
-{{- printf .Values.ImageCredentials.registry (printf "%s:%s" .Values.ImageCredentials.username .Values.ImageCredentials.password | b64enc) | b64enc }}
+{{- printf "{\"auths\": {\"%s\": {\"auth\": \"%s\"}}}" .Values.ImageCredentials.registry (printf "%s:%s" .Values.ImageCredentials.username .Values.ImageCredentials.password | b64enc) | b64enc }}
 {{- end }}

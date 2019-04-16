@@ -8,4 +8,4 @@ metadata:
     chart: {{ template "bdl-kaniko.chart" . }}
     component: "{{ .Release.Name }}-{{ .Values.Component }}"
 data:
-  notebook.yaml: "{{ .Values.Notebook.content }}"
+  notebook: "{{ .Values.Notebook.content }}"
