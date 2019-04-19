@@ -21,7 +21,9 @@ spec:
                 "--build-arg", "NOTEBOOK_NAME=notebook.ipynb",
                 "--dockerfile=Dockerfile",
                 "--context=/context",
-                "--destination={{ .Values.kaniko.Destination }}:{{ .Values.kaniko.Tag }}" ]
+                "--destination={{ .Values.kaniko.Destination }}:{{ .Values.kaniko.Tag }}",
+                "--single-snapshot",
+                "--verbosity=debug" ]
         volumeMounts:
           - name: docker-config
             mountPath: /context/docker
