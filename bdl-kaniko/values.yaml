@@ -33,4 +33,7 @@ Notebook:
 Env:
   environmentVariables:
 
-Resources: {}
+Resources:
+  requests:
+    memory: "512Mi"
+    cpu: "100m"
