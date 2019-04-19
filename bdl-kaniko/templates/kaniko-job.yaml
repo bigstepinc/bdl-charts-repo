@@ -16,8 +16,8 @@ spec:
         imagePullPolicy: "{{ .Values.kaniko.ImagePullPolicy }}"
         resources:
 {{ toYaml .Values.Resources | indent 10 }}
-        args: [ "--build-arg", "PIP_PACKAGES={{ .Values.ImagePackages.PipPackages }}",
-                "--build-arg", "OS_PACKAGES={{ .Values.ImagePackages.OsPackages }}",
+        args: [ "--build-arg", "PIP_PACKAGES={{ .Values.PipPackages }}",
+                "--build-arg", "OS_PACKAGES={{ .Values.OsPackages }}",
                 "--build-arg", "NOTEBOOK_NAME=notebook.ipynb",
                 "--dockerfile=Dockerfile",
                 "--context=/context",
