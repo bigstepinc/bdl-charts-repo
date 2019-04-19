@@ -22,8 +22,7 @@ spec:
                 "--dockerfile=Dockerfile",
                 "--context=/context",
                 "--destination={{ .Values.kaniko.Destination }}:{{ .Values.kaniko.Tag }}",
-                "--single-snapshot",
-                "--verbosity=debug" ]
+                "--single-snapshot" ]
         volumeMounts:
           - name: docker-config
             mountPath: /context/docker
