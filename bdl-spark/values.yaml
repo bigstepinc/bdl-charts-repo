@@ -28,7 +28,7 @@ Master:
   ImagePullPolicy: "IfNotPresent"
   Resources: {}
   DataDir: "/lentiq/data-dir"
-  Storage: "15Gi"
+  Storage: "30Gi"
   StorageClassUseDefault: true
   StorageClass: "-"
   Ports:
@@ -53,7 +53,7 @@ Worker:
   ImagePullPolicy: "IfNotPresent"
   Resources: {}
   DataDir: "/lentiq/data-dir"
-  Storage: "15Gi"
+  Storage: "30Gi"
   StorageClassUseDefault: true
   StorageClass: "-"
   Service:
