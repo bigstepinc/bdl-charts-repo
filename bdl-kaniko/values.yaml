@@ -16,9 +16,8 @@ ImageCredentials:
   username: ""
   password: ""
 
-ImagePackages:
-  PipPackages: "seaborn"
-  OsPackages: "vim"
+PipPackages: "seaborn"
+OsPackages: "vim"
   
 sync:
   Image: "bigstepinc/sync"
