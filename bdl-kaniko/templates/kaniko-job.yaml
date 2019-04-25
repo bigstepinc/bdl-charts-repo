@@ -51,7 +51,7 @@ spec:
                 name: "{{ template "bdl-kaniko.fullname" . }}-docker-config"
                 items:
                 - key: .dockerconfigjson
-                  path: .docker/config.json
+                  path: config.json
         - name: context
           emptyDir: {}
         - name: config
