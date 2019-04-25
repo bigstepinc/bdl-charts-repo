@@ -25,7 +25,7 @@ spec:
                 "--single-snapshot" ]
         volumeMounts:
           - name: docker-config
-            mountPath: /context/docker
+            mountPath: /kaniko/.docker
           - name: context
             mountPath: /context
           - name: bash-config
