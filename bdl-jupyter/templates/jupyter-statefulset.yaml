@@ -41,6 +41,10 @@ spec:
         env:
         - name: DATALAKE_ID
           value: "{{ .Values.BDL.DatalakeId }}"
+        - name: DATAPOOL_NAME
+          value: "{{ .Values.BDL.DatapoolName }}"
+        - name: STARTER_DATAPOOL
+          value: "{{ .Values.BDL.StarterDatapool }}"
         - name: PROJECT
           value: "{{ .Values.BDL.ProjectName }}"
         - name: AUTH_METHOD

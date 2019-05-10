@@ -5,6 +5,8 @@
 BDL:
   ApiEndpoint: ""
   DatalakeId: ""
+  DatapoolName: ""
+  StarterDatapool: false
   ProjectName: ""
 
 
