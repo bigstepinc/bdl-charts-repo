@@ -32,6 +32,13 @@ spec:
         imagePullPolicy: "{{ .Values.ImagePullPolicy }}"
         terminationMessagePolicy: "File"
         terminationMessagePath: "/dev/termination-log"
+        readinessProbe:
+          exec:
+            command:
+            - /readyness_probe.sh
+          initialDelaySeconds: 20
+          periodSeconds: 5
+          failureThreshold: 10
         ports: 
         - name: mleap
           containerPort: 65327
