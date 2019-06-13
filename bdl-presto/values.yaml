@@ -1,0 +1,49 @@
+# Default values for bdl-presto.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+Component: "presto"
+Image: "bigstepinc/presto_bdl"
+ImageTag: "3.1.1"
+ImagePullPolicy: IfNotPresent
+Resources: {}
+
+Service:
+  Enabled: true
+  Type: "ClusterIP"
+
+Worker:
+  Component: "presto-worker"
+
+Coordinator:
+  Component: "presto-coordinator"
+
+Catalog:
+  Component: "presto-catalog"
+
+server:
+  workers: 2
+  node:
+    environment: production
+    dataDir: /presto/etc/data
+  log:
+    presto:
+      level: INFO
+  config:
+    path: /etc/presto
+    http:
+      port: 8080
+    query:
+      maxMemory: "4GB"
+      maxMemoryPerNode: "1GB"
+  jvm:
+    maxHeapSize: "8G"
+    gcMethod:
+      type: "UseG1GC"
+      g1:
+        heapRegionSize: "32M"
+  catalog:
+    log.properties: |
+      connector.name=localfile
+      presto-logs.http-request-log.location=/presto/etc/data/var/log
+      presto-logs.http-request-log.pattern=*.log

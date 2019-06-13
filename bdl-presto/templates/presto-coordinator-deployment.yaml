@@ -1,37 +1,34 @@
 apiVersion: apps/v1beta2
 kind: Deployment
 metadata:
-  name: {{ template "presto.coordinator" . }}
+  name: {{ template "bdl-presto.fullname" . }}-coordinator
   labels:
-    app: {{ template "presto.name" . }}
-    chart: {{ template "presto.chart" . }}
-    release: {{ .Release.Name }}
-    heritage: {{ .Release.Service }}
-    component: coordinator
+    heritage: {{ .Release.Service | quote }}
+    release: {{ .Release.Name | quote }}
+    chart: {{ template "bdl-presto.chart" . }}
+    component: "{{ .Release.Name }}-{{ .Values.Coordinator.Component }}"
 spec:
   selector:
     matchLabels:
-      app: {{ template "presto.name" . }}
-      release: {{ .Release.Name }}
-      component: coordinator
+      release: {{ .Release.Name | quote }}
+      component: "{{ .Release.Name }}-{{ .Values.Coordinator.Component }}"
   template:
     metadata:
       labels:
-        app: {{ template "presto.name" . }}
-        release: {{ .Release.Name }}
-        component: coordinator
+        release: {{ .Release.Name | quote }}
+        component: "{{ .Release.Name }}-{{ .Values.Coordinator.Component }}"
     spec:
       volumes:
         - name: config-volume
           configMap:
-            name: {{ template "presto.coordinator" . }}
+            name: {{ template "bdl-presto.fullname" . }}-coordinator
         - name: catalog-volume
           secret:
-            secretName: {{ template "presto.catalog" . }}
+            name: {{ template "bdl-presto.fullname" . }}-catalog
       containers:
         - name: {{ .Chart.Name }}-coordinator
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          image: "{{ .Values.Image }}:{{ .Values.ImageTag }}"
+          imagePullPolicy: {{ .Values.ImagePullPolicy }}
           command: ["/bin/bash"]
           args:
             - {{ .Values.server.config.path }}/docker-presto.sh
@@ -53,16 +50,4 @@ spec:
               path: /v1/cluster
               port: http-coord
           resources:
-{{ toYaml .Values.resources | indent 12 }}
-    {{- with .Values.nodeSelector }}
-      nodeSelector:
-{{ toYaml . | indent 8 }}
-    {{- end }}
-    {{- with .Values.affinity }}
-      affinity:
-{{ toYaml . | indent 8 }}
-    {{- end }}
-    {{- with .Values.tolerations }}
-      tolerations:
-{{ toYaml . | indent 8 }}
-    {{- end }}
+{{ toYaml .Values.Resources | indent 12 }}

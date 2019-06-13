@@ -1,0 +1,22 @@
+{{- if .Values.Service.Enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ template "bdl-presto.fullname" . }}-coordinator
+  labels:
+    heritage: {{ .Release.Service | quote }}
+    release: {{ .Release.Name | quote }}
+    chart: {{ template "bdl-presto.chart" . }}
+    component: "{{ .Release.Name }}-{{ .Values.Coordinator.Component }}"
+spec:
+  type: {{ .Values.Service.Type }}
+  ports:
+    - port: {{ .Values.server.config.http.port }}
+      targetPort: http-coord
+      protocol: TCP
+      name: http-coord
+  selector:
+    release: {{ .Release.Name | quote }}
+    chart: {{ template "bdl-presto.chart" . }}
+    component: "{{ .Release.Name }}-{{ .Values.Coordinator.Component }}"
+{{- end }}
