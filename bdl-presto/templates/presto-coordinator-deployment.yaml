@@ -1,4 +1,4 @@
-apiVersion: apps/v1beta2
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ template "bdl-presto.coordinator.fullname" . }}
@@ -29,7 +29,7 @@ spec:
             name: {{ template "bdl-presto.coordinator.fullname" . }}
         - name: catalog-volume
           secret:
-            name: {{ template "bdl-presto.catalog.fullname" . }}
+            secretName: {{ template "bdl-presto.catalog.fullname" . }}
       containers:
       - name: {{ .Chart.Name }}-coordinator
         image: "{{ .Values.Coordinator.Image }}:{{ .Values.Coordinator.ImageTag }}"
