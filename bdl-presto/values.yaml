@@ -8,21 +8,32 @@ ImageTag: "3.1.1"
 ImagePullPolicy: IfNotPresent
 Resources: {}
 
-Service:
-  Enabled: true
-  Type: "ClusterIP"
-
 Worker:
   Component: "presto-worker"
+  Replicas: 1
+  Image: "bigstepinc/presto_bdl"
+  ImageTag: "3.1.1"
+  ImagePullPolicy: "IfNotPresent"
+  Resources: {}
 
 Coordinator:
   Component: "presto-coordinator"
+  Replicas: 1
+  Image: "bigstepinc/presto_bdl"
+  ImageTag: "3.1.1"
+  ImagePullPolicy: "IfNotPresent"
+  Resources: {}
+  Ports:
+    HttpCoord: 8080
+  Service:
+    Enabled: true
+    Type: "LoadBalancer"
+
 
 Catalog:
   Component: "presto-catalog"
 
 server:
-  workers: 2
   node:
     environment: production
     dataDir: /presto/etc/data
@@ -31,8 +42,6 @@ server:
       level: INFO
   config:
     path: /etc/presto
-    http:
-      port: 8080
     query:
       maxMemory: "4GB"
       maxMemoryPerNode: "1GB"

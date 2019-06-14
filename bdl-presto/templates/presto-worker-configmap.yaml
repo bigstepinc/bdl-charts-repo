@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ template "bdl-presto.fullname" . }}-worker
+  name: {{ template "bdl-presto.worker.fullname" . }}
   labels:
     heritage: {{ .Release.Service | quote }}
     release: {{ .Release.Name | quote }}
@@ -28,7 +28,7 @@ data:
     http-server.http.port={{ .Values.server.config.http.port }}
     query.max-memory={{ .Values.server.config.query.maxMemory }}
     query.max-memory-per-node={{ .Values.server.config.query.maxMemoryPerNode }}
-    discovery.uri=http://{{ template "bdl-presto.fullname" . }}:{{ .Values.server.config.http.port }}
+    discovery.uri=http://{{ template "bdl-presto.coordinator.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local:{{ .Values.Coordinator.Ports.HttpCoord }}
 
   log.properties: |
     com.facebook.presto={{ .Values.server.log.presto.level }}
@@ -42,7 +42,7 @@ data:
 
   health_check.sh: |
     #!/bin/bash
-    curl --silent {{ template "bdl-presto.fullname" . }}:{{ .Values.server.config.http.port }}/v1/node | tr "," "\n" | grep --silent $(hostname -i)
+    curl --silent {{ template "bdl-presto.coordinator.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local:{{ .Values.Coordinator.Ports.HttpCoord }}/v1/node | tr "," "\n" | grep --silent $(hostname -i)
 
 ---
 {{- end }}

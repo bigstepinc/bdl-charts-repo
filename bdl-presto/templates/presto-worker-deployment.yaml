@@ -1,15 +1,14 @@
-{{- if gt (int .Values.server.workers) 0 }}
 apiVersion: apps/v1beta2
 kind: Deployment
 metadata:
-  name: {{ template "bdl-presto.fullname" . }}-worker
+  name: {{ template "bdl-presto.worker.fullname" . }}
   labels:
     heritage: {{ .Release.Service | quote }}
     release: {{ .Release.Name | quote }}
     chart: {{ template "bdl-presto.chart" . }}
     component: "{{ .Release.Name }}-{{ .Values.Worker.Component }}"
 spec:
-  replicas: {{ .Values.server.workers }}
+  replicas: {{ .Values.Worker.Replicas }}
   selector:
     matchLabels:
       release: {{ .Release.Name | quote }}
@@ -23,36 +22,35 @@ spec:
       volumes:
         - name: config-volume
           configMap:
-            name: {{ template "bdl-presto.fullname" . }}-worker
+            name: {{ template "bdl-presto.worker.fullname" . }}
         - name: catalog-volume
           secret:
-            name: {{ template "bdl-presto.fullname" . }}-catalog
+            name: {{ template "bdl-presto.catalog.fullname" . }}
       containers:
-        - name: {{ .Chart.Name }}-worker
-          image: "{{ .Values.Image }}:{{ .Values.ImageTag }}"
-          imagePullPolicy: {{ .Values.ImagePullPolicy }}
-          command: ["/bin/bash"]
-          args:
-            - {{ .Values.server.config.path }}/docker-presto.sh
-          volumeMounts:
-            - mountPath: {{ .Values.server.config.path }}
-              name: config-volume
-            - mountPath: {{ .Values.server.config.path }}/catalog
-              name: catalog-volume
-          livenessProbe:
-            exec:
-              command:
-                - /bin/bash
-                - {{ .Values.server.config.path }}/health_check.sh
-            initialDelaySeconds: 10
-            periodSeconds: 25
-          readinessProbe:
-            exec:
-              command:
-                - /bin/bash
-                - {{ .Values.server.config.path }}/health_check.sh
-            initialDelaySeconds: 5
-            periodSeconds: 10
-          resources:
-{{ toYaml .Values.Resources | indent 12 }}
-{{- end }}
+      - name: {{ .Chart.Name }}-worker
+        image: "{{ .Values.Coordinator.Image }}:{{ .Values.Coordinator.ImageTag }}"
+        imagePullPolicy: {{ .Values.Coordinator.ImagePullPolicy }}
+        command: ["/bin/bash"]
+        args:
+          - {{ .Values.server.config.path }}/docker-presto.sh
+        volumeMounts:
+          - mountPath: {{ .Values.server.config.path }}
+            name: config-volume
+          - mountPath: {{ .Values.server.config.path }}/catalog
+            name: catalog-volume
+        livenessProbe:
+          exec:
+            command:
+              - /bin/bash
+              - {{ .Values.server.config.path }}/health_check.sh
+          initialDelaySeconds: 10
+          periodSeconds: 25
+        readinessProbe:
+          exec:
+            command:
+              - /bin/bash
+              - {{ .Values.server.config.path }}/health_check.sh
+          initialDelaySeconds: 5
+          periodSeconds: 10
+        resources:
+{{ toYaml .Values.Resources | indent 10 }}

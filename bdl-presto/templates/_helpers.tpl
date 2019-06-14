@@ -20,21 +20,24 @@ If release name contains chart name it will be used as a full name.
 {{- end -}}
 {{- end -}}
 
-{{- define "bdl-presto.coordinator" -}}
-{{ template "bdl-presto.fullname" . }}-coordinator
-{{- end -}}
-
-{{- define "bdl-presto.worker" -}}
-{{ template "bdl-presto.fullname" . }}-worker
-{{- end -}}
-
-{{- define "bdl-presto.catalog" -}}
-{{ template "bdl-presto.fullname" . }}-catalog
-{{- end -}}
-
 {{/*
 Create chart name and version as used by the chart label.
 */}}
 {{- define "bdl-presto.chart" -}}
 {{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" -}}
+{{- end -}}
+
+{{- define "bdl-presto.coordinator.fullname" -}}
+{{- $name := default (printf "%s-%s" .Chart.Name "coordinator") .Values.Coordinator.Name -}}
+{{- printf "%s-%s" .Release.Name $name | trunc 63 | trimSuffix "-" -}}
+{{- end -}}
+
+{{- define "bdl-presto.worker.fullname" -}}
+{{- $name := default (printf "%s-%s" .Chart.Name "worker") .Values.Worker.Name -}}
+{{- printf "%s-%s" .Release.Name $name | trunc 63 | trimSuffix "-" -}}
+{{- end -}}
+
+{{- define "bdl-presto.catalog.fullname" -}}
+{{- $name := default (printf "%s-%s" .Chart.Name "catalog") .Values.Catalog.Name -}}
+{{- printf "%s-%s" .Release.Name $name | trunc 63 | trimSuffix "-" -}}
 {{- end -}}

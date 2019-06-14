@@ -1,53 +1,58 @@
 apiVersion: apps/v1beta2
 kind: Deployment
 metadata:
-  name: {{ template "bdl-presto.fullname" . }}-coordinator
+  name: {{ template "bdl-presto.coordinator.fullname" . }}
   labels:
     heritage: {{ .Release.Service | quote }}
     release: {{ .Release.Name | quote }}
     chart: {{ template "bdl-presto.chart" . }}
     component: "{{ .Release.Name }}-{{ .Values.Coordinator.Component }}"
 spec:
+  replicas: {{ .Values.Coordinator.Replicas }}
   selector:
     matchLabels:
+      heritage: {{ .Release.Service | quote }}
       release: {{ .Release.Name | quote }}
+      chart: {{ template "bdl-presto.chart" . }}
       component: "{{ .Release.Name }}-{{ .Values.Coordinator.Component }}"
   template:
     metadata:
       labels:
+        heritage: {{ .Release.Service | quote }}
         release: {{ .Release.Name | quote }}
+        chart: {{ template "bdl-presto.chart" . }}
         component: "{{ .Release.Name }}-{{ .Values.Coordinator.Component }}"
     spec:
       volumes:
         - name: config-volume
           configMap:
-            name: {{ template "bdl-presto.fullname" . }}-coordinator
+            name: {{ template "bdl-presto.coordinator.fullname" . }}
         - name: catalog-volume
           secret:
-            name: {{ template "bdl-presto.fullname" . }}-catalog
+            name: {{ template "bdl-presto.catalog.fullname" . }}
       containers:
-        - name: {{ .Chart.Name }}-coordinator
-          image: "{{ .Values.Image }}:{{ .Values.ImageTag }}"
-          imagePullPolicy: {{ .Values.ImagePullPolicy }}
-          command: ["/bin/bash"]
-          args:
-            - {{ .Values.server.config.path }}/docker-presto.sh
-          volumeMounts:
-            - mountPath: {{ .Values.server.config.path }}
-              name: config-volume
-            - mountPath: {{ .Values.server.config.path }}/catalog
-              name: catalog-volume
-          ports:
-            - name: http-coord
-              containerPort: {{ .Values.server.config.http.port }}
-              protocol: TCP
-          livenessProbe:
-            httpGet:
-              path: /v1/cluster
-              port: http-coord
-          readinessProbe:
-            httpGet:
-              path: /v1/cluster
-              port: http-coord
-          resources:
-{{ toYaml .Values.Resources | indent 12 }}
+      - name: {{ .Chart.Name }}-coordinator
+        image: "{{ .Values.Coordinator.Image }}:{{ .Values.Coordinator.ImageTag }}"
+        imagePullPolicy: {{ .Values.Coordinator.ImagePullPolicy }}
+        command: ["/bin/bash"]
+        args:
+          - {{ .Values.server.config.path }}/docker-presto.sh
+        volumeMounts:
+          - mountPath: {{ .Values.server.config.path }}
+            name: config-volume
+          - mountPath: {{ .Values.server.config.path }}/catalog
+            name: catalog-volume
+        ports:
+          - name: http-coord
+            containerPort: 8080
+            protocol: TCP
+        livenessProbe:
+          httpGet:
+            path: /v1/cluster
+            port: http-coord
+        readinessProbe:
+          httpGet:
+            path: /v1/cluster
+            port: http-coord
+        resources:
+{{ toYaml .Values.Resources | indent 10 }}
