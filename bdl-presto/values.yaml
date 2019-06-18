@@ -39,7 +39,7 @@ server:
     dataDir: /presto/etc/data
   log:
     presto:
-      level: INFO
+      level: DEBUG
   config:
     path: /etc/presto
     query:
