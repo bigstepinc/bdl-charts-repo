@@ -56,3 +56,5 @@ server:
       connector.name=localfile
       presto-logs.http-request-log.location=/presto/etc/data/var/log
       presto-logs.http-request-log.pattern=*.log
+  hdfs:
+    config: ""
