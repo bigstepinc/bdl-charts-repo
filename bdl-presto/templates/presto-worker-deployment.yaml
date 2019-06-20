@@ -26,6 +26,9 @@ spec:
         - name: catalog-volume
           secret:
             secretName: {{ template "bdl-presto.catalog.fullname" . }}
+        - name: hive-volume
+          secret:
+            secretName: {{ template "bdl-presto.catalog.fullname" .}}-hive
       containers:
       - name: {{ .Chart.Name }}-worker
         image: "{{ .Values.Worker.Image }}:{{ .Values.Worker.ImageTag }}"
@@ -38,6 +41,8 @@ spec:
             name: config-volume
           - mountPath: {{ .Values.server.config.path }}/catalog
             name: catalog-volume
+          - mountPath: {{ .Values.server.config.path}}/hive
+            name: hive-volume
         livenessProbe:
           exec:
             command:
