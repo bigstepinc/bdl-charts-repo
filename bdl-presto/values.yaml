@@ -10,7 +10,7 @@ Resources: {}
 
 Worker:
   Component: "presto-worker"
-  Replicas: 1
+  Replicas: 2
   Image: "bigstepinc/presto_bdl"
   ImageTag: "3.1.1"
   ImagePullPolicy: "IfNotPresent"
