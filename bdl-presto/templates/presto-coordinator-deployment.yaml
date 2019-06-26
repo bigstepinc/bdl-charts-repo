@@ -60,4 +60,4 @@ spec:
             path: /v1/cluster
             port: http-coord
         resources:
-{{ toYaml .Values.Resources | indent 10 }}
+{{ toYaml .Values.Coordinator.Resources | indent 10 }}
