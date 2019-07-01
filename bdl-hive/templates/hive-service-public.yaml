@@ -32,6 +32,6 @@ spec:
   selector:
     heritage: {{ .Release.Service | quote }}
     release: {{ .Release.Name | quote }}
-    chart: {{ template "bdl-presto.chart" . }}
+    chart: {{ template "bdl-hive.chart" . }}
     component: "{{ .Release.Name }}-{{ .Values.Component }}"
 {{- end }}

@@ -27,7 +27,7 @@ Service:
   Enabled: true
   Type: "LoadBalancer"
 
-Database:
+DataBase:
   Enabled: false
   CredentialsSecret: ""
   Type: ""
