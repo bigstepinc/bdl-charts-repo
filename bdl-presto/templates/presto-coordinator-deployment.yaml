@@ -8,6 +8,7 @@ metadata:
     chart: {{ template "bdl-presto.chart" . }}
     component: "{{ .Release.Name }}-{{ .Values.Coordinator.Component }}"
 spec:
+  serviceName: "{{ template "bdl-presto.coordinator.fullname" . }}"
   replicas: {{ .Values.Coordinator.Replicas }}
   selector:
     matchLabels:

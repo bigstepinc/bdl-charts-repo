@@ -1,16 +1,17 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "bdl-hive.fullname" . }}
+  serviceName: "{{ template "bdl-hive.fullname" . }}"
   labels:
     heritage: {{ .Release.Service | quote }}
     release: {{ .Release.Name | quote }}
     chart: {{ template "bdl-hive.chart" .}}
     component: "{{ .Release.Name }}-{{ .Values.Component }}"
 spec:
+  serviceName: "{{ template "bdl-hive.fullname" . }}"
   replicas: {{ .Values.Replicas }}
-  strategy:
-  type: RollingUpdate
+  updateStrategy:
+    type: RollingUpdate
   selector:
     matchLabels:
       heritage: {{ .Release.Service | quote }}
