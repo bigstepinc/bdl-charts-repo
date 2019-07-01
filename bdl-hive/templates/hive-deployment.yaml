@@ -1,0 +1,80 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "bdl-hive.fullname" . }}
+  labels:
+    heritage: {{ .Release.Service | quote }}
+    release: {{ .Release.Name | quote }}
+    chart: {{ template "bdl-hive.chart" .}}
+    component: "{{ .Release.Name }}-{{ .Values.Component }}"
+spec:
+  replicas: {{ .Values.Replicas }}
+  selector:
+    matchLabels:
+      heritage: {{ .Release.Service | quote }}
+      release: {{ .Release.Name | quote }}
+      chart: {{ template "bdl-hive.chart" .}}
+      component: "{{ .Release.Name }}-{{ .Values.Component }}"
+  template:
+    metadata:
+      labels:
+        heritage: {{ .Release.Service | quote }}
+        release: {{ .Release.Name | quote }}
+        chart: {{ template "bdl-hive.chart" .}}
+        component: "{{ .Release.Name }}-{{ .Values.Component }}"
+    spec:
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.Image }}:{{ .Values.ImageTag }}"
+          imagePullPolicy: {{ .Values.ImagePullPolicy }}
+          ports:
+            - name: hive
+              containerPort: 9083
+              protocol: TCP
+          # livenessProbe:
+          #   httpGet:
+          #     path: /
+          #     port: http
+          # readinessProbe:
+          #   httpGet:
+          #     path: /
+          #     port: http
+          resources:
+{{- toYaml .Values.Resources | indent 12 }}
+          - name: AUTH_METHOD
+            value: "{{ .Values.ObjStorage.Auth.Method }}"
+          - name: MODE
+            value: "{{ .Values.ObjStorage.Mode"
+          {{- if (eq .Values.ObjStorage.Auth.Method "apikey") }}
+          - name: AUTH_APIKEY
+            value: "{{ .Values.ObjStorage.Auth.ApiKey }}"
+          - name: API_ENDPOINT
+            value: "{{ .Values.BDL.ApiEndpoint }}"
+          {{- end }}
+          - name: BDL_DEFAULT_PATH
+            value: "{{ .Values.ObjStorage.BdlDefaultPath }}"
+          {{- if .Values.DataBase.Enabled}}
+          - name: DB_TYPE
+            value: "{{ .Values.DataBase.Type }}"
+          {{- if (eq .Values.DataBase.Type "postgresql") }}
+          - name: POSTGRES_HOSTNAME
+            value: "{{ .Values.DataBase.Hostname }}"
+          - name: POSTGRES_PORT
+            value: "{{ .Values.DataBase.Port }}"
+          - name: DB_NAME
+            valueFrom:
+              secretKeyRef:
+                name: {{ .Values.DataBase.CredentialsSecret }}
+                key: db_name
+          - name: DB_USER
+            valueFrom:
+              secretKeyRef:
+                name: {{ .Values.DataBase.CredentialsSecret }}
+                key: db_user
+          - name: DB_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: {{ .Values.DataBase.CredentialsSecret }}
+                key: db_password
+          {{- end }}
+          {{- end }}

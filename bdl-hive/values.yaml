@@ -1,0 +1,35 @@
+# Default values for bdl-hive.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+BDL:
+  ApiEndpoint: ""
+
+ObjStorage:
+  Auth:
+    Method: "apikey"
+    Username: ""
+    Password: ""
+  BdlDefaultPath: ""
+  Mode: "hive"
+
+Ports:
+  hive: 9083
+
+Component: "hive"
+Image: "bigstepinc/hive_bdl"
+ImageTag: "2.3.2"
+ImagePullPolicy: "IfNotPresent"
+Replicas: 1
+Resources: {}
+
+Service:
+  Enabled: true
+  Type: "LoadBalancer"
+
+Database:
+  Enabled: false
+  CredentialsSecret: ""
+  Type: ""
+  Hostname: ""
+  Port: "5432"
