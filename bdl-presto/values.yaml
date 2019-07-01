@@ -46,7 +46,7 @@ server:
       maxMemory: "4GB"
       maxMemoryPerNode: "1GB"
   jvm:
-    maxHeapSize: "8G"
+    maxHeapSize: "3G"
     gcMethod:
       type: "UseG1GC"
       g1:

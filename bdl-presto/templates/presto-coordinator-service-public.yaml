@@ -15,7 +15,7 @@ spec:
   {{- end }}
   {{- if .Values.Coordinator.Service.externalIPs }}
   externalIPs:
-  {{ toYaml .Values.MasCoordinatorter.Service.externalIPs | indent 4 }}
+  {{ toYaml .Values.Coordinator.Service.externalIPs | indent 4 }}
   {{- end }}
   {{- if .Values.Coordinator.Service.loadBalancerIP }}
   loadBalancerIP: {{ .Values.Coordinator.Service.loadBalancerIP }}
