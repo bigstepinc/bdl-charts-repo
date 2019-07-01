@@ -9,6 +9,8 @@ metadata:
     component: "{{ .Release.Name }}-{{ .Values.Component }}"
 spec:
   replicas: {{ .Values.Replicas }}
+  strategy:
+  type: RollingUpdate
   selector:
     matchLabels:
       heritage: {{ .Release.Service | quote }}
@@ -44,7 +46,7 @@ spec:
           - name: AUTH_METHOD
             value: "{{ .Values.ObjStorage.Auth.Method }}"
           - name: MODE
-            value: "{{ .Values.ObjStorage.Mode"
+            value: "{{ .Values.ObjStorage.Mode }}"
           {{- if (eq .Values.ObjStorage.Auth.Method "apikey") }}
           - name: AUTH_APIKEY
             value: "{{ .Values.ObjStorage.Auth.ApiKey }}"
