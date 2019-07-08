@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  serviceName: "{{ template "bdl-hive.fullname" . }}"
+  name: "{{ template "bdl-hive.fullname" . }}"
   labels:
     heritage: {{ .Release.Service | quote }}
     release: {{ .Release.Name | quote }}
