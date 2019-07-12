@@ -27,6 +27,7 @@ data:
     http-server.http.port={{ .Values.Coordinator.Ports.HttpCoord }}
     query.max-memory={{ .Values.server.config.query.maxMemory }}
     query.max-memory-per-node={{ .Values.server.config.query.maxMemoryPerNode }}
+    query.max-length={{ .Values.server.config.query.maxLength }}
     discovery.uri=http://{{ template "bdl-presto.coordinator.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local:{{ .Values.Coordinator.Ports.HttpCoord }}
 
   log.properties: |

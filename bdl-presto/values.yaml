@@ -45,6 +45,7 @@ server:
     query:
       maxMemory: "4GB"
       maxMemoryPerNode: "1GB"
+      maxLength: "1MB"
   jvm:
     maxHeapSize: "8G"
     gcMethod:
