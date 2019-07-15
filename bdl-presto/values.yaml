@@ -4,7 +4,7 @@
 
 Component: "presto"
 Image: "bigstepinc/presto_bdl"
-ImageTag: "3.1.1"
+ImageTag: "3.1.6"
 ImagePullPolicy: IfNotPresent
 Resources: {}
 
@@ -12,7 +12,7 @@ Worker:
   Component: "presto-worker"
   Replicas: 2
   Image: "bigstepinc/presto_bdl"
-  ImageTag: "3.1.1"
+  ImageTag: "3.1.6"
   ImagePullPolicy: "IfNotPresent"
   Resources: {}
 
@@ -20,7 +20,7 @@ Coordinator:
   Component: "presto-coordinator"
   Replicas: 1
   Image: "bigstepinc/presto_bdl"
-  ImageTag: "3.1.1"
+  ImageTag: "3.1.6"
   ImagePullPolicy: "IfNotPresent"
   Resources: {}
   Ports:
