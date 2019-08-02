@@ -38,9 +38,9 @@ spec:
       - name: {{ .Chart.Name }}-coordinator
         image: "{{ .Values.Coordinator.Image }}:{{ .Values.Coordinator.ImageTag }}"
         imagePullPolicy: {{ .Values.Coordinator.ImagePullPolicy }}
-        command: ["/bin/bash"]
-        args:
-          - {{ .Values.server.config.path }}/docker-presto.sh
+        # command: ["/bin/bash"]
+        # args:
+        #   - {{ .Values.server.config.path }}/docker-presto.sh
         volumeMounts:
           - mountPath: {{ .Values.server.config.path }}
             name: config-volume
