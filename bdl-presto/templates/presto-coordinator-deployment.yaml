@@ -18,6 +18,8 @@ spec:
       component: "{{ .Release.Name }}-{{ .Values.Coordinator.Component }}"
   template:
     metadata:
+      annotations:
+        checksum/presto-catalog-secret: {{ include (print $.Template.BasePath "/presto-catalog-secret.yaml") . | sha256sum }}
       labels:
         heritage: {{ .Release.Service | quote }}
         release: {{ .Release.Name | quote }}
