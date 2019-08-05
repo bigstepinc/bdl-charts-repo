@@ -1,0 +1,37 @@
+{{- if .Values.Coordinator.Service.Enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ template "bdl-presto.coordinator.fullname" . }}-public
+  labels:
+    heritage: {{ .Release.Service | quote }}
+    release: {{ .Release.Name | quote }}
+    chart: {{ template "bdl-presto.chart" . }}
+    component: "{{ .Release.Name }}-{{ .Values.Coordinator.Component }}"
+spec:
+  type: {{ .Values.Coordinator.Service.Type }}
+  {{- if .Values.Coordinator.Service.clusterIP }}
+  clusterIP: {{ .Values.Coordinator.Service.clusterIP }}
+  {{- end }}
+  {{- if .Values.Coordinator.Service.externalIPs }}
+  externalIPs:
+  {{ toYaml .Values.Coordinator.Service.externalIPs | indent 4 }}
+  {{- end }}
+  {{- if .Values.Coordinator.Service.loadBalancerIP }}
+  loadBalancerIP: {{ .Values.Coordinator.Service.loadBalancerIP }}
+  {{- end }}
+  {{- if .Values.Coordinator.Service.loadBalancerSourceRanges }}
+  loadBalancerSourceRanges:
+  {{ toJson .Values.Coordinator.Service.loadBalancerSourceRanges | indent 4 }}
+  {{- end }}
+  ports:
+    - port: {{ .Values.Coordinator.Ports.HttpCoord }}
+      targetPort: http-coord
+      protocol: TCP
+      name: http-coord
+  selector:
+    heritage: {{ .Release.Service | quote }}
+    release: {{ .Release.Name | quote }}
+    chart: {{ template "bdl-presto.chart" . }}
+    component: "{{ .Release.Name }}-{{ .Values.Coordinator.Component }}"
+{{- end }}

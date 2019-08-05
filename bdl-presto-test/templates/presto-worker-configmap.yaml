@@ -1,0 +1,45 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ template "bdl-presto.worker.fullname" . }}
+  labels:
+    heritage: {{ .Release.Service | quote }}
+    release: {{ .Release.Name | quote }}
+    chart: {{ template "bdl-presto.chart" . }}
+    component: "{{ .Release.Name }}-{{ .Values.Worker.Component }}"
+data:
+  node.properties: |
+    node.environment={{ .Values.server.node.environment }}
+    node.data-dir={{ .Values.server.node.dataDir }}
+
+  jvm.config: |
+    -server
+    -Xmx{{ .Values.server.jvm.maxHeapSize }}
+    -XX:+{{ .Values.server.jvm.gcMethod.type }}
+    -XX:G1HeapRegionSize={{ .Values.server.jvm.gcMethod.g1.heapRegionSize }}
+    -XX:+UseGCOverheadLimit
+    -XX:+ExplicitGCInvokesConcurrent
+    -XX:+HeapDumpOnOutOfMemoryError
+    -XX:+ExitOnOutOfMemoryError
+
+  config.properties: |
+    coordinator=false
+    http-server.http.port={{ .Values.Coordinator.Ports.HttpCoord }}
+    query.max-memory={{ .Values.server.config.query.maxMemory }}
+    query.max-memory-per-node={{ .Values.server.config.query.maxMemoryPerNode }}
+    query.max-length={{ .Values.server.config.query.maxLength }}
+    discovery.uri=http://{{ template "bdl-presto.coordinator.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local:{{ .Values.Coordinator.Ports.HttpCoord }}
+
+  log.properties: |
+    com.facebook.presto={{ .Values.server.log.presto.level }}
+
+  docker-presto.sh: |
+    #!/bin/bash
+    cp {{ .Values.server.config.path }}/*.properties $PRESTO_CONF_DIR
+    cp {{ .Values.server.config.path }}/*.config $PRESTO_CONF_DIR
+    cp {{ .Values.server.config.path }}/catalog/*properties $PRESTO_CONF_DIR/catalog
+    launcher run
+
+  health_check.sh: |
+    #!/bin/bash
+    curl --silent {{ template "bdl-presto.coordinator.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local:{{ .Values.Coordinator.Ports.HttpCoord }}/v1/node | tr "," "\n" | grep --silent $(hostname -i)

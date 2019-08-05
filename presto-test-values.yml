@@ -1,0 +1,77 @@
+Coordinator:
+  Image: bigstepinc/presto_bdl
+  ImageTag: 3.1.6
+  Ports:
+    HttpCoord: 8080
+  Replicas: 1
+  Resources:
+    limits:
+      cpu: 1
+      memory: 3.0Gi
+    requests:
+      cpu: 1
+      memory: 3.0Gi
+  Service:
+    loadBalancerSourceRanges:
+    - 176.223.207.36/32
+    - 89.36.24.2/32
+    - 84.40.56.0/24
+Worker:
+  Image: bigstepinc/presto_bdl
+  ImageTag: 3.1.6
+  Replicas: 0
+  Resources:
+    limits:
+      cpu: 0
+      memory: 0.0Gi
+    requests:
+      cpu: 0
+      memory: 0.0Gi
+server:
+  catalog:
+    first.properties: |
+      connector.name=hive-hadoop2
+      hive.metastore.uri=thrift://first-internal-hive-bdl-hive.first.svc.cluster.local:9083
+      hive.config.resources=/etc/presto/hive/core-site-first.xml
+      hive.metastore.username=presto
+      hive.metastore-timeout=1m
+      hive.collect-column-statistics-on-write=true
+      hive.allow-drop-table=true
+    second.properties: |
+      connector.name=hive-hadoop2
+      hive.metastore.uri=thrift://first-internal-hive-bdl-hive.first.svc.cluster.local:9083
+      hive.config.resources=/etc/presto/hive/core-site-first.xml
+      hive.metastore.username=presto
+      hive.metastore-timeout=1m
+      hive.collect-column-statistics-on-write=true
+      hive.allow-drop-table=true
+  config:
+    path: /etc/presto
+    query:
+      maxLength: "100000000"
+      maxMemory: 4GB
+      maxMemoryPerNode: 1GB
+  hdfs:
+    config:
+      core-site-first.xml: |-
+        <?xml version="1.0" encoding="UTF-8" standalone="no"?><configuration>
+        <property><name>fs.bdl.api.endpoint</name><value>http://176.223.207.36:8765</value><final>false</final><source>programmatically</source></property>
+        <property><name>bdl.conf.mock.audit.enabled</name><value>false</value><final>false</final><source>programmatically</source></property>
+        <property><name>fs.bdl.auth.apiKey</name><value>0HhZRvfDetMIpse58ZLQXa0oeaSTss</value><final>false</final><source>programmatically</source></property>
+        <property><name>fs.bdl.impl</name><value>com.bigstep.bdl.BDLFileSystem</value><final>false</final><source>programmatically</source></property>
+        <property><name>fs.defaultFS</name><value>bdl://presto-pizza.first/</value><final>false</final><source>programmatically</source></property>
+        <property><name>bdl.conf.mock.enabled</name><value>false</value><final>false</final><source>programmatically</source></property>
+        <property><name>bdl.conf.mock.audit.userId</name><value>AUDIT_MOCK_USERID</value><final>false</final><source>programmatically</source></property>
+        </configuration>
+  jvm:
+    gcMethod:
+      g1:
+        heapRegionSize: 32M
+      type: UseG1GC
+    maxHeapSize: 5G
+  log:
+    presto:
+      level: INFO
+  node:
+    dataDir: presto/etc/data
+    environment: production
