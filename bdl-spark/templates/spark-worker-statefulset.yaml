@@ -3,10 +3,14 @@ kind: StatefulSet
 metadata:
   name: {{ template "bdl-spark.worker.fullname" . }}
   labels:
+{{- if .Values.Worker.Labels }}
+{{ toYaml .Values.Worker.Labels | indent 4 }}
+{{- else }}
     heritage: {{ .Release.Service | quote }}
     release: {{ .Release.Name | quote }}
     chart: {{ template "bdl-spark.chart" . }}
     component: "{{ .Release.Name }}-{{ .Values.Worker.Component }}"
+{{- end }}
 spec:
   serviceName: "{{ template "bdl-spark.worker.fullname" . }}"
   replicas: {{ .Values.Worker.Replicas }}
@@ -14,15 +18,23 @@ spec:
     type: RollingUpdate
   selector:
     matchLabels:
+{{- if .Values.Worker.Labels }}
+{{ toYaml .Values.Worker.Labels | indent 6 }}
+{{- else }}
       component: "{{ .Release.Name }}-{{ .Values.Worker.Component }}"
+{{- end }}
   template:
     metadata:
       name: "{{ template "bdl-spark.worker.fullname" }}"
       labels:
+{{- if .Values.Worker.Labels }}
+{{ toYaml .Values.Worker.Labels | indent 8 }}
+{{- else }}
         heritage: {{ .Release.Service | quote }}
         release: {{ .Release.Name | quote }}
         chart: {{ template "bdl-spark.chart" . }}
         component: "{{ .Release.Name }}-{{ .Values.Worker.Component }}"
+{{- end }}
     spec:
       containers:
       - name: "{{ template "bdl-spark.worker.fullname" . }}"
@@ -130,10 +142,14 @@ spec:
   volumeClaimTemplates:
   - metadata:
       labels:
+{{- if .Values.Worker.Labels }}
+{{ toYaml .Values.Worker.Labels | indent 8 }}
+{{- else }}
         heritage: {{ .Release.Service | quote }}
         release: {{ .Release.Name | quote }}
         chart: {{ template "bdl-spark.chart" . }}
         component: "{{ .Release.Name }}-{{ .Values.Worker.Component }}"
+{{- end }}
       name: "data"
     spec:
       accessModes:
