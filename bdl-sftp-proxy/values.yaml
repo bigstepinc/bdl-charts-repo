@@ -20,3 +20,6 @@ Ports:
 Service:
   Enabled: true
   Type: "LoadBalancer"
+
+Tests:
+  Labels:
