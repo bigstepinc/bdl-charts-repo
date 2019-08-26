@@ -3,10 +3,14 @@ kind: Deployment
 metadata:
   name: {{ template "bdl-sftp-proxy.fullname" . }}
   labels:
+{{- if .Values.Labels }}
+{{ toYaml .Values.Labels | indent 4 }}
+{{- else }}
     heritage: {{ .Release.Service | quote }}
     release: {{ .Release.Name | quote }}
     chart: {{ template "bdl-sftp-proxy.chart" .}}
     component: "{{ .Release.Name }}-{{ .Values.Component }}"
+{{- end }}
 spec:
   serviceName: "{{ template "bdl-sftp-proxy.fullname" . }}"
   replicas: {{ .Values.Replicas }}
@@ -14,17 +18,25 @@ spec:
     type: RollingUpdate
   selector:
     matchLabels:
+{{- if .Values.Labels }}
+{{ toYaml .Values.Labels | indent 6 }}
+{{- else }}
       heritage: {{ .Release.Service | quote }}
       release: {{ .Release.Name | quote }}
       chart: {{ template "bdl-sftp-proxy.chart" .}}
       component: "{{ .Release.Name }}-{{ .Values.Component }}"
+{{- end }}
   template:
     metadata:
       labels:
+{{- if .Values.Labels }}
+{{ toYaml .Values.Labels | indent 8 }}
+{{- else }}
         heritage: {{ .Release.Service | quote }}
         release: {{ .Release.Name | quote }}
         chart: {{ template "bdl-sftp-proxy.chart" .}}
         component: "{{ .Release.Name }}-{{ .Values.Component }}"
+{{- end }}
     spec:
       containers:
       - name: "{{ template "bdl-sftp-proxy.fullname" . }}"
