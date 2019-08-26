@@ -3,10 +3,14 @@ kind: Pod
 metadata:
   name: "{{ include "bdl-sftp-proxy.fullname" . }}-test-connection"
   labels:
+{{- if .Values.Tests.Labels }}
+{{ toYaml .Values.Tests.Labels | indent 4 }}
+{{- else }}
     app.kubernetes.io/name: {{ include "bdl-sftp-proxy.name" . }}
     helm.sh/chart: {{ include "bdl-sftp-proxy.chart" . }}
     app.kubernetes.io/instance: {{ .Release.Name }}
     app.kubernetes.io/managed-by: {{ .Release.Service }}
+{{- end }}
   annotations:
     "helm.sh/hook": test-success
 spec:
