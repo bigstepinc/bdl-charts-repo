@@ -3,10 +3,14 @@ kind: StatefulSet
 metadata:
   name: {{ template "bdl-postgresql.fullname" . }}
   labels:
-    heritage: {{ .Release.Service | quote }}
+{{- if .Values.Labels }}
+{{ toYaml .Values.Labels | indent 4 }}
+{{- else }}
     release: {{ .Release.Name | quote }}
     chart: {{ template "bdl-postgresql.chart" . }}
     component: "{{ .Release.Name }}-{{ .Values.Component }}"
+{{- end }}
+  heritage: {{ .Release.Service | quote }}
 spec:
   serviceName: "{{ template "bdl-postgresql.fullname" . }}"
   replicas: {{ .Values.Replicas }}
@@ -14,15 +18,23 @@ spec:
     type: RollingUpdate
   selector:
     matchLabels:
+{{- if .Values.Labels }}
+{{ toYaml .Values.Labels | indent 6 }}
+{{- else }}
       component: "{{ .Release.Name }}-{{ .Values.Component }}"
+{{- end }}
   template:
     metadata:
       name: "{{ template "bdl-postgresql.fullname" . }}"
       labels:
-        heritage: {{ .Release.Service | quote }}
+{{- if .Values.Labels }}
+{{ toYaml .Values.Labels | indent 8 }}
+{{- else }}
         release: {{ .Release.Name | quote }}
         chart: {{ template "bdl-postgresql.chart" . }}
         component: "{{ .Release.Name }}-{{ .Values.Component }}"
+{{- end }}
+      heritage: {{ .Release.Service | quote }}
     spec:
       containers:
       - name: "{{ template "bdl-postgresql.fullname" . }}"

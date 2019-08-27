@@ -6,11 +6,11 @@ metadata:
 {{- if .Values.Worker.Labels }}
 {{ toYaml .Values.Worker.Labels | indent 4 }}
 {{- else }}
-    heritage: {{ .Release.Service | quote }}
     release: {{ .Release.Name | quote }}
     chart: {{ template "bdl-spark.chart" . }}
     component: "{{ .Release.Name }}-{{ .Values.Worker.Component }}"
 {{- end }}
+  heritage: {{ .Release.Service | quote }}
 spec:
   serviceName: "{{ template "bdl-spark.worker.fullname" . }}"
   replicas: {{ .Values.Worker.Replicas }}
@@ -30,11 +30,11 @@ spec:
 {{- if .Values.Worker.Labels }}
 {{ toYaml .Values.Worker.Labels | indent 8 }}
 {{- else }}
-        heritage: {{ .Release.Service | quote }}
         release: {{ .Release.Name | quote }}
         chart: {{ template "bdl-spark.chart" . }}
         component: "{{ .Release.Name }}-{{ .Values.Worker.Component }}"
 {{- end }}
+      heritage: {{ .Release.Service | quote }}
     spec:
       containers:
       - name: "{{ template "bdl-spark.worker.fullname" . }}"

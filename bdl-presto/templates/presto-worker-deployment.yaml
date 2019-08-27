@@ -3,23 +3,35 @@ kind: Deployment
 metadata:
   name: {{ template "bdl-presto.worker.fullname" . }}
   labels:
-    heritage: {{ .Release.Service | quote }}
+{{- if .Values.Labels }}
+{{ toYaml .Values.Labels | indent 4 }}
+{{- else }}
     release: {{ .Release.Name | quote }}
     chart: {{ template "bdl-presto.chart" . }}
     component: "{{ .Release.Name }}-{{ .Values.Worker.Component }}"
+{{- end }}
+  heritage: {{ .Release.Service | quote }}
 spec:
   replicas: {{ .Values.Worker.Replicas }}
   selector:
     matchLabels:
+{{- if .Values.Labels }}
+{{ toYaml .Values.Labels | indent 6 }}
+{{- else }}
       release: {{ .Release.Name | quote }}
       component: "{{ .Release.Name }}-{{ .Values.Worker.Component }}"
+{{- end }}
   template:
     metadata:
       annotations:
         checksum/presto-catalog-secret: {{ include (print $.Template.BasePath "/presto-catalog-secret.yaml") . | sha256sum }}
       labels:
+{{- if .Values.Labels }}
+{{ toYaml .Values.Labels | indent 8 }}
+{{- else }}
         release: {{ .Release.Name | quote }}
         component: "{{ .Release.Name }}-{{ .Values.Worker.Component }}"
+{{- end }}
     spec:
       volumes:
         - name: config-volume
