@@ -3,21 +3,21 @@ kind: Deployment
 metadata:
   name: {{ template "bdl-presto.coordinator.fullname" . }}
   labels:
-{{- if .Values.Labels }}
-{{ toYaml .Values.Labels | indent 4 }}
+    heritage: {{ .Release.Service | quote }}
+{{- if .Values.Coordinator.Labels }}
+{{ toYaml .Values.Coordinator.Labels | indent 4 }}
 {{- else }}
     release: {{ .Release.Name | quote }}
     chart: {{ template "bdl-presto.chart" . }}
     component: "{{ .Release.Name }}-{{ .Values.Coordinator.Component }}"
-  heritage: {{ .Release.Service | quote }}
 {{- end }}
 spec:
   serviceName: "{{ template "bdl-presto.coordinator.fullname" . }}"
   replicas: {{ .Values.Coordinator.Replicas }}
   selector:
     matchLabels:
-{{- if .Values.Labels }}
-{{ toYaml .Values.Labels | indent 6 }}
+{{- if .Values.Coordinator.Labels }}
+{{ toYaml .Values.Coordinator.Labels | indent 6 }}
 {{- else }}
       release: {{ .Release.Name | quote }}
       chart: {{ template "bdl-presto.chart" . }}
@@ -29,14 +29,14 @@ spec:
       annotations:
         checksum/presto-catalog-secret: {{ include (print $.Template.BasePath "/presto-catalog-secret.yaml") . | sha256sum }}
       labels:
-{{- if .Values.Labels }}
-{{ toYaml .Values.Labels | indent 8 }}
+        heritage: {{ .Release.Service | quote }}
+{{- if .Values.Coordinator.Labels }}
+{{ toYaml .Values.Coordinator.Labels | indent 8 }}
 {{- else }}
         release: {{ .Release.Name | quote }}
         chart: {{ template "bdl-presto.chart" . }}
         component: "{{ .Release.Name }}-{{ .Values.Coordinator.Component }}"
 {{- end }}
-      heritage: {{ .Release.Service | quote }}
     spec:
       volumes:
         - name: config-volume

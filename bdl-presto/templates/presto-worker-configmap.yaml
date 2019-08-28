@@ -4,9 +4,13 @@ metadata:
   name: {{ template "bdl-presto.worker.fullname" . }}
   labels:
     heritage: {{ .Release.Service | quote }}
+{{- if .Values.Worker.Labels }}
+{{ toYaml .Values.Worker.Labels | indent 4 }}
+{{- else }}
     release: {{ .Release.Name | quote }}
     chart: {{ template "bdl-presto.chart" . }}
     component: "{{ .Release.Name }}-{{ .Values.Worker.Component }}"
+{{- end }}
 data:
   node.properties: |
     node.environment={{ .Values.server.node.environment }}

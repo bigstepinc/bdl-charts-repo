@@ -3,20 +3,20 @@ kind: Deployment
 metadata:
   name: {{ template "bdl-presto.worker.fullname" . }}
   labels:
-{{- if .Values.Labels }}
-{{ toYaml .Values.Labels | indent 4 }}
+    heritage: {{ .Release.Service | quote }}
+{{- if .Values.Worker.Labels }}
+{{ toYaml .Values.Worker.Labels | indent 4 }}
 {{- else }}
     release: {{ .Release.Name | quote }}
     chart: {{ template "bdl-presto.chart" . }}
     component: "{{ .Release.Name }}-{{ .Values.Worker.Component }}"
 {{- end }}
-  heritage: {{ .Release.Service | quote }}
 spec:
   replicas: {{ .Values.Worker.Replicas }}
   selector:
     matchLabels:
-{{- if .Values.Labels }}
-{{ toYaml .Values.Labels | indent 6 }}
+{{- if .Values.Worker.Labels }}
+{{ toYaml .Values.Worker.Labels | indent 6 }}
 {{- else }}
       release: {{ .Release.Name | quote }}
       component: "{{ .Release.Name }}-{{ .Values.Worker.Component }}"
@@ -26,8 +26,8 @@ spec:
       annotations:
         checksum/presto-catalog-secret: {{ include (print $.Template.BasePath "/presto-catalog-secret.yaml") . | sha256sum }}
       labels:
-{{- if .Values.Labels }}
-{{ toYaml .Values.Labels | indent 8 }}
+{{- if .Values.Worker.Labels }}
+{{ toYaml .Values.Worker.Labels | indent 8 }}
 {{- else }}
         release: {{ .Release.Name | quote }}
         component: "{{ .Release.Name }}-{{ .Values.Worker.Component }}"

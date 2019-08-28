@@ -5,9 +5,13 @@ metadata:
   name: {{ template "bdl-presto.coordinator.fullname" . }}-public
   labels:
     heritage: {{ .Release.Service | quote }}
+{{- if .Values.Coordinator.Labels }}
+{{ toYaml .Values.Coordinator.Labels | indent 4 }}
+{{- else }}
     release: {{ .Release.Name | quote }}
     chart: {{ template "bdl-presto.chart" . }}
     component: "{{ .Release.Name }}-{{ .Values.Coordinator.Component }}"
+{{- end }}
 spec:
   type: {{ .Values.Coordinator.Service.Type }}
   {{- if .Values.Coordinator.Service.clusterIP }}
@@ -31,7 +35,11 @@ spec:
       name: http-coord
   selector:
     heritage: {{ .Release.Service | quote }}
+{{- if .Values.Coordinator.Labels }}
+{{ toYaml .Values.Coordinator.Labels | indent 4 }}
+{{- else }}
     release: {{ .Release.Name | quote }}
     chart: {{ template "bdl-presto.chart" . }}
     component: "{{ .Release.Name }}-{{ .Values.Coordinator.Component }}"
+{{- end }}
 {{- end }}
