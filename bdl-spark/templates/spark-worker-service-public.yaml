@@ -4,10 +4,10 @@ kind: Service
 metadata:
   name: {{ template "bdl-spark.worker.fullname" . }}-public
   labels:
+    heritage: {{ .Release.Service | quote }}
 {{- if .Values.Worker.Labels }}
 {{ toYaml .Values.Worker.Labels | indent 4 }}
 {{- else }}
-    heritage: {{ .Release.Service | quote }}
     release: {{ .Release.Name | quote }}
     chart: {{ template "bdl-spark.chart" . }}
     component: "{{ .Release.Name }}-{{ .Values.Worker.Component }}"
@@ -34,10 +34,10 @@ spec:
     targetPort: 8081
     protocol: TCP
   selector:
+    heritage: {{ .Release.Service | quote }}
 {{- if .Values.Worker.Labels }}
 {{ toYaml .Values.Worker.Labels | indent 4 }}
 {{- else }}
-    heritage: {{ .Release.Service | quote }}
     release: {{ .Release.Name | quote }}
     chart: {{ template "bdl-spark.chart" . }}
     component: "{{ .Release.Name }}-{{ .Values.Worker.Component }}"

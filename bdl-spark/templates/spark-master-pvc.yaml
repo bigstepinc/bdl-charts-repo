@@ -7,10 +7,10 @@ kind: PersistentVolumeClaim
 metadata:
   name: "data-{{ template "bdl-spark.master.fullname" . }}-{{ $i }}"
   labels:
+    heritage: {{ .Release.Service | quote }}
 {{- if .Values.Master.Labels }}
 {{ toYaml .Values.Master.Labels | indent 4 }}
 {{- else }}
-    heritage: {{ .Release.Service | quote }}
     release: {{ .Release.Name | quote }}
     chart: {{ template "bdl-spark.chart" . }}
     component: "{{ .Release.Name }}-{{ .Values.Master.Component }}"

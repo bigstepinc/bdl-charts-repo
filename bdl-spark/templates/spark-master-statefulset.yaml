@@ -3,6 +3,7 @@ kind: StatefulSet
 metadata:
   name: {{ template "bdl-spark.master.fullname" . }}
   labels:
+    heritage: {{ .Release.Service | quote }}
 {{- if .Values.Master.Labels }}
 {{ toYaml .Values.Master.Labels | indent 4 }}
 {{- else }}
@@ -10,7 +11,6 @@ metadata:
     chart: {{ template "bdl-spark.chart" . }}
     component: "{{ .Release.Name }}-{{ .Values.Master.Component }}"
 {{- end }}
-  heritage: {{ .Release.Service | quote }}
 spec:
   serviceName: "{{ template "bdl-spark.master.fullname" . }}"
   replicas: {{ .Values.Master.Replicas }}
@@ -27,6 +27,7 @@ spec:
     metadata:
       name: "{{ template "bdl-spark.master.fullname" }}"
       labels:
+        heritage: {{ .Release.Service | quote }}
 {{- if .Values.Master.Labels }}
 {{ toYaml .Values.Master.Labels | indent 8 }}
 {{- else }}
@@ -34,7 +35,6 @@ spec:
         chart: {{ template "bdl-spark.chart" . }}
         component: "{{ .Release.Name }}-{{ .Values.Master.Component }}"
 {{- end }}
-      heritage: {{ .Release.Service | quote }}
     spec:
       containers:
       - name: "{{ template "bdl-spark.master.fullname" . }}-ui-proxy"
@@ -168,10 +168,10 @@ spec:
   volumeClaimTemplates:
   - metadata:
       labels:
+        heritage: {{ .Release.Service | quote }}
 {{- if .Values.Master.Labels }}
 {{ toYaml .Values.Master.Labels | indent 8 }}
 {{- else }}
-        heritage: {{ .Release.Service | quote }}
         release: {{ .Release.Name | quote }}
         chart: {{ template "bdl-spark.chart" . }}
         component: "{{ .Release.Name }}-{{ .Values.Master.Component }}"
