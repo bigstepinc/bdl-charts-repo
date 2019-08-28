@@ -3,14 +3,14 @@ kind: Deployment
 metadata:
   name: {{ template "bdl-argo.ui.fullname" . }}
   labels:
-{{- if .Values.Labels }}
-{{ toYaml .Values.Labels | indent 4 }}
+    heritage: {{ .Release.Service | quote }}
+{{- if .Values.UI.Labels }}
+{{ toYaml .Values.UI.Labels | indent 4 }}
 {{- else }}
     release: {{ .Release.Name | quote }}
     chart: {{ template "bdl-argo.chart" . }}
     component: "{{ .Release.Name }}-{{ .Values.UI.Component }}"
 {{- end }}
-  heritage: {{ .Release.Service | quote }}  
 spec:
   serviceName: "{{ template "bdl-argo.ui.fullname" . }}"
   replicas: {{ .Values.UI.Replicas }}
@@ -18,25 +18,25 @@ spec:
     type: RollingUpdate
   selector:
     matchLabels:
-{{- if .Values.Labels }}
-{{ toYaml .Values.Labels | indent 6 }}
+      heritage: {{ .Release.Service | quote }}
+{{- if .Values.UI.Labels }}
+{{ toYaml .Values.UI.Labels | indent 6 }}
 {{- else }}
       release: {{ .Release.Name | quote }}
       chart: {{ template "bdl-argo.chart" . }}
       component: "{{ .Release.Name }}-{{ .Values.UI.Component }}"
 {{- end }}
-    heritage: {{ .Release.Service | quote }}
   template:
     metadata:
       labels:
-{{- if .Values.Labels }}
-{{ toYaml .Values.Labels | indent 8 }}
+        heritage: {{ .Release.Service | quote }}
+{{- if .Values.UI.Labels }}
+{{ toYaml .Values.UI.Labels | indent 8 }}
 {{- else }}
         release: {{ .Release.Name | quote }}
         chart: {{ template "bdl-argo.chart" . }}
         component: "{{ .Release.Name }}-{{ .Values.UI.Component }}"
 {{- end }}
-      heritage: {{ .Release.Service | quote }}
     spec:
       serviceAccountName: "{{ template "bdl-argo.ui.fullname" . }}-{{ .Values.UI.ServiceAccount.NameBase }}"
       containers:

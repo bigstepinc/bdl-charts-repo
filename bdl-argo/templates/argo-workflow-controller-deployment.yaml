@@ -3,14 +3,14 @@ kind: Deployment
 metadata:
   name: {{ template "bdl-argo.workflow-controller.fullname" . }}
   labels:
-{{- if .Values.Labels }}
-{{ toYaml .Values.Labels | indent 4 }}
+    heritage: {{ .Release.Service | quote }}
+{{- if .Values.WorkflowController.Labels }}
+{{ toYaml .Values.WorkflowController.Labels | indent 4 }}
 {{- else }}
     release: {{ .Release.Name | quote }}
     chart: {{ template "bdl-argo.chart" .}}
     component: "{{ .Release.Name }}-{{ .Values.WorkflowController.Component }}"
 {{- end }}
-  heritage: {{ .Release.Service | quote }}
 spec:
   serviceName: "{{ template "bdl-argo.workflow-controller.fullname" . }}"
   replicas: {{ .Values.WorkflowController.Replicas }}
@@ -18,24 +18,24 @@ spec:
     type: RollingUpdate
   selector:
     matchLabels:
-{{- if .Values.Labels }}
-{{ toYaml .Values.Labels | indent 6 }}
+      heritage: {{ .Release.Service | quote }}
+{{- if .Values.WorkflowController.Labels }}
+{{ toYaml .Values.WorkflowController.Labels | indent 6 }}
 {{- else }}
       release: {{ .Release.Name | quote }}
       chart: {{ template "bdl-argo.chart" .}}
       component: "{{ .Release.Name }}-{{ .Values.WorkflowController.Component }}"
-    heritage: {{ .Release.Service | quote }}
 {{- end }}
   template:
     metadata:
       labels:
-{{- if .Values.Labels }}
-{{ toYaml .Values.Labels | indent 8 }}
+        heritage: {{ .Release.Service | quote }}
+{{- if .Values.WorkflowController.Labels }}
+{{ toYaml .Values.WorkflowController.Labels | indent 8 }}
 {{- else }}
         release: {{ .Release.Name | quote }}
         chart: {{ template "bdl-argo.chart" .}}
         component: "{{ .Release.Name }}-{{ .Values.WorkflowController.Component }}"
-      heritage: {{ .Release.Service | quote }}
 {{- end }}
     spec:
       serviceAccountName: "{{ template "bdl-argo.workflow-controller.fullname" . }}-{{ .Values.WorkflowController.ServiceAccount.NameBase }}"

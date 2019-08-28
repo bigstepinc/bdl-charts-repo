@@ -5,9 +5,13 @@ metadata:
   name: {{ template "bdl-argo.ui.fullname" . }}-public
   labels:
     heritage: {{ .Release.Service | quote }}
+{{- if .Values.UI.Labels }}
+{{ toYaml .Values.UI.Labels | indent 4 }}
+{{- else }}
     release: {{ .Release.Name | quote }}
     chart: {{ template "bdl-argo.chart" . }}
     component: "{{ .Release.Name }}-{{ .Values.UI.Component }}"
+{{- end }}
 spec:
   type: {{ .Values.UI.Service.Type }}
   {{- if .Values.UI.Service.clusterIP }}
@@ -31,7 +35,11 @@ spec:
     protocol: TCP
   selector:
     heritage: {{ .Release.Service | quote }}
+{{- if .Values.UI.Labels }}
+{{ toYaml .Values.UI.Labels | indent 4 }}
+{{- else }}
     release: {{ .Release.Name | quote }}
     chart: {{ template "bdl-argo.chart" . }}
     component: "{{ .Release.Name }}-{{ .Values.UI.Component }}"
+{{- end }}
 {{- end }}

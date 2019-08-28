@@ -4,9 +4,13 @@ metadata:
   name: {{ template "bdl-argo.workflow-controller.fullname" . }}-configmap
   labels:
     heritage: {{ .Release.Service | quote }}
+{{- if .Values.WorkflowController.Labels }}
+{{ toYaml .Values.WorkflowController.Labels | indent 4 }}
+{{- else }}
     release: {{ .Release.Name | quote }}
     chart: {{ template "bdl-argo.chart" .}}
     component: "{{ .Release.Name }}-{{ .Values.WorkflowController.Component }}"
+{{- end }}
 data:
   config: |
     {{- if .Values.WorkflowController.instanceID.enabled }}
