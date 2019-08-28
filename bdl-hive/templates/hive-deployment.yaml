@@ -3,14 +3,14 @@ kind: Deployment
 metadata:
   name: "{{ template "bdl-hive.fullname" . }}"
   labels:
+    heritage: {{ .Release.Service | quote }}
 {{- if .Values.Labels }}
 {{ toYaml .Values.Labels | indent 4 }}
-{{- else }}  
+{{- else }}
     release: {{ .Release.Name | quote }}
     chart: {{ template "bdl-hive.chart" .}}
     component: "{{ .Release.Name }}-{{ .Values.Component }}"
 {{- end }}
-  heritage: {{ .Release.Service | quote }}
 spec:
   serviceName: "{{ template "bdl-hive.fullname" . }}"
   replicas: {{ .Values.Replicas }}
@@ -18,24 +18,24 @@ spec:
     type: RollingUpdate
   selector:
     matchLabels:
+      heritage: {{ .Release.Service | quote }}
 {{- if .Values.Labels }}
 {{ toYaml .Values.Labels | indent 6 }}
 {{- else }}
       release: {{ .Release.Name | quote }}
       chart: {{ template "bdl-hive.chart" .}}
       component: "{{ .Release.Name }}-{{ .Values.Component }}"
-    heritage: {{ .Release.Service | quote }}
 {{- end }}
   template:
     metadata:
       labels:
+        heritage: {{ .Release.Service | quote }}
 {{- if .Values.Labels }}
 {{ toYaml .Values.Labels | indent 8 }}
 {{- else }}
         release: {{ .Release.Name | quote }}
         chart: {{ template "bdl-hive.chart" .}}
         component: "{{ .Release.Name }}-{{ .Values.Component }}"
-      heritage: {{ .Release.Service | quote }}
 {{- end }}
     spec:
       containers:

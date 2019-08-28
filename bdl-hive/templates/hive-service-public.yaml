@@ -5,9 +5,13 @@ metadata:
   name: {{ template "bdl-hive.fullname" . }}-public
   labels:
     heritage: {{ .Release.Service | quote }}
+{{- if .Values.Labels }}
+{{ toYaml .Values.Labels | indent 4 }}
+{{- else }}
     release: {{ .Release.Name | quote }}
     chart: {{ template "bdl-hive.chart" . }}
     component: "{{ .Release.Name }}-{{ .Values.Component }}"
+{{- end }}
 spec:
   type: {{ .Values.Service.Type }}
   {{- if .Values.Service.clusterIP }}
@@ -31,7 +35,11 @@ spec:
       name: hive
   selector:
     heritage: {{ .Release.Service | quote }}
+{{- if .Values.Labels }}
+{{ toYaml .Values.Labels | indent 4 }}
+{{- else }}
     release: {{ .Release.Name | quote }}
     chart: {{ template "bdl-hive.chart" . }}
     component: "{{ .Release.Name }}-{{ .Values.Component }}"
+{{- end }}
 {{- end }}
