@@ -5,9 +5,13 @@ metadata:
   name: {{ template "bdl-sparksql.master.fullname" . }}-public
   labels:
     heritage: {{ .Release.Service | quote }}
+{{- if .Values.Master.Labels }}
+{{ toYaml .Values.Master.Labels | indent 4 }}
+{{- else }}
     release: {{ .Release.Name | quote }}
     chart: {{ template "bdl-sparksql.chart" . }}
     component: "{{ .Release.Name }}-{{ .Values.Master.Component }}"
+{{- end }}
 spec:
   type: {{ .Values.Master.Service.Type }}
   {{- if .Values.Master.Service.clusterIP }}
@@ -43,7 +47,11 @@ spec:
     protocol: TCP
   selector:
     heritage: {{ .Release.Service | quote }}
+{{- if .Values.Master.Labels }}
+{{ toYaml .Values.Master.Labels | indent 4 }}
+{{- else }}
     release: {{ .Release.Name | quote }}
     chart: {{ template "bdl-sparksql.chart" . }}
     component: "{{ .Release.Name }}-{{ .Values.Master.Component }}"
+{{- end }}
 {{- end }}

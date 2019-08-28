@@ -4,9 +4,13 @@ metadata:
   name: {{ template "bdl-sparksql.master.fullname" . }}
   labels:
     heritage: {{ .Release.Service | quote }}
+{{- if .Values.Master.Labels }}
+{{ toYaml .Values.Master.Labels | indent 4 }}
+{{- else }}
     release: {{ .Release.Name | quote }}
     chart: {{ template "bdl-sparksql.chart" . }}
     component: "{{ .Release.Name }}-{{ .Values.Master.Component }}"
+{{- end }}
 spec:
   serviceName: "{{ template "bdl-sparksql.master.fullname" . }}"
   replicas: {{ .Values.Master.Replicas }}
@@ -14,15 +18,23 @@ spec:
     type: RollingUpdate
   selector:
     matchLabels:
+{{- if .Values.Master.Labels }}
+{{ toYaml .Values.Master.Labels | indent 6 }}
+{{- else }}
       component: "{{ .Release.Name }}-{{ .Values.Master.Component }}"
+{{- end }}
   template:
     metadata:
       name: "{{ template "bdl-sparksql.master.fullname" }}"
       labels:
         heritage: {{ .Release.Service | quote }}
+{{- if .Values.Master.Labels }}
+{{ toYaml .Values.Master.Labels | indent 8 }}
+{{- else }}
         release: {{ .Release.Name | quote }}
         chart: {{ template "bdl-sparksql.chart" . }}
         component: "{{ .Release.Name }}-{{ .Values.Master.Component }}"
+{{- end }}
     spec:
       containers:
       - name: "{{ template "bdl-sparksql.master.fullname" . }}-ui-proxy"
@@ -161,9 +173,13 @@ spec:
   - metadata:
       labels:
         heritage: {{ .Release.Service | quote }}
+{{- if .Values.Master.Labels }}
+{{ toYaml .Values.Master.Labels | indent 8 }}
+{{- else }}
         release: {{ .Release.Name | quote }}
         chart: {{ template "bdl-sparksql.chart" . }}
         component: "{{ .Release.Name }}-{{ .Values.Master.Component }}"
+{{- end }}
       name: "data"
     spec:
       accessModes:

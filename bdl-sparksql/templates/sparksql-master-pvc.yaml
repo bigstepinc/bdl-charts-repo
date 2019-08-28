@@ -8,9 +8,13 @@ metadata:
   name: "data-{{ template "bdl-sparksql.master.fullname" . }}-{{ $i }}"
   labels:
     heritage: {{ .Release.Service | quote }}
+{{- if .Values.Master.Labels }}
+{{ toYaml .Values.Master.Labels | indent 4 }}
+{{- else }}
     release: {{ .Release.Name | quote }}
     chart: {{ template "bdl-sparksql.chart" . }}
     component: "{{ .Release.Name }}-{{ .Values.Master.Component }}"
+{{- end }}
 spec:
   accessModes:
   - "ReadWriteOnce"
