@@ -3,10 +3,10 @@ kind: Service
 metadata:
   name: {{ template "bdl-sftp-proxy.fullname" . }}
   labels:
+    heritage: {{ .Release.Service | quote }}
 {{- if .Values.Labels }}
 {{ toYaml .Values.Labels | indent 4 }}
 {{- else }}
-    heritage: {{ .Release.Service | quote }}
     release: {{ .Release.Name | quote }}
     chart: {{ template "bdl-sftp-proxy.chart" .}}
     component: "{{ .Release.Name }}-{{ .Values.Component }}"
@@ -20,10 +20,10 @@ spec:
     targetPort: 22
     protocol: TCP
   selector:
+    heritage: {{ .Release.Service | quote }}
 {{- if .Values.Labels }}
 {{ toYaml .Values.Labels | indent 4 }}
 {{- else }}
-    heritage: {{ .Release.Service | quote }}
     release: {{ .Release.Name | quote }}
     chart: {{ template "bdl-sftp-proxy.chart" .}}
     component: "{{ .Release.Name }}-{{ .Values.Component }}"
