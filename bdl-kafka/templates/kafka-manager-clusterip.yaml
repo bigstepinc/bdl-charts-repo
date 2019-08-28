@@ -4,9 +4,13 @@ metadata:
   name: {{ template "bdl-kafka.manager.fullname" . }}
   labels:
     heritage: {{ .Release.Service | quote }}
+{{- if .Values.Manager.Labels }}
+{{ toYaml .Values.Manager.Labels | indent 8 }}
+{{- else }}
     release: {{ .Release.Name | quote }}
     chart: {{ template "bdl-kafka.chart" . }}
     component: "{{ .Release.Name }}-{{ .Values.Manager.Component }}"
+{{- end }}
 spec:
   type: ClusterIP
   clusterIP: None
@@ -18,6 +22,10 @@ spec:
     targetPort: 9000
   selector:
     heritage: {{ .Release.Service | quote }}
+{{- if .Values.Manager.Labels }}
+{{ toYaml .Values.Manager.Labels | indent 8 }}
+{{- else }}
     release: {{ .Release.Name | quote }}
     chart: {{ template "bdl-kafka.chart" . }}
     component: "{{ .Release.Name }}-{{ .Values.Manager.Component }}"
+{{- end }}

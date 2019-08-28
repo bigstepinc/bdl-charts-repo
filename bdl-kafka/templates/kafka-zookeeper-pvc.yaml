@@ -8,9 +8,13 @@ metadata:
   name: "data-{{ template "bdl-kafka.zookeeper.fullname" . }}-{{ $i }}"
   labels:
     heritage: {{ .Release.Service | quote }}
+{{- if .Values.Zookeeper.Labels }}
+{{ toYaml .Values.Zookeeper.Labels | indent 4 }}
+{{- else }}
     release: {{ .Release.Name | quote }}
     chart: {{ template "bdl-kafka.chart" . }}
     component: "{{ .Release.Name }}-{{ .Values.Zookeeper.Component }}"
+{{- end }}
 spec:
   accessModes:
   - "ReadWriteOnce"

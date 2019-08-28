@@ -3,14 +3,14 @@ kind: StatefulSet
 metadata:
   name: {{ template "bdl-kafka.manager.fullname" . }}
   labels:
-{{- if .Values.Labels }}
-{{ toYaml .Values.Labels | indent 4 }}
+    heritage: {{ .Release.Service | quote }}
+{{- if .Values.Manager.Labels }}
+{{ toYaml .Values.Manager.Labels | indent 4 }}
 {{- else }}
     release: {{ .Release.Name | quote }}
     chart: {{ template "bdl-kafka.chart" . }}
     component: "{{ .Release.Name }}-{{ .Values.Manager.Component }}"
 {{- end }}
-  heritage: {{ .Release.Service | quote }}
 spec:
   serviceName: "{{ template "bdl-kafka.manager.fullname" . }}"
   replicas: {{ .Values.Manager.Replicas }}
@@ -20,7 +20,7 @@ spec:
   selector:
     matchLabels:
 {{- if .Values.Labels }}
-{{ toYaml .Values.Labels | indent 6 }}
+{{ toYaml .Values.Manager.Labels | indent 6 }}
 {{- else }}
       component: "{{ .Release.Name }}-{{ .Values.Manager.Component }}"
 {{- end }}
@@ -28,14 +28,14 @@ spec:
     metadata:
       name: "{{ template "bdl-kafka.manager.fullname" }}"
       labels:
-{{- if .Values.Labels }}
-{{ toYaml .Values.Labels | indent 8 }}
+        heritage: {{ .Release.Service | quote }}
+{{- if .Values.Manager.Labels }}
+{{ toYaml .Values.Manager.Labels | indent 8 }}
 {{- else }}
         release: {{ .Release.Name | quote }}
         chart: {{ template "bdl-kafka.chart" . }}
         component: "{{ .Release.Name }}-{{ .Values.Manager.Component }}"
 {{- end }}
-      heritage: {{ .Release.Service | quote }}
     spec:
       containers:
       - name: "{{ template "bdl-kafka.manager.fullname" . }}"

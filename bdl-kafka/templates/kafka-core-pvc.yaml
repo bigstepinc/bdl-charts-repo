@@ -8,9 +8,13 @@ metadata:
   name: "logs-{{ template "bdl-kafka.core.fullname" . }}-{{ $i }}"
   labels:
     heritage: {{ .Release.Service | quote }}
+{{- if .Values.Core.Labels }}
+{{ toYaml .Values.Core.Labels | indent 4 }}
+{{- else }}
     release: {{ .Release.Name | quote }}
     chart: {{ template "bdl-kafka.chart" . }}
     component: "{{ .Release.Name }}-{{ .Values.Core.Component }}"
+{{- end }}
 spec:
   accessModes:
   - "ReadWriteOnce"

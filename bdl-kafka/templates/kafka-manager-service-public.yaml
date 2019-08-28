@@ -5,9 +5,13 @@ metadata:
   name: {{ template "bdl-kafka.manager.fullname" . }}-public
   labels:
     heritage: {{ .Release.Service | quote }}
+{{- if .Values.Manager.Labels }}
+{{ toYaml .Values.Manager.Labels | indent 8 }}
+{{- else }}
     release: {{ .Release.Name | quote }}
     chart: {{ template "bdl-kafka.chart" . }}
     component: "{{ .Release.Name }}-{{ .Values.Manager.Component }}"
+{{- end }}
 spec:
   type: {{ .Values.Manager.Service.Type }}
   {{- if .Values.Manager.Service.clusterIP }}
@@ -31,7 +35,11 @@ spec:
     protocol: TCP
   selector:
     heritage: {{ .Release.Service | quote }}
+{{- if .Values.Manager.Labels }}
+{{ toYaml .Values.Manager.Labels | indent 8 }}
+{{- else }}
     release: {{ .Release.Name | quote }}
     chart: {{ template "bdl-kafka.chart" . }}
     component: "{{ .Release.Name }}-{{ .Values.Manager.Component }}"
+{{- end }}
 {{- end }}

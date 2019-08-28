@@ -3,14 +3,14 @@ kind: StatefulSet
 metadata:
   name: {{ template "bdl-kafka.zookeeper.fullname" . }}
   labels:
-{{- if .Values.Labels }}
-{{ toYaml .Values.Labels | indent 4 }}
+    heritage: {{ .Release.Service | quote }}
+{{- if .Values.Zookeeper.Labels }}
+{{ toYaml .Values.Zookeeper.Labels | indent 4 }}
 {{- else }}
     release: {{ .Release.Name | quote }}
     chart: {{ template "bdl-kafka.chart" . }}
     component: "{{ .Release.Name }}-{{ .Values.Zookeeper.Component }}"
 {{- end }}
-  heritage: {{ .Release.Service | quote }}
 spec:
   serviceName: "{{ template "bdl-kafka.zookeeper.fullname" . }}"
   replicas: {{ .Values.Zookeeper.Replicas }}
@@ -19,22 +19,22 @@ spec:
     type: RollingUpdate
   selector:
     matchLabels:
-{{- if .Values.Labels }}
-{{ toYaml .Values.Labels | indent 6 }}
+{{- if .Values.Zookeeper.Labels }}
+{{ toYaml .Values.Zookeeper.Labels | indent 6 }}
 {{- else }}
       component: "{{ .Release.Name }}-{{ .Values.Zookeeper.Component }}"
 {{- end }}
   template:
     metadata:
       labels:
-{{- if .Values.Labels }}
-{{ toYaml .Values.Labels | indent 8 }}
+        heritage: {{ .Release.Service | quote }}
+{{- if .Values.Zookeeper.Labels }}
+{{ toYaml .Values.Zookeeper.Labels | indent 8 }}
 {{- else }}
         release: {{ .Release.Name | quote }}
         chart: {{ template "bdl-kafka.chart" . }}
         component: "{{ .Release.Name }}-{{ .Values.Zookeeper.Component }}"
 {{- end }}
-      heritage: {{ .Release.Service | quote }}
     spec:
       containers:
       - name: "{{ template "bdl-kafka.zookeeper.fullname" . }}"
@@ -107,9 +107,13 @@ spec:
   - metadata:
       labels:
         heritage: {{ .Release.Service | quote }}
+{{- if .Values.Zookeeper.Labels }}
+{{ toYaml .Values.Zookeeper.Labels | indent 8 }}
+{{- else }}
         release: {{ .Release.Name | quote }}
         chart: {{ template "bdl-kafka.chart" . }}
         component: "{{ .Release.Name }}-{{ .Values.Zookeeper.Component }}"
+{{- end }}
       name: "data"
     spec:
       accessModes:
