@@ -4,8 +4,12 @@ metadata:
   name: "{{ template "bdl-kaniko.fullname" . }}"
   labels:
     heritage: {{ .Release.Service | quote }}
+{{- if .Values.Labels }}
+{{ toYaml .Values.Labels | indent 4 }}
+{{- else }}
     release: {{ .Release.Name | quote }}
     chart: {{ template "bdl-kaniko.chart" . }}
     component: "{{ .Release.Name }}-{{ .Values.Component }}"
+{{- end }}
 data:
   notebook.ipynb: {{ .Values.Notebook.content | quote }}
