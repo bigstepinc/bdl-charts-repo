@@ -4,9 +4,13 @@ metadata:
   name: "data-{{ template "bdl-jupyter.fullname" . }}"
   labels:
     heritage: {{ .Release.Service | quote }}
+{{- if .Values.Labels }}
+{{ toYaml .Values.Labels | indent 4 }}
+{{- else }}
     release: {{ .Release.Name | quote }}
     chart: {{ template "bdl-jupyter.chart" . }}
     component: "{{ .Release.Name }}-{{ .Values.Component }}"
+{{- end }}
 spec:
   accessModes:
   - "ReadWriteOnce"
