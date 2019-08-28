@@ -55,8 +55,6 @@ spec:
             mountPath: /context
           - name: bash-config
             mountPath: /root/envs
-          - name: config
-            mountPath: /context/notebook
       initContainers:
       - name: "{{ template "bdl-kaniko.fullname" . }}-sync"
         image: "{{ .Values.sync.Image }}"
@@ -79,9 +77,6 @@ spec:
                   path: config.json
         - name: context
           emptyDir: {}
-        - name: config
-          configMap:
-            name: "{{ template "bdl-kaniko.fullname" . }}"
         - name: bash-config
           configMap:
             name: "{{ template "bdl-kaniko.fullname" . }}-bash"
