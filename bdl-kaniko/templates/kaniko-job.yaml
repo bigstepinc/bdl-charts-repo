@@ -39,7 +39,11 @@ spec:
 {{ toYaml .Values.Resources | indent 10 }}
         args: [ "--build-arg", "PIP_PACKAGES={{ .Values.PipPackages }}",
                 "--build-arg", "OS_PACKAGES={{ .Values.OsPackages }}",
-                "--build-arg", "NOTEBOOK_NAME=notebook.ipynb",
+                "--build-arg", "NOTEBOOK_NAME={{ .Values.Env.NotebookName }}",
+                "--build-arg", "DATALAKE_ID={{ .Values.Env.DatalakeID }}",
+                "--build-arg", "NOTEBOOK_VERSION={{ .Values.Env.NotebookVersion }}",
+                "--build-arg", "API_KEY={{ .Values.Env.ApiKey }}",
+                "--build-arg", "API_ENDPOINT={{ .Values.Env.ApiEndpoint }}",                
                 "--dockerfile=Dockerfile",
                 "--context=/context",
                 "--destination={{ .Values.kaniko.Destination }}:{{ .Values.kaniko.Tag }}",

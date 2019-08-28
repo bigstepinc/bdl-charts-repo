@@ -30,6 +30,11 @@ Notebook:
   content: ""
 
 Env:
+  DatalakeId: ""
+  NotebookName: ""
+  NotebookVersion: ""
+  ApiKey: ""
+  ApiEndpoint: ""
   environmentVariables:
 
 Resources: {}
