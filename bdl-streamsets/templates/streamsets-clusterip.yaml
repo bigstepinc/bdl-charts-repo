@@ -4,9 +4,13 @@ metadata:
   name: {{ template "bdl-streamsets.fullname" . }}
   labels:
     heritage: {{ .Release.Service | quote }}
+{{- if .Values.Labels }}
+{{ toYaml .Values.Labels | indent 4 }}
+{{- else }}
     release: {{ .Release.Name | quote }}
     chart: {{ template "bdl-streamsets.chart" . }}
     component: "{{ .Release.Name }}-{{ .Values.Component }}"
+{{- end }}
 spec:
   type: ClusterIP
   ports:
@@ -16,6 +20,10 @@ spec:
     protocol: TCP
   selector:
     heritage: {{ .Release.Service | quote }}
+{{- if .Values.Labels }}
+{{ toYaml .Values.Labels | indent 4 }}
+{{- else }}
     release: {{ .Release.Name | quote }}
     chart: {{ template "bdl-streamsets.chart" . }}
     component: "{{ .Release.Name }}-{{ .Values.Component }}"
+{{- end }}

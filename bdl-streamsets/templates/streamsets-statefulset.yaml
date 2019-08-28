@@ -3,6 +3,7 @@ kind: StatefulSet
 metadata:
   name: {{ template "bdl-streamsets.fullname" . }}
   labels:
+    heritage: {{ .Release.Service | quote }}
 {{- if .Values.Labels }}
 {{ toYaml .Values.Labels | indent 4 }}
 {{- else }}
@@ -10,7 +11,6 @@ metadata:
     chart: {{ template "bdl-streamsets.chart" . }}
     component: "{{ .Release.Name }}-{{ .Values.Component }}"
 {{- end }}
-  heritage: {{ .Release.Service | quote }}
 spec:
   serviceName: "{{ template "bdl-streamsets.fullname" . }}"
   replicas: {{ .Values.Replicas }}
@@ -27,6 +27,7 @@ spec:
     metadata:
       name: "{{ template "bdl-streamsets.fullname" . }}"
       labels:
+        heritage: {{ .Release.Service | quote }}
 {{- if .Values.Labels }}
 {{ toYaml .Values.Labels | indent 8 }}
 {{- else }}
@@ -34,7 +35,6 @@ spec:
         chart: {{ template "bdl-streamsets.chart" . }}
         component: "{{ .Release.Name }}-{{ .Values.Component }}"
 {{- end }}
-      heritage: {{ .Release.Service | quote }}
     spec:
       containers:
       - name: "{{ template "bdl-streamsets.fullname" . }}"
