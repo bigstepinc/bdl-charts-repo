@@ -25,9 +25,6 @@ sync:
   ImagePullPolicy: "Always"
   Repository: ""
 
-Env:
-  environmentVariables:
-
 Notebook:
   DatalakeId: ""
   NotebookName: ""

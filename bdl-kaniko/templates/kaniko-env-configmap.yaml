@@ -1,6 +1,0 @@
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: "{{ template "bdl-kaniko.fullname" . }}-bash"
-data:
-  bashEnv: "{{ .Values.Env.environmentVariables }}"

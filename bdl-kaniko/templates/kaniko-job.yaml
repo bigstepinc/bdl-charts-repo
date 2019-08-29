@@ -39,9 +39,6 @@ spec:
 {{ toYaml .Values.Resources | indent 10 }}
         args: [ "--build-arg", "PIP_PACKAGES={{ .Values.PipPackages }}",
                 "--build-arg", "OS_PACKAGES={{ .Values.OsPackages }}",
-                "--build-arg", "NOTEBOOK_NAME={{ .Values.Notebook.NotebookName }}",
-                "--build-arg", "DATALAKE_ID={{ .Values.Notebook.DatalakeID }}",
-                "--build-arg", "NOTEBOOK_VERSION={{ .Values.Notebook.NotebookVersion }}",
                 "--build-arg", "API_KEY={{ .Values.ObjStorage.Auth.ApiKey }}",
                 "--build-arg", "API_ENDPOINT={{ .Values.BDL.ApiEndpoint }}",                
                 "--dockerfile=Dockerfile",
@@ -53,8 +50,6 @@ spec:
             mountPath: /kaniko/.docker
           - name: context
             mountPath: /context
-          - name: bash-config
-            mountPath: /root/envs
       initContainers:
       - name: "{{ template "bdl-kaniko.fullname" . }}-sync"
         image: "{{ .Values.sync.Image }}"
@@ -77,6 +72,3 @@ spec:
                   path: config.json
         - name: context
           emptyDir: {}
-        - name: bash-config
-          configMap:
-            name: "{{ template "bdl-kaniko.fullname" . }}-bash"
