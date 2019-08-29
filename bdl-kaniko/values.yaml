@@ -26,11 +26,19 @@ sync:
   Repository: ""
 
 Env:
+  environmentVariables:
+
+Notebook:
   DatalakeId: ""
   NotebookName: ""
   NotebookVersion: ""
-  ApiKey: ""
+
+BDL:
   ApiEndpoint: ""
-  environmentVariables:
+
+ObjStorage:
+  Auth:
+    Method: "apikey"
+    ApiKey: ""
 
 Resources: {}
