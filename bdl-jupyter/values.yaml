@@ -17,7 +17,7 @@ ObjStorage:
   WarehouseDir: ""
   BdlDefaultPath: ""
 
-Component: "jupyter"
+Component: "bdl-jupyter"
 Replicas: 1
 Image: "bigstepinc/jupyter_bdl"
 ImageTag: "2.4.1-4"
