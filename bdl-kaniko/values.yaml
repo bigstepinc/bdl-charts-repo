@@ -9,7 +9,6 @@ kaniko:
   ImageTag: "latest"
   ImagePullPolicy: "IfNotPresent"
   Destination: ""
-  Tag: "v1"
 
 ImageCredentials:
   registry: ""
