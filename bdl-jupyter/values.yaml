@@ -42,6 +42,7 @@ Notebook:
     Create: true
     # ExternalName: ""
   Password: "notebook"
+  Token: "token"
 
 DataBase:
   Enabled: false
