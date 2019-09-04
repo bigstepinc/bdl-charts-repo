@@ -24,11 +24,6 @@ sync:
   ImagePullPolicy: "Always"
   Repository: ""
 
-Notebook:
-  DatalakeId: ""
-  NotebookName: ""
-  NotebookVersion: ""
-
 BDL:
   ApiEndpoint: ""
 
