@@ -9,7 +9,6 @@ kaniko:
   ImageTag: "latest"
   ImagePullPolicy: "IfNotPresent"
   Destination: ""
-  Tag: "v1"
 
 ImageCredentials:
   registry: ""
@@ -25,11 +24,12 @@ sync:
   ImagePullPolicy: "Always"
   Repository: ""
 
-Notebook:
-  name: ""
-  content: ""
+BDL:
+  ApiEndpoint: ""
 
-Env:
-  environmentVariables:
+ObjStorage:
+  Auth:
+    Method: "apikey"
+    ApiKey: ""
 
 Resources: {}

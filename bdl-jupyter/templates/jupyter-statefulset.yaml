@@ -44,6 +44,9 @@ spec:
         imagePullPolicy: "{{ .Values.ImagePullPolicy }}"
         terminationMessagePolicy: "File"
         terminationMessagePath: "/dev/termination-log"
+        volumeMounts:
+          - name: token
+            mountPath: /token
         ports:
         - name: notebook
           containerPort: 8888
@@ -125,5 +128,13 @@ spec:
       - name: datadir
         persistentVolumeClaim:
           claimName: "data-{{ template "bdl-jupyter.fullname" . }}"
+      - name: token
+        projected:
+          sources:
+          - secret:
+              name: "{{ template "bdl-jupyter.fullname" . }}-token"
+              items:
+              - key: token
+                path: token
   podManagementPolicy: OrderedReady
   revisionHistoryLimit: 10
