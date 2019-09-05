@@ -44,9 +44,6 @@ spec:
         imagePullPolicy: "{{ .Values.ImagePullPolicy }}"
         terminationMessagePolicy: "File"
         terminationMessagePath: "/dev/termination-log"
-        volumeMounts:
-          - name: token
-            mountPath: "{{ .Values.Notebook.TokenFolder }}"
         ports:
         - name: notebook
           containerPort: 8888
@@ -121,6 +118,8 @@ spec:
         volumeMounts:
         - name: datadir
           mountPath: {{ .Values.DataDir }}
+        - name: token
+          mountPath: "{{ .Values.Notebook.TokenFolder }}"
       restartPolicy: Always
       terminationGracePeriodSeconds: 30
       dnsPolicy: ClusterFirst
