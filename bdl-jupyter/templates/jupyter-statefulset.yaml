@@ -46,7 +46,7 @@ spec:
         terminationMessagePath: "/dev/termination-log"
         volumeMounts:
           - name: token
-            mountPath: /token
+            mountPath: "{{ .Values.Notebook.TokenFolder }}"
         ports:
         - name: notebook
           containerPort: 8888
@@ -54,6 +54,8 @@ spec:
         resources:
 {{ toYaml .Values.Resources | indent 10 }}
         env:
+        - name: JUPYTER_TOKEN_PATH
+          value: "{{ .Values.Notebook.TokenFolder }}/{{ .Values.Notebook.TokenFile }}"
         - name: DATALAKE_ID
           value: "{{ .Values.BDL.DatalakeId }}"
         - name: DATAPOOL_NAME
@@ -135,6 +137,6 @@ spec:
               name: "{{ template "bdl-jupyter.fullname" . }}-token"
               items:
               - key: token
-                path: token
+                path: "{{ .Values.Notebook.TokenFile }}"
   podManagementPolicy: OrderedReady
   revisionHistoryLimit: 10

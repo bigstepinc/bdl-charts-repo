@@ -43,6 +43,8 @@ Notebook:
     # ExternalName: ""
   Password: "notebook"
   Token: "token"
+  TokenFolder: "/token"
+  TokenFile: "token"
 
 DataBase:
   Enabled: false
