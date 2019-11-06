@@ -50,6 +50,12 @@ spec:
           protocol: TCP
         resources:
 {{ toYaml .Values.Resources | indent 10 }}
+        readinessProbe:
+          httpGet:
+            path: /login
+            port: 8888 
+          initialDelaySeconds: 3
+          periodSeconds: 3
         env:
         - name: JUPYTER_TOKEN_PATH
           value: "{{ .Values.Notebook.TokenFolder }}/{{ .Values.Notebook.TokenFile }}"
