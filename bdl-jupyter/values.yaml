@@ -41,13 +41,7 @@ StorageClassUseDefault: true
 StorageClass: "-"
 
 Notebook:
-  Secret:
-    Create: true
-    # ExternalName: ""
-  Password: "notebook"
   Token: "token"
-  TokenFolder: "/token"
-  TokenFile: "token"
 
 DataBase:
   Enabled: false

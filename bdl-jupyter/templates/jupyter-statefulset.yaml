@@ -57,8 +57,6 @@ spec:
           initialDelaySeconds: 3
           periodSeconds: 3
         env:
-        - name: JUPYTER_TOKEN_PATH
-          value: "{{ .Values.Notebook.TokenFolder }}/{{ .Values.Notebook.TokenFile }}"
         - name: DATALAKE_ID
           value: "{{ .Values.BDL.DatalakeId }}"
         - name: DATAPOOL_NAME
@@ -108,24 +106,14 @@ spec:
               key: db_password
         {{- end }}
         {{- end }}
-        {{- if .Values.Notebook.Secret.Create }}
-        - name: NOTEBOOK_PASSWORD
+        - name: NOTEBOOK_TOKEN
           valueFrom:
             secretKeyRef:
-              name: {{ template "bdl-jupyter.fullname" . }}-credentials
-              key: notebook_password
-        {{- else }}
-        - name: NOTEBOOK_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: {{ .Values.Notebook.Secret.ExternalName }}
-              key: notebook_password
-        {{- end }}
+              name: {{ template "bdl-jupyter.fullname" . }}-token
+              key: token
         volumeMounts:
         - name: datadir
           mountPath: {{ .Values.DataDir }}
-        - name: token
-          mountPath: "{{ .Values.Notebook.TokenFolder }}"
       restartPolicy: Always
       terminationGracePeriodSeconds: 30
       dnsPolicy: ClusterFirst
@@ -135,13 +123,5 @@ spec:
       - name: datadir
         persistentVolumeClaim:
           claimName: "data-{{ template "bdl-jupyter.fullname" . }}"
-      - name: token
-        projected:
-          sources:
-          - secret:
-              name: "{{ template "bdl-jupyter.fullname" . }}-token"
-              items:
-              - key: token
-                path: "{{ .Values.Notebook.TokenFile }}"
   podManagementPolicy: OrderedReady
   revisionHistoryLimit: 10
