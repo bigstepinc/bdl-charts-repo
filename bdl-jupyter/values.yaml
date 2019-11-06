@@ -29,6 +29,9 @@ Service:
   Enabled: true
   Type: "LoadBalancer"
 
+NodePort:
+  Enabled: false
+
 Ports:
   notebook: 8888
 

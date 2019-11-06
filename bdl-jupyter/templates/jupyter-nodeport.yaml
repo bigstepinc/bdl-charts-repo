@@ -1,5 +1,4 @@
 {{- if .Values.NodePort.Enabled }}
-{{- else }}
 apiVersion: v1
 kind: Service
 metadata:
@@ -14,17 +13,19 @@ metadata:
     component: "{{ .Release.Name }}-{{ .Values.Component }}"
 {{- end }}
 spec:
-  type: ClusterIP
-  clusterIP: None
-  sessionAffinity: None
+  type: NodePort
   ports:
   - name: notebook
-    port: 8888
+    port: {{ .Values.Ports.notebook }}
     targetPort: 8888
     protocol: TCP
   selector:
     heritage: {{ .Release.Service | quote }}
+{{- if .Values.Labels }}
+{{ toYaml .Values.Labels | indent 4 }}
+{{- else }}
     release: {{ .Release.Name | quote }}
     chart: {{ template "bdl-jupyter.chart" . }}
     component: "{{ .Release.Name }}-{{ .Values.Component }}"
+{{- end }}
 {{- end }}
