@@ -40,12 +40,13 @@ Storage: "15Gi"
 StorageClassUseDefault: true
 StorageClass: "-"
 
-Notebook:
-  Token: "token"
-
 DataBase:
   Enabled: false
   Type: ""
   Hostname: ""
   Port: ""
   CredentialsSecret: ""
+
+Admin:
+  Secret:
+    Create: true
