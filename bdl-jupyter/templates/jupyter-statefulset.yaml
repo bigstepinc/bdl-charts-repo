@@ -106,11 +106,19 @@ spec:
               key: db_password
         {{- end }}
         {{- end }}
+        {{- if .Values.Admin.Secret.Create }}
+        - name: NOTEBOOK_TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: {{ template "bdl-jupyter.fullname" . }}-token
+              key: notebook_token
+        {{- else }}
         - name: NOTEBOOK_TOKEN
           valueFrom:
             secretKeyRef:
               name: {{ .Values.Admin.Secret.ExternalName }}
               key: notebook_token
+        {{- end }}
         volumeMounts:
         - name: datadir
           mountPath: {{ .Values.DataDir }}
