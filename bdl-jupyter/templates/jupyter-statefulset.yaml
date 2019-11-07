@@ -109,8 +109,8 @@ spec:
         - name: NOTEBOOK_TOKEN
           valueFrom:
             secretKeyRef:
-              name: {{ template "bdl-jupyter.fullname" . }}-token
-              key: token
+              name: {{ .Values.Admin.Secret.ExternalName }}
+              key: notebook_token
         volumeMounts:
         - name: datadir
           mountPath: {{ .Values.DataDir }}
