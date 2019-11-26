@@ -8,6 +8,7 @@ BDL:
   DatapoolName: ""
   StarterDatapool: false
   ProjectName: ""
+  BaseUrl: ""
 
 
 ObjStorage:
