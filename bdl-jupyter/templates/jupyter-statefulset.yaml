@@ -52,7 +52,7 @@ spec:
 {{ toYaml .Values.Resources | indent 10 }}
         readinessProbe:
           httpGet:
-            path: /login
+            path: {{ .Values.BDL.BaseUrl }}login
             port: 8888 
           initialDelaySeconds: 3
           periodSeconds: 3
