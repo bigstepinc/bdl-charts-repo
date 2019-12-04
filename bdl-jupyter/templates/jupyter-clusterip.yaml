@@ -1,5 +1,3 @@
-{{- if .Values.NodePort.Enabled }}
-{{- else }}
 apiVersion: v1
 kind: Service
 metadata:
@@ -27,4 +25,3 @@ spec:
     release: {{ .Release.Name | quote }}
     chart: {{ template "bdl-jupyter.chart" . }}
     component: "{{ .Release.Name }}-{{ .Values.Component }}"
-{{- end }}

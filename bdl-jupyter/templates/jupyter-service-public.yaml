@@ -24,14 +24,16 @@ spec:
   {{- if .Values.Service.loadBalancerIP }}
   loadBalancerIP: {{ .Values.Service.loadBalancerIP }}
   {{- end }}
+  {{- if eq .Values.Service.Type "LoadBalancer" }}
   {{- if .Values.Service.loadBalancerSourceRanges }}
   loadBalancerSourceRanges:
   {{ toJson .Values.Service.loadBalancerSourceRanges | indent 4 }}
   {{- end }}
+  {{- end }}
   ports:
   - name: notebook
     port: {{ .Values.Ports.notebook }}
-    targetPort: 8888
+    targetPort: notebook
     protocol: TCP
   selector:
     heritage: {{ .Release.Service | quote }}
